@@ -126,7 +126,7 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
   "stay above other windows" and "follow workspace switches" separately. An extension cannot
   change compositor state, so this needs a native messaging host that calls the compositor
   (`hyprctl` on Hyprland), or falls back to a documented rule. It is a separate decision
-  (future ADR) and task, not part of this backend choice.
+  ([ADR 0002](0002-pip-window-pin-control.md), proposed) and task, not part of this backend choice.
 - Minimum versions: Firefox 154 for the isolated-world path. Zen versions are tracked by
   their Gecko base.
 
