@@ -5,7 +5,7 @@
 | Status | **Proposed**, 2026-11-08 |
 | Jira | [V1C-129](https://v1cferr.atlassian.net/browse/V1C-129) (follow-up of [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120), under [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119)) |
 | Depends on | [ADR 0001 — PiP window backend](0001-pip-window-backend.md) (Accepted) |
-| Evidence | [Spike report, "Pin control"](../spikes/V1C-120/README.md#pin-control-new-requirement), [manual Hyprland results](../../experiments/m0/results/) |
+| Evidence | [V1C-129 spike report](../spikes/V1C-129/README.md), [V1C-120 "Pin control"](../spikes/V1C-120/README.md#pin-control-new-requirement), [results](../../experiments/v1c-129/results/) |
 
 ## 1. Context
 
@@ -78,15 +78,28 @@ must let the user decide two things separately:
   the pin control.
 - Everything else in BetterPiP keeps working without the helper.
 
+## 6a. Spike evidence (2026-11-08)
+
+On isolated sway, with Firefox 159.0 and Zen 1.24b, the proposed design worked end to end:
+- PiP toggles → background → `sendNativeMessage` → helper → `swaymsg`;
+- helper state matched compositor state on all 7 steps, at 44–137 ms per toggle;
+- `allowed_extensions` and the closed message set held against every hostile input tried.
+
+Both browsers read the manifest only from `~/.mozilla/native-messaging-hosts`. The two
+options are coupled on sway and, by its API, on Hyprland: following workspaces requires
+floating. The UI therefore shows that coupling.
+
 ## 7. Open questions (to answer in the spike)
 
-1. On Hyprland 0.57: can "above others" be had **without** pin, through floating plus z-order
-   or a window property, and does it hold over fullscreen windows?
-2. On sway: do *floating* and *sticky* give the two options independently?
-3. Can the helper find the PiP window reliably? Title token versus pid, given that Firefox
-   and Zen run several processes.
-4. Does Zen allow `nativeMessaging` the same way as Firefox (manifest locations, the
-   `zen-beta` binary)?
+1. On Hyprland 0.57: can "above others" be had **without** pin? Per the Lua API: floating
+   gives it within the workspace, and there is no persistent keep-above property. Over
+   fullscreen windows, `binds.allow_pin_fullscreen` applies. End-to-end run pending.
+2. ~~On sway, are the two options independent?~~ No: sticky only applies to floating
+   windows.
+3. ~~Can the helper find the PiP window?~~ Yes: a random title token gives exactly one
+   match.
+4. ~~Does Zen support `nativeMessaging` like Firefox?~~ Yes, with the same manifest
+   location (`~/.mozilla/native-messaging-hosts`).
 5. Windows and macOS: is there any acceptable path, or is it documented as unsupported?
 
 ## 8. Validation plan (not started)
