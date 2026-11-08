@@ -1,0 +1,13 @@
+{
+  "_note": "Hand-trimmed from the watch-next response shape observed on 2026-11-08. Only the fields the parser reads, plus a few it must ignore.",
+  "currentVideoEndpoint": { "watchEndpoint": { "videoId": "AAAAAAAAAAA" } },
+  "playerOverlays": { "playerOverlayRenderer": { "decoratedPlayerBarRenderer": { "decoratedPlayerBarRenderer": { "playerBar": { "multiMarkersPlayerBarRenderer": {
+    "visibleOnLoad": { "key": "DESCRIPTION_CHAPTERS" },
+    "markersMap": [ { "key": "DESCRIPTION_CHAPTERS", "value": { "chapters": [
+      { "chapterRenderer": { "title": { "simpleText": "Intro" }, "timeRangeStartMillis": 0, "thumbnail": { "thumbnails": [] } } },
+      { "chapterRenderer": { "title": { "simpleText": "First topic" }, "timeRangeStartMillis": 85000 } },
+      { "chapterRenderer": { "title": { "runs": [ { "text": "Second " }, { "text": "topic" } ] }, "timeRangeStartMillis": 637000 } }
+    ] } } ]
+  } } } } } },
+  "engagementPanels": []
+}

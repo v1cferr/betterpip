@@ -1,0 +1,5 @@
+{
+  "currentVideoEndpoint": { "watchEndpoint": { "videoId": "CCCCCCCCCCC" } },
+  "playerOverlays": { "playerOverlayRenderer": { "decoratedPlayerBarRenderer": { "decoratedPlayerBarRenderer": { "playerBar": { "chapteredPlayerBarRenderer": {} } } } } },
+  "engagementPanels": [ { "engagementPanelSectionListRenderer": { "panelIdentifier": "engagement-panel-comments-section" } } ]
+}

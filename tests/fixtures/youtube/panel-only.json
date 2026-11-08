@@ -1,0 +1,13 @@
+{
+  "_note": "Seek-bar markers missing; chapters only in the 'In this video' engagement panel.",
+  "currentVideoEndpoint": { "watchEndpoint": { "videoId": "DDDDDDDDDDD" } },
+  "engagementPanels": [
+    { "engagementPanelSectionListRenderer": { "panelIdentifier": "engagement-panel-comments-section" } },
+    { "engagementPanelSectionListRenderer": { "panelIdentifier": "engagement-panel-macro-markers-description-chapters",
+      "content": { "macroMarkersListRenderer": { "contents": [
+        { "macroMarkersListItemRenderer": { "title": { "simpleText": "Start" }, "timeDescription": { "simpleText": "0:00" }, "onTap": { "watchEndpoint": { "startTimeSeconds": 0 } } } },
+        { "macroMarkersListItemRenderer": { "title": { "simpleText": "Middle" }, "timeDescription": { "simpleText": "10:37" } } },
+        { "continuationItemRenderer": {} }
+      ] } } } }
+  ]
+}

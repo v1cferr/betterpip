@@ -1,0 +1,12 @@
+{
+  "currentVideoEndpoint": { "watchEndpoint": { "videoId": "BBBBBBBBBBB" } },
+  "playerOverlays": { "playerOverlayRenderer": { "decoratedPlayerBarRenderer": { "decoratedPlayerBarRenderer": { "playerBar": { "multiMarkersPlayerBarRenderer": {
+    "markersMap": [
+      { "key": "HEATSEEKER", "value": { "heatmap": {} } },
+      { "key": "AUTO_CHAPTERS", "value": { "chapters": [
+        { "chapterRenderer": { "title": { "simpleText": "Opening" }, "timeRangeStartMillis": 0 } },
+        { "chapterRenderer": { "title": { "simpleText": "Demo" }, "timeRangeStartMillis": 120500 } }
+      ] } }
+    ]
+  } } } } } }
+}

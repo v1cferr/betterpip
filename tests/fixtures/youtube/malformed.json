@@ -1,0 +1,15 @@
+{
+  "currentVideoEndpoint": { "watchEndpoint": { "videoId": 42 } },
+  "playerOverlays": { "playerOverlayRenderer": { "decoratedPlayerBarRenderer": { "decoratedPlayerBarRenderer": { "playerBar": { "multiMarkersPlayerBarRenderer": {
+    "markersMap": [ { "key": "DESCRIPTION_CHAPTERS", "value": { "chapters": [
+      { "chapterRenderer": { "title": { "simpleText": "" }, "timeRangeStartMillis": 0 } },
+      { "chapterRenderer": { "title": "not an object", "timeRangeStartMillis": 1000 } },
+      { "chapterRenderer": { "title": { "simpleText": "No time" } } },
+      { "chapterRenderer": { "title": { "simpleText": "Bad time" }, "timeRangeStartMillis": "5000" } },
+      { "chapterRenderer": { "title": { "simpleText": "Negative" }, "timeRangeStartMillis": -5 } },
+      null,
+      "garbage"
+    ] } } ]
+  } } } } } },
+  "engagementPanels": { "not": "an array" }
+}
