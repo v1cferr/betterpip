@@ -104,21 +104,55 @@ class Lab:
         }
 
     # -- driver lifecycle: one fresh profile per scenario keeps state from leaking
-    def start(self):
-        o = Options()
-        o.binary_location = self.args.browser
-        if self.args.headless:
-            o.add_argument("-headless")
-        o.set_preference("media.autoplay.default", 0)  # let the fixture play after a click
-        o.set_preference("browser.shell.checkDefaultBrowser", False)
-        # Without the isolated null sink (see isolated-wayland.sh), scale the audio output to zero below the DOM, so video.volume and
-        # volumechange still behave normally but nothing reaches the host's speakers.
+    def prefs(self):
+        prefs = {
+            "media.autoplay.default": 0,  # let the fixture play after a click
+            "browser.shell.checkDefaultBrowser": False,
+        }
+        # Without the isolated null sink (see isolated-wayland.sh), scale the audio output to
+        # zero below the DOM: video.volume and volumechange still behave normally, but
+        # nothing reaches the host's speakers.
         if not os.environ.get("M0_AUDIO_SINK"):
-            o.set_preference("media.volume_scale", "0.0")
+            prefs["media.volume_scale"] = "0.0"
+        return prefs
+
+    def is_firefox_branded(self):
+        """geckodriver only launches binaries whose --version says "Mozilla Firefox"."""
+        env = {k: v for k, v in os.environ.items() if k != "LD_LIBRARY_PATH"}
+        out = subprocess.run([self.args.browser, "--version"], capture_output=True, text=True, env=env, timeout=30).stdout
+        self.results["meta"]["versionString"] = out.strip()
+        return out.startswith("Mozilla Firefox")
+
+    def start(self):
         # Chrome-context access is needed only by the toolbar/command probe (E1), test profile only.
         env = {**os.environ, "MOZ_REMOTE_ALLOW_SYSTEM_ACCESS": "1"}
         env.pop("LD_LIBRARY_PATH", None)
-        svc = Service(executable_path=self.args.geckodriver, service_args=["--allow-system-access"], env=env)
+        self.own_browser = None
+        if self.is_firefox_branded():
+            o = Options()
+            o.binary_location = self.args.browser
+            if self.args.headless:
+                o.add_argument("-headless")
+            for k, v in self.prefs().items():
+                o.set_preference(k, v)
+            svc = Service(executable_path=self.args.geckodriver, service_args=["--allow-system-access"], env=env)
+        else:
+            # Forks such as Zen: launch with a throw-away profile and Marionette, then attach.
+            profile = Path(tempfile.mkdtemp(prefix="m0-profile-"))
+            port = self.args.port + 1
+            # zen.welcome-screen.seen: Zen's first-run screen otherwise covers the content area
+            # (viewport 0x0) in a fresh profile.
+            prefs = {**self.prefs(), "marionette.port": port, "zen.welcome-screen.seen": True}
+            (profile / "user.js").write_text("".join(f"user_pref({json.dumps(k)}, {json.dumps(v)});\n" for k, v in prefs.items()))
+            cmd = [self.args.browser, "--marionette", "--remote-allow-system-access", "-no-remote", "-profile", str(profile)]
+            if self.args.headless:
+                cmd.append("-headless")
+            self.own_browser = subprocess.Popen(cmd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            self.own_profile = profile
+            time.sleep(6)
+            o = Options()
+            svc = Service(executable_path=self.args.geckodriver, env=env,
+                          service_args=["--connect-existing", "--marionette-port", str(port), "--allow-system-access"])
         self.d = webdriver.Firefox(options=o, service=svc)
         self.d.set_window_rect(x=40, y=40, width=1100, height=900)
         xpi = self.pack_extension()
@@ -127,7 +161,7 @@ class Lab:
         caps = self.d.capabilities
         self.results["meta"].update(browserName=caps.get("browserName"), browserVersion=caps.get("browserVersion"),
                                     platformName=caps.get("platformName"))
-        self.browser_pid = caps.get("moz:processID")
+        self.browser_pid = caps.get("moz:processID") or (self.own_browser and self.own_browser.pid)
         time.sleep(1.0)
 
     def stop(self):
@@ -137,6 +171,14 @@ class Lab:
             except WebDriverException:
                 pass
             self.d = None
+        if getattr(self, "own_browser", None):
+            self.own_browser.terminate()
+            try:
+                self.own_browser.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                self.own_browser.kill()
+            shutil.rmtree(self.own_profile, ignore_errors=True)
+            self.own_browser = None
 
     def pack_extension(self):
         out = Path(tempfile.mkdtemp(prefix="m0-xpi-")) / "probe.xpi"
@@ -187,7 +229,7 @@ class Lab:
         audio = self.audio_stop()
         if audio is not None:
             data["audio"] = audio
-        if self.compositor_enabled():
+        if self.compositor_enabled() and getattr(self, "browser_pid", None):
             data["compositor"] = self.compositor()
         self.results["scenarios"][sid] = data
         print(sid, json.dumps(data)[:600], flush=True)
@@ -197,6 +239,7 @@ class Lab:
             return
         try:
             self.req_mark = len(self.media_requests())
+            self.browser_pid = None
             self.audio_start()
             self.start()
             fn()
@@ -545,6 +588,20 @@ class Lab:
                 st = self.js("""const a = window.__m0.pipApi, p = a.pip; return {inner:[p.innerWidth,p.innerHeight], outer:[p.outerWidth,p.outerHeight], effective:a.effectiveMode(), video:a.videoBox()}""")
                 now = next((x for x in (self.compositor() or []) if x["id"] == target["id"]), None)
                 out["resizes"].append({"requested": [w, h], "compositorReply": msg, "compositorSize": now and now["size"], "floating": now and now["floating"], **st})
+        # What a user window rule would do on a tiling Wayland compositor: float + sticky
+        # (sway) / float + pin (Hyprland). Applied only to the isolated compositor.
+        if target and self.compositor_kind() == "sway":
+            r = subprocess.run(["swaymsg", f"[con_id={target['id']}]", "floating", "enable,", "sticky", "enable"], capture_output=True, text=True)
+            out["ruleApplied"] = (r.stdout + r.stderr).strip()[:200]
+            out["floatingResizes"] = []
+            for w, h in [(960, 420), (520, 340), (300, 200), (240, 135), (720, 405)]:
+                msg = self.compositor_resize(target["id"], w, h)
+                time.sleep(0.8)
+                self.d.switch_to.window(self.main)
+                st = self.js("""const a = window.__m0.pipApi, p = a.pip, d = p.document; return {inner:[p.innerWidth,p.innerHeight], outer:[p.outerWidth,p.outerHeight], effective:a.effectiveMode(), video:a.videoBox(),
+                    overflow: d.documentElement.scrollWidth > d.documentElement.clientWidth || d.documentElement.scrollHeight > d.documentElement.clientHeight}""")
+                now = next((x for x in (self.compositor() or []) if x["id"] == target["id"]), None)
+                out["floatingResizes"].append({"requested": [w, h], "compositorReply": msg, "compositor": now, **st})
         out["playback"] = self.m0("snapshot()")
         self.record("E5-compositor", **out)
 
