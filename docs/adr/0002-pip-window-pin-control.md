@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Status | **Proposed**, 2026-11-08 |
+| Status | **Accepted**, 2026-11-08 (V1C-129 spike: sway and Hyprland, Firefox and Zen) |
 | Jira | [V1C-129](https://v1cferr.atlassian.net/browse/V1C-129) (follow-up of [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120), under [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119)) |
 | Depends on | [ADR 0001 — PiP window backend](0001-pip-window-backend.md) (Accepted) |
 | Evidence | [V1C-129 spike report](../spikes/V1C-129/README.md), [V1C-120 "Pin control"](../spikes/V1C-120/README.md#pin-control-new-requirement), [results](../../experiments/v1c-129/results/) |
@@ -80,8 +80,9 @@ must let the user decide two things separately:
 
 ## 6a. Spike evidence (2026-11-08)
 
-On isolated sway, with Firefox 159.0 and Zen 1.24b, the proposed design worked end to end:
-- PiP toggles → background → `sendNativeMessage` → helper → `swaymsg`;
+On isolated sway and on the host Hyprland 0.57.1 desktop, with Firefox 159.0 and Zen 1.24b,
+the proposed design worked end to end:
+- PiP toggles → background → `sendNativeMessage` → helper → `swaymsg` / `hyprctl`;
 - helper state matched compositor state on all 7 steps, at 44–137 ms per toggle;
 - `allowed_extensions` and the closed message set held against every hostile input tried.
 
@@ -89,11 +90,12 @@ Both browsers read the manifest only from `~/.mozilla/native-messaging-hosts`. T
 options are coupled on sway and, by its API, on Hyprland: following workspaces requires
 floating. The UI therefore shows that coupling.
 
-## 7. Open questions (to answer in the spike)
+## 7. Open questions
 
 1. On Hyprland 0.57: can "above others" be had **without** pin? Per the Lua API: floating
    gives it within the workspace, and there is no persistent keep-above property. Over
-   fullscreen windows, `binds.allow_pin_fullscreen` applies. End-to-end run pending.
+   fullscreen windows, `binds.allow_pin_fullscreen` applies (not measured). The toggles
+   themselves were verified on the host desktop.
 2. ~~On sway, are the two options independent?~~ No: sticky only applies to floating
    windows.
 3. ~~Can the helper find the PiP window?~~ Yes: a random title token gives exactly one
@@ -102,7 +104,7 @@ floating. The UI therefore shows that coupling.
    location (`~/.mozilla/native-messaging-hosts`).
 5. Windows and macOS: is there any acceptable path, or is it documented as unsupported?
 
-## 8. Validation plan (not started)
+## 8. Validation plan
 
 This is a spike in the isolated lab, like M0. It needs no change to the host system:
 
@@ -112,4 +114,7 @@ This is a spike in the isolated lab, like M0. It needs no change to the host sys
 - Under isolated sway: toggle each option, then read the state back from the compositor.
 - On the Hyprland host: run the same toggles and read back with `hyprctl clients`.
 
-The ADR becomes *Accepted* only after that evidence exists.
+Done on 2026-11-08: see the [V1C-129 report](../spikes/V1C-129/README.md). The UX contract is
+in [UX.md](../UX.md#window-pin-control-v1c-129). Still open for the product: requesting
+`nativeMessaging` as an optional permission at enable time, packaging the helper (V1C-127),
+X11/KDE/GNOME/Windows/macOS backends, and behaviour over fullscreen windows.
