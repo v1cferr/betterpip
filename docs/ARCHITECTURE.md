@@ -18,8 +18,20 @@ Status: **proposed architecture, approved stack; no implementation yet**. Update
 3. **Capability registry (plain TypeScript):** expose supported seek, duration, rate, volume, captions and chapters; UI must never imply unsupported controls work.
 4. **Site adapters (plain TypeScript):** progressively enhance known origins (YouTube first), handle SPA navigation, missing metadata and markup changes without breaking generic playback.
 5. **Window backend:** Document PiP vs native PiP vs extension popup based on experimentally verified browser/API capabilities. **An ordinary popup does not guarantee always-on-top**.
-6. **PiP renderer (Svelte 5, loaded on demand):** compact/expanded interface, chapters, subtitles, controls, themes, focus and keyboard navigation. Isolate styles from host websites and minimize JS/CSS bundle impact.
+6. **PiP renderer + adaptive layout (Svelte 5, loaded on demand):** single-window Minimal / Overlay-Glass / Docked-Split states; responsive composition inside user-selected window bounds, with shared tool panel and capability-driven controls. Preserve the video's aspect ratio and focus/keyboard accessibility. Use localized translucency/optional blur rather than costly full-surface effects; isolate styles from host websites and minimize JS/CSS bundle impact.
 7. **Local settings:** versioned browser storage, minimal origin permissions, explicit grants where possible.
+
+## Single-window UX contract (approved 2026-11-08)
+
+Read [UX.md](UX.md) as the authoritative public specification for interaction states. A **single user-resizable floating PiP window contains both the original video surface and the tools**; no secondary windows for chapters/controls and no automatic outer-window expansion. The interface supports:
+
+- **Minimal** with no permanently reserved panel; contextual playback chrome.
+- **Overlay / Glass** with a dismissible translucent tools layer over the existing video surface, contrast/opacity controls and optional limited blur.
+- **Docked / Split** with video left, tools right, sharing the existing window; separate panel scrolling, original aspect ratio maintained.
+- Container-scoped size adaptation. If Docked cannot remain readable at a smaller window size, gracefully fall back to Overlay/Minimal while preserving the user's preferred mode to restore when size permits.
+- One shared modules/panels model for playback, chapters and captions; capabilities control visibility. Comments/playlist/chat remain **deferred**, with permissions, privacy and adapter evaluation required.
+
+The player must not reset or duplicate streams upon resize, layout change or panel switching. No promises of full website feature parity. Browser/OS window constraints, PiP lifecycle and the practicality of moving/referencing the media element in an arbitrary-HTML PiP **must be tested in M0**, not assumed.
 
 ## Feasibility gate — V1C-120
 
@@ -27,7 +39,7 @@ On actual Firefox and Zen builds, record OS, browser version and test context (p
 
 ## Performance and quality
 
-Establish and measure baseline in a fixed test fixture: extension package size, injected script size, idle and active CPU/memory, wakeups, UI update latency, observer/listener leaks and playback continuity. Record results per browser/OS; avoid invented budgets and set thresholds after baseline measurement. Components are imported selectively; animations respect reduced-motion preferences. Test keyboard use, focus, screen-reader labels, contrast and error/unavailable states.
+Establish and measure baseline in a fixed test fixture: extension package size, injected script size, idle and active CPU/memory, wakeups, UI update latency, observer/listener leaks, playback continuity and resize/overlay/compositing costs (closed vs Overlay vs Docked). Record results per browser/OS; avoid invented budgets and set thresholds after baseline measurement. Components are imported selectively; animations respect reduced-motion preferences. Test keyboard use, focus, screen-reader labels, contrast and error/unavailable states.
 
 ## Source-of-truth policy for agents
 
