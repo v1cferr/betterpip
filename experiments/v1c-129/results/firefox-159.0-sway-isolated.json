@@ -1,0 +1,605 @@
+{
+ "meta": {
+  "label": "firefox-159.0",
+  "browser": "/nix/store/vk5drhp6vl299ivwrwh2xzj6243g17zz-firefox-159.0/bin/firefox",
+  "headless": false,
+  "date": "2026-11-08T16:03:10-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "sway-headless",
+  "wayland_display": true,
+  "display": null,
+  "versionString": "Mozilla Firefox 159.0",
+  "browserName": "firefox",
+  "browserVersion": "159.0",
+  "platformName": "linux",
+  "note": "V1C-129 pin-control spike, isolated headless sway 1.12, 2026-11-08. Native messaging manifest in a throw-away HOME per scenario."
+ },
+ "scenarios": {
+  "pin-toggles": {
+   "open": {
+    "ok": true,
+    "token": "bp-6xov03kg"
+   },
+   "steps": [
+    {
+     "label": "initial",
+     "op": "getState",
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": false,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": 6,
+       "floating": false,
+       "sticky": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 54
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": false,
+      "sticky": false,
+      "size": [
+       960,
+       1054
+      ],
+      "shell": "xdg_shell"
+     }
+    },
+    {
+     "label": "click above",
+     "op": "setAbove",
+     "value": true,
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": true,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": 6,
+       "floating": true,
+       "sticky": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 61
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": false,
+      "size": [
+       424,
+       203
+      ],
+      "shell": "xdg_shell"
+     }
+    },
+    {
+     "label": "click follow",
+     "op": "setFollowWorkspaces",
+     "value": true,
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": true,
+       "followWorkspaces": true
+      },
+      "raw": {
+       "id": 6,
+       "floating": true,
+       "sticky": true
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 44
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       424,
+       203
+      ],
+      "shell": "xdg_shell"
+     }
+    },
+    {
+     "label": "click above",
+     "op": "setAbove",
+     "value": false,
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": false,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": 6,
+       "floating": false,
+       "sticky": false
+      },
+      "implied": [
+       "followWorkspaces=false"
+      ],
+      "commandErrors": [],
+      "ms": 63
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": false,
+      "sticky": false,
+      "size": [
+       960,
+       1054
+      ],
+      "shell": "xdg_shell"
+     }
+    },
+    {
+     "label": "click follow",
+     "op": "setFollowWorkspaces",
+     "value": true,
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": true,
+       "followWorkspaces": true
+      },
+      "raw": {
+       "id": 6,
+       "floating": true,
+       "sticky": true
+      },
+      "implied": [
+       "above=true"
+      ],
+      "commandErrors": [],
+      "ms": 59
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       424,
+       203
+      ],
+      "shell": "xdg_shell"
+     }
+    },
+    {
+     "label": "click follow",
+     "op": "setFollowWorkspaces",
+     "value": false,
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": true,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": 6,
+       "floating": true,
+       "sticky": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 52
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": false,
+      "size": [
+       424,
+       203
+      ],
+      "shell": "xdg_shell"
+     }
+    },
+    {
+     "label": "click above",
+     "op": "setAbove",
+     "value": false,
+     "res": {
+      "ok": true,
+      "backend": "sway",
+      "state": {
+       "above": false,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": 6,
+       "floating": false,
+       "sticky": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 75
+     },
+     "compositor": {
+      "id": 6,
+      "app_id": "firefox",
+      "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+      "floating": false,
+      "sticky": false,
+      "size": [
+       960,
+       1054
+      ],
+      "shell": "xdg_shell"
+     }
+    }
+   ],
+   "agree": true,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 10.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 6,
+     "app_id": "firefox",
+     "title": "BetterPiP bp-6xov03kg \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "manifest-dir-mozilla": {
+   "open": {
+    "ok": true,
+    "token": "bp-a5pk20hl"
+   },
+   "first": {
+    "label": "initial",
+    "op": "getState",
+    "res": {
+     "ok": true,
+     "backend": "sway",
+     "state": {
+      "above": false,
+      "followWorkspaces": false
+     },
+     "raw": {
+      "id": 8,
+      "floating": false,
+      "sticky": false
+     },
+     "implied": [],
+     "commandErrors": [],
+     "ms": 64
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 7,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 8,
+     "app_id": "firefox",
+     "title": "BetterPiP bp-a5pk20hl \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "manifest-dir-xdg-mozilla": {
+   "open": {
+    "ok": true,
+    "token": "bp-h3sy1po0"
+   },
+   "first": {
+    "label": "initial",
+    "op": "getState",
+    "res": {
+     "ok": false,
+     "error": "native-error",
+     "message": "No such native application betterpip_pin",
+     "ms": 5
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 9,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 10,
+     "app_id": "firefox",
+     "title": "BetterPiP bp-h3sy1po0 \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "manifest-dir-zen": {
+   "open": {
+    "ok": true,
+    "token": "bp-xm5mb5tw"
+   },
+   "first": {
+    "label": "initial",
+    "op": "getState",
+    "res": {
+     "ok": false,
+     "error": "native-error",
+     "message": "No such native application betterpip_pin",
+     "ms": 7
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 11,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 12,
+     "app_id": "firefox",
+     "title": "BetterPiP bp-xm5mb5tw \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "wrong-extension-id": {
+   "open": {
+    "ok": true,
+    "token": "bp-x5ch2w2f"
+   },
+   "first": {
+    "label": "initial",
+    "op": "getState",
+    "res": {
+     "ok": false,
+     "error": "native-error",
+     "message": "No such native application betterpip_pin",
+     "ms": 7
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 13,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 14,
+     "app_id": "firefox",
+     "title": "BetterPiP bp-x5ch2w2f \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "no-helper": {
+   "open": {
+    "ok": true,
+    "token": "bp-3zhaskud"
+   },
+   "first": {
+    "label": "initial",
+    "op": "getState",
+    "res": {
+     "ok": false,
+     "error": "native-error",
+     "message": "No such native application betterpip_pin",
+     "ms": 6
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 15,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 16,
+     "app_id": "firefox",
+     "title": "BetterPiP bp-3zhaskud \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "host-security": {
+   "unknown-op": {
+    "ok": false,
+    "error": "unsupported-op"
+   },
+   "token-injection": {
+    "ok": false,
+    "error": "bad-token"
+   },
+   "token-shape": {
+    "ok": false,
+    "error": "bad-token"
+   },
+   "non-bool-value": {
+    "ok": false,
+    "error": "bad-value"
+   },
+   "no-such-window": {
+    "ok": false,
+    "error": "window-not-found",
+    "backend": "sway"
+   },
+   "oversized": {
+    "ok": false,
+    "error": "bad-message"
+   },
+   "not-json": {
+    "ok": false,
+    "error": "bad-message"
+   },
+   "no-compositor": {
+    "ok": false,
+    "error": "unsupported-compositor"
+   }
+  }
+ },
+ "perf": []
+}
