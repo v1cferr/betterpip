@@ -1,0 +1,326 @@
+{
+ "meta": {
+  "label": "zen-hyprland",
+  "browser": "/nix/store/lb24swp3dfiamis03h5482jdhfyccp5j-zen-beta-guarded/bin/zen-beta",
+  "headless": false,
+  "date": "2026-11-08T16:34:41-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "Hyprland",
+  "wayland_display": true,
+  "display": ":0",
+  "versionString": "Mozilla Zen 1.24b",
+  "browserName": "firefox",
+  "browserVersion": "1.24b",
+  "platformName": "linux",
+  "note": "V1C-129 pin-control run on the host Hyprland 0.57.1 desktop via harness/hyprland-check.sh, 2026-11-08 (no prompts; throw-away HOME)."
+ },
+ "scenarios": {
+  "pin-toggles": {
+   "open": {
+    "ok": true,
+    "token": "bp-e4sw1y7m"
+   },
+   "steps": [
+    {
+     "label": "initial",
+     "op": "getState",
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": false,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": false,
+       "pinned": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 61
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": false,
+      "pinned": false,
+      "size": [
+       2518,
+       1380
+      ],
+      "xwayland": false
+     }
+    },
+    {
+     "label": "click above",
+     "op": "setAbove",
+     "value": true,
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": true,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": true,
+       "pinned": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 77
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": true,
+      "pinned": false,
+      "size": [
+       1280,
+       1040
+      ],
+      "xwayland": false
+     }
+    },
+    {
+     "label": "click follow",
+     "op": "setFollowWorkspaces",
+     "value": true,
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": true,
+       "followWorkspaces": true
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": true,
+       "pinned": true
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 72
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": true,
+      "pinned": true,
+      "size": [
+       1280,
+       1040
+      ],
+      "xwayland": false
+     }
+    },
+    {
+     "label": "click above",
+     "op": "setAbove",
+     "value": false,
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": false,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": false,
+       "pinned": false
+      },
+      "implied": [
+       "followWorkspaces=false"
+      ],
+      "commandErrors": [],
+      "ms": 104
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": false,
+      "pinned": false,
+      "size": [
+       2518,
+       1380
+      ],
+      "xwayland": false
+     }
+    },
+    {
+     "label": "click follow",
+     "op": "setFollowWorkspaces",
+     "value": true,
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": true,
+       "followWorkspaces": true
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": true,
+       "pinned": true
+      },
+      "implied": [
+       "above=true"
+      ],
+      "commandErrors": [],
+      "ms": 85
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": true,
+      "pinned": true,
+      "size": [
+       1280,
+       1040
+      ],
+      "xwayland": false
+     }
+    },
+    {
+     "label": "click follow",
+     "op": "setFollowWorkspaces",
+     "value": false,
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": true,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": true,
+       "pinned": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 76
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": true,
+      "pinned": false,
+      "size": [
+       1280,
+       1040
+      ],
+      "xwayland": false
+     }
+    },
+    {
+     "label": "click above",
+     "op": "setAbove",
+     "value": false,
+     "res": {
+      "ok": true,
+      "backend": "hyprland",
+      "state": {
+       "above": false,
+       "followWorkspaces": false
+      },
+      "raw": {
+       "id": "0x5c5510ff2300",
+       "floating": false,
+       "pinned": false
+      },
+      "implied": [],
+      "commandErrors": [],
+      "ms": 80
+     },
+     "compositor": {
+      "id": "0x5c5510ff2300",
+      "app_id": "zen-beta",
+      "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+      "floating": false,
+      "pinned": false,
+      "size": [
+       2518,
+       1380
+      ],
+      "xwayland": false
+     }
+    }
+   ],
+   "agree": true,
+   "mediaRequestsInScenario": 1,
+   "compositor": [
+    {
+     "id": "0x5c5510ff26e0",
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "pinned": false,
+     "size": [
+      2518,
+      1380
+     ],
+     "xwayland": false
+    },
+    {
+     "id": "0x5c5510ff2300",
+     "app_id": "zen-beta",
+     "title": "BetterPiP bp-e4sw1y7m \u2014 Zen Browser",
+     "floating": false,
+     "pinned": false,
+     "size": [
+      2518,
+      1380
+     ],
+     "xwayland": false
+    }
+   ]
+  },
+  "host-security": {
+   "unknown-op": {
+    "ok": false,
+    "error": "unsupported-op"
+   },
+   "token-injection": {
+    "ok": false,
+    "error": "bad-token"
+   },
+   "token-shape": {
+    "ok": false,
+    "error": "bad-token"
+   },
+   "non-bool-value": {
+    "ok": false,
+    "error": "bad-value"
+   },
+   "no-such-window": {
+    "ok": false,
+    "error": "window-not-found",
+    "backend": "hyprland"
+   },
+   "oversized": {
+    "ok": false,
+    "error": "bad-message"
+   },
+   "not-json": {
+    "ok": false,
+    "error": "bad-message"
+   },
+   "no-compositor": {
+    "ok": false,
+    "error": "unsupported-compositor"
+   }
+  }
+ },
+ "perf": []
+}
