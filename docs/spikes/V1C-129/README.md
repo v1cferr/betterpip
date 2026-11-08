@@ -6,14 +6,14 @@
 | Date | 2026-11-08 |
 | Decision record | [ADR 0002 — PiP window pin control](../../adr/0002-pip-window-pin-control.md) (Proposed) |
 | Lab | [`experiments/v1c-129/`](../../../experiments/v1c-129/README.md) |
-| Status | Sway path demonstrated for Firefox 159.0 and Zen 1.24b. **Hyprland run pending** (`experiments/v1c-129/harness/hyprland-check.sh`). |
+| Status | Demonstrated on isolated sway and on the host **Hyprland 0.57.1** desktop, for Firefox 159.0 and Zen 1.24b. |
 
 ## Summary
 
 The pin control works when the extension delegates the compositor call to a small native
-messaging helper. In an isolated sway session, for Firefox and Zen, toggles in the PiP window
-moved the window between tiled, floating ("above others") and floating + sticky ("follow
-workspaces"). Every state the helper reported matched what the compositor showed. Each round
+messaging helper. On Hyprland 0.57.1 and in an isolated sway session, for Firefox and Zen, toggles in the PiP window
+moved the window between tiled, floating ("above others") and floating + sticky/pinned
+("follow workspaces"). Every state the helper reported matched what the compositor showed. Each round
 trip took 44–137 ms, and the helper rejected every malformed or hostile message tried.
 
 The two options are **not independent** on either compositor checked. Following workspaces
@@ -60,9 +60,24 @@ Helper security, identical in both runs:
 Commands address the window only by the compositor's own id: sway `con_id` (an integer) or a
 Hyprland address that is validated against `^0x[0-9a-f]+$`. The helper uses no shell.
 
+### Hyprland 0.57.1 (host desktop, `harness/hyprland-check.sh`, no prompts)
+
+| Check | Firefox 159.0 | Zen 1.24b |
+| --- | --- | --- |
+| Toggle sequence (7 steps), helper state = `hyprctl clients` state | PASS | PASS |
+| `hl.dsp.window.float({ action = "toggle" })` and `hl.dsp.window.pin({ window = … })` toggle as expected | PASS | PASS |
+| Implied changes reported and applied | PASS | PASS |
+| Latency per toggle | 63–87 ms | 61–104 ms |
+| Helper security cases (as above) | PASS | PASS |
+
+In this run the PiP window opened **tiled** (2518×1380). Floating it gave 1280×1040, and
+turning floating off returned it to the tile. In the V1C-120 manual checks it opened
+floating. The difference is unexplained; the probe requested 420×160 here and 640×400
+there. The control works from either starting state.
+
 ## Compositor mapping
 
-| Option | sway (tested) | Hyprland 0.57.1 (from its Lua API stubs; run pending) |
+| Option | sway (tested) | Hyprland 0.57.1 (tested; persistence notes from its Lua API) |
 | --- | --- | --- |
 | Above others | `floating enable`: above tiled windows of the workspace | `window.float`: above tiled windows of the workspace. No persistent "keep above" property was found; `alter_zorder` and `bring_to_top` act once. |
 | Follow workspaces | `sticky enable`, effective only while floating | `window.pin` (floating only), shown on every workspace |
@@ -75,10 +90,6 @@ separate. Not tested.
 
 ## Not established
 
-- **Hyprland end to end.** The helper's Hyprland backend was checked read-only against the
-  live session: it parses `hyprctl clients -j`, validates addresses, and reports
-  `window-not-found` for an unknown token. The toggles themselves have not run there yet.
-  `harness/hyprland-check.sh` does that with no prompts.
 - Whether a floating window stays above **other floating** or fullscreen windows.
 - Packaging and installing the helper for users, Windows/macOS, KDE/GNOME (V1C-127 scope).
 - Requesting `nativeMessaging` as an *optional* permission at the moment the user enables
