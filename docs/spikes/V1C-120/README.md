@@ -38,7 +38,7 @@ yet**; see [Manual checks](#manual-checks-pending).
 | 6 | Manually resizable? | The compositor resizes it (tested on isolated sway). Physical drag on Hyprland: not tested. | Automated; Manual pending |
 | 7 | Content adapts to the size? | Yes: container queries switch Docked → Overlay → Minimal, keep 16:9 and never overflow the document. | Automated (E4, E5) |
 | 8 | Always on top across applications in the real environment? | **Not tested.** Expected to need a compositor rule. | Inferred + Manual pending |
-| 9 | Firefox vs Zen differences? | Same behaviour in every page/content-script scenario. Zen titles the PiP window `… — Zen Browser` (app_id `zen-beta`) versus `… — Mozilla Firefox` (app_id `firefox`). Zen's background `commands` handler found no tab in automation (unresolved). Zen needed `zen.welcome-screen.seen` in a fresh profile. | Automated |
+| 9 | Firefox vs Zen differences? | Same behaviour in every page/content-script scenario. Zen titles the PiP window `… — Zen Browser` (app_id `zen-beta`) versus `… — Mozilla Firefox` (app_id `firefox`). In the lab's Zen launch mode the extension could not see any tab (`tabs.query({})` empty, no `sender.tab`), so the `commands` path failed there; this needs a check in a normal Zen profile (M8). Zen needed `zen.welcome-screen.seen` in a fresh profile. | Automated |
 | 10 | Public, sustainable alternatives? | Native video PiP (video only, no HTML) and an ordinary popup (no always-on-top flag, cannot hold the page's video). Neither meets the single-window requirement. No public Zen-specific mechanism was found. | Automated + documentation |
 
 ## Method
@@ -62,6 +62,13 @@ yet**; see [Manual checks](#manual-checks-pending).
   blips less than 0.5 s apart.
 - **Stream evidence.** A local server logs every media request. Sink inputs are counted to
   detect duplicate audio.
+- **CSP and keyboard (E7, E8).** Added after reading the Jira scope, and run on the same
+  builds and isolated session. The lab server sends `/site/csp.html` with a policy chosen per
+  run (`none`, `strict`, `strict` + Trusted Types) as an HTTP header. The page world and the
+  isolated content script each apply the same eight injections in a new PiP window. Success
+  is judged by computed style or DOM effect, not by the absence of an exception. Keyboard
+  input uses trusted WebDriver key actions on the PiP window. Results are in
+  `results/*-e7-e8.json`.
 - **Classification.** *Automated*: produced by the harness. *Manual*: a human on the real
   desktop. *Inferred*: reasoned from evidence or documentation, not observed directly.
 
@@ -98,6 +105,23 @@ yet**; see [Manual checks](#manual-checks-pending).
 - **Layout.** CSS container queries on the PiP root alone produced Docked (≥ 560 px),
   Overlay (300–559 px) and Minimal (< 300 px wide or < 180 px tall). `object-fit: contain`
   kept the picture at 16:9. Switching modes never changed `outerWidth/outerHeight`.
+- **CSP (E7).** The PiP document **inherits the opener's Content-Security-Policy**. Under a
+  strict page policy (`default-src 'none'; script-src 'self'; style-src 'self'; img-src
+  'self'; …`), page-world code in the PiP window loses `<style>` elements, `style`
+  attributes and `data:` images, each with a `securitypolicyviolation`. With Trusted Types
+  enforced (`require-trusted-types-for 'script'`) its `innerHTML` throws as well. The same
+  operations done **from the isolated content script are not blocked**: `<style>`, `style`
+  attributes, `innerHTML` (even with Trusted Types), `data:` images, a linked
+  `moz-extension://` stylesheet (web-accessible) and constructable stylesheets
+  (`adoptedStyleSheets`) all applied. Inline `<script>` is blocked in both worlds, as
+  expected. Moving the `<video>` still worked under both policies (playing, no error, one
+  media request). Firefox and Zen behave identically. Consequence: the UI must be built
+  from the isolated world, never from a MAIN-world or page script.
+- **Keyboard (E8).** Buttons in the PiP window are reachable with Tab and Shift+Tab. With the
+  moved `<video>` still carrying `controls`, Tab first visits its 6 native control stops,
+  then the tool buttons in order; focus is not trapped. Space and Enter activate the
+  focused button, and a `keydown` listener on the PiP document receives trusted keys (`k`
+  toggled playback, `ArrowRight` seeked). Escape does not close the window.
 - **Lifecycle.** PiP survives tab switches and minimising the opener window. It closes
   when the opener navigates or is closed (spec behaviour), and `pagehide` fires in time to
   restore the element.
@@ -116,15 +140,22 @@ yet**; see [Manual checks](#manual-checks-pending).
   automation, and nothing proves that a toolbar click gives the page user activation. The
   keyboard `commands` path did pass with `isActive: true` on Firefox, but via a synthesised
   key.
-- **Zen `commands`.** The handler ran, but no tab was resolved (see the matrix). Unresolved.
+- **Zen `commands`.** The handler ran, but no tab was resolved. A follow-up probe showed the
+  cause is wider than `commands`: in the lab's Zen launch mode (own process, fresh profile,
+  geckodriver `--connect-existing`, extension installed as temporary), the background sees
+  **no tabs at all** (`tabs.query({})` returned `[]`, messages arrived without
+  `sender.tab`), while Firefox reported the tab normally. This is probably an artefact of
+  that launch mode, but it is not proven; M8 checks it in a normal Zen profile.
+- **Focus when the window opens or closes (E8).** In the isolated sway session the new PiP
+  window did **not** take keyboard focus (`pipHasFocus: false`, the opener kept it), and no
+  focus returned to the opener within 1 s of closing. Both are compositor decisions;
+  Hyprland may differ (M1, M7). The UI must therefore not assume focus on open.
 - **Cross-origin iframes.** Embedded players in cross-origin frames cannot be moved, and
   their content script cannot open Document PiP (top-level only). Needs a frame-aware design
   (V1C-121) or a native-PiP fallback.
-- **CSP not tested.** The PiP document starts as `about:blank` and inherits the opener's
-  policy container, so a strict page CSP (`style-src`/`script-src`) may also apply inside
-  the PiP window. This could block the inline styles or UI the extension injects there. The
-  fixture page has no CSP and YouTube was not checked for this. Listed in the V1C-120 scope;
-  open.
+- **CSP on real sites.** E7 used a local page with synthetic policies. YouTube's own
+  policy was not inspected, and nonce/hash-based policies were not tried; the isolated-world
+  exemption should cover them, but this is not measured.
 - **Not tested at all.** DRM/EME-protected media (out of scope to bypass; expected to keep
   working only if the browser allows the element to move, otherwise fallback), Shadow-DOM
   players (`<video>` inside a shadow root is still a movable element, but not exercised),
@@ -179,7 +210,7 @@ in a **separate temporary profile** (`firefox -no-remote -profile $(mktemp -d)`;
 | M5 | Drag PiP edges and corners | Layout goes Docked → Overlay → Minimal, no overflow, playback continues | NOT TESTED | NOT TESTED |
 | M6 | Minimise/hide the browser window, switch tabs, play for 1 min | PiP keeps playing; audio continuous | NOT TESTED | NOT TESTED |
 | M7 | Close PiP with its close button and with the browser's "return" button | Video back in page, same position, still playing | NOT TESTED | NOT TESTED |
-| M8 | Open the toolbar action button, then press `Alt+Shift+9` | Record whether either opens PiP (activation from browser UI) | NOT TESTED | NOT TESTED |
+| M8 | Open the toolbar action button, then press `Alt+Shift+9`. On Zen, also open `about:debugging` → the probe → *Inspect* and run `await browser.tabs.query({})` in its console. | Record whether either opens PiP (activation from browser UI); on Zen, whether tabs are listed | NOT TESTED | NOT TESTED |
 | M9 | YouTube: move the player video, interact with YouTube's page controls, return | Record any UI breakage | NOT TESTED | NOT TESTED |
 
 ## Decision
@@ -193,6 +224,9 @@ and Zen built on it, with these conditions:
    Toolbar/command entry points need M8 before being promised.
 3. Cross-origin iframe players and DRM media are compatibility limits that need a defined
    fallback (native video PiP or "not supported").
+4. The PiP UI is built from the isolated content script, because the PiP document inherits
+   the page's CSP and only isolated-world injections were exempt (E7). The UI must not
+   assume it has keyboard focus when the window opens (E8).
 
 Details, alternatives and consequences: [ADR 0001](../../adr/0001-pip-window-backend.md).
 
@@ -208,7 +242,7 @@ Details, alternatives and consequences: [ADR 0001](../../adr/0001-pip-window-bac
 - Jira V1C-120 was read after the run (2026-11-08). Its acceptance criteria are covered: a
   dated matrix, the floating vs. always-on-top difference, and an ADR with go/no-go. Its
   extra gate items remain open: always-on-top verified across applications, and manual
-  resize. Its scope lists **CSP**, which this run did not test (added above and to the ADR
-  open questions). Keyboard focus inside the PiP window was not tested either.
+  resize. Its scope lists **CSP** and focus, which the first run missed; both were then
+  tested (E7, E8, 2026-11-08, same builds) and are reported above.
 - The repository docs say the backend is chosen "only after V1C-120". This report proposes it
   (ADR 0001, status *Proposed*). Nothing in the repository conflicts with the findings.

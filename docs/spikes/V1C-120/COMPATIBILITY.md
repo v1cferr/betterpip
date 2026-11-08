@@ -42,9 +42,11 @@ platform correctly refuses something it should refuse.
 
 ¹ The shortcut key was synthesised through Marionette's chrome context; it reached the
 extension `commands` handler, but a physical keypress has not been tested.
-² Zen passed no `tab` to `commands.onCommand`, and `tabs.query({active: true})` returned no
-tab from the background. May be a Zen quirk or an artefact of attaching geckodriver with
-`--connect-existing`; **unresolved**.
+² Zen passed no `tab` to `commands.onCommand`. A follow-up probe showed the background saw
+no tabs at all in this launch mode: `tabs.query({})` returned `[]`, and `runtime` messages
+from the content script arrived without `sender.tab`. Firefox, launched by geckodriver,
+reported the tab in both cases. Probably an artefact of launching Zen ourselves and attaching
+with `--connect-existing`; **unresolved** until the manual check M8 in a normal Zen profile.
 
 ### HTML window, video and layout (E2–E4)
 
@@ -63,6 +65,44 @@ tab from the background. May be a Zen quirk or an artefact of attaching geckodri
 | E4 Resize by compositor, tiled: 900 → Docked, 480 → Overlay, 280 → Minimal | n/a | PASS | PASS |
 | E4 Resize by compositor, floating 240×135 … 960×420: fallback, no document overflow, 16:9 picture kept | n/a | PASS | PASS |
 | E4 Panel scrolls internally | PASS | PASS | PASS |
+
+### Page Content-Security-Policy (E7)
+
+The page is served with the policy as an HTTP header. *strict* = `default-src 'none';
+script-src 'self'; style-src 'self'; img-src 'self'; media-src 'self'; connect-src 'self';
+base-uri 'none'; form-action 'none'`. *TT* = *strict* + `require-trusted-types-for 'script'`.
+Each cell is "applied" judged from the PiP document (computed style, DOM result or image
+load), for FX-W and ZEN-W; both browsers gave identical results.
+
+| Injection into the PiP document | Page world, no CSP | Page world, strict | Page world, TT | Isolated content script, strict | Isolated content script, TT |
+| --- | --- | --- | --- | --- | --- |
+| `<style>` element | applied | **blocked** (`style-src-elem`) | **blocked** | applied | applied |
+| `style` attribute (`setAttribute`) | applied | **blocked** (`style-src-attr`) | **blocked** | applied | applied |
+| CSSOM (`el.style.color = …`) | applied | applied | applied | applied | applied |
+| `<link rel=stylesheet>` (page: same origin; extension: web-accessible `moz-extension://`) | applied | applied | applied | applied | applied |
+| Constructable stylesheet (`adoptedStyleSheets`) | applied | applied | applied | applied | applied |
+| `innerHTML` with a string | applied | applied | **throws** (Trusted Types) | applied | applied |
+| `data:` image | loads | **blocked** (`img-src`) | **blocked** | loads | loads |
+| Inline `<script>` | runs | blocked | blocked (throws) | blocked | blocked |
+| Move the page's `<video>` into PiP, keep playing | n/a | n/a | n/a | PASS (1 media request) | PASS |
+
+The PiP window therefore inherits the opener's policy, and isolated-world DOM changes are
+exempt from it (except scripts). Real-site policies (YouTube) and nonce/hash policies: NOT
+TESTED.
+
+### Keyboard focus and input (E8)
+
+| Scenario | FX-W | ZEN-W |
+| --- | --- | --- |
+| PiP window takes keyboard focus when it opens | **No** (opener keeps focus under sway; compositor-dependent) | **No** (same) |
+| Tab moves through the PiP UI; no trap (6 native `<video controls>` stops, then the tool buttons in order) | PASS | PASS |
+| Shift+Tab moves backwards | PASS | PASS |
+| Space on the focused play button toggles playback | PASS | PASS |
+| Enter on the focused +10 s button seeks | PASS | PASS |
+| `keydown` shortcuts on the PiP document (`k`, `ArrowRight`), `isTrusted: true` | PASS | PASS |
+| Escape closes the PiP window | No (stays open) | No (stays open) |
+| Focus returns to the opener within 1 s of closing | **No** under sway (compositor-dependent) | **No** |
+| Same on Hyprland | NOT TESTED (M1, M7) | NOT TESTED |
 
 ### Lifecycle (E5, automated part)
 

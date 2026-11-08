@@ -12,8 +12,9 @@ code**: no WXT, no Svelte, no build step. Findings live in
 | `fixtures/make-fixture.sh` | Generates `clock.webm`: synthetic 120 s VP9/Opus, burned-in clock, 440 Hz bed + 1 kHz blip per second. Not versioned. |
 | `site/index.html`, `site/lab.js` | Page-world probe: feature detection (E1), HTML-only PiP (E2), moving the original `<video>` (E3), layout states (E4), native PiP (B). |
 | `site/pip.css` | Minimal / Overlay / Docked probe with a container-query fallback. Not the product design. |
+| `site/csp.html`, `site/csp.js`, `site/csp-*.css` | CSP probe (E7). The server sends the page with the policy named by `?csp=` (`none`, `strict`, `tt`). |
 | `site/iframe.html`, `site/frame.html` | Cross-origin iframe probe (127.0.0.1 page, `localhost` frame). |
-| `extension/` | Temporary MV3 probe: isolated, `wrappedJSObject`, MAIN-world, keydown, background, command → `scripting.executeScript`, extension page and `windows.create` contexts. |
+| `extension/` | Temporary MV3 probe: isolated, `wrappedJSObject`, MAIN-world, keydown, background, command → `scripting.executeScript`, extension page and `windows.create` contexts. Also the content-script CSP probe (`cs-csp.js`, E7) and a tab-visibility probe. |
 | `harness/server.py` | Static server on 127.0.0.1 that logs every media request (evidence for "no second stream"). |
 | `harness/run_lab.py` | Selenium + geckodriver driver; writes one JSON file per browser run. |
 | `harness/isolated-wayland.sh` | Runs a command in an invisible headless sway session with a temporary null audio sink. |
@@ -55,7 +56,8 @@ gd=$(nix build --no-link --print-out-paths nixpkgs#geckodriver)/bin/geckodriver
 "$py" harness/run_lab.py --geckodriver "$gd" --browser … --label … --headless
 ```
 
-`--only E3,E4` runs a subset; `--youtube URL` adds E6. `--host-compositor` observes the host
+Scenarios: E1 contexts, E2 HTML window, E3 video move and audio, E4 layout, E5 lifecycle and
+compositor, E6 YouTube, E7 page CSP, E8 keyboard focus. `--only E3,E4` runs a subset; `--youtube URL` adds E6. `--host-compositor` observes the host
 Hyprland session instead and **opens real windows on the desktop**; use it only on purpose.
 
 ## What automation cannot prove
