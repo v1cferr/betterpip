@@ -25,6 +25,7 @@
     "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
     "vitest": "5.1.0",
+    "web-ext": "10.8.0",
     "wxt": "0.21.5"
   }
 }
