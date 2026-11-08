@@ -5,6 +5,17 @@ UI in the shadcn-svelte style, and Minimal / Overlay / Docked layouts. It is a *
 trying the UX on real sites; scope and limits are listed below. Architecture:
 [ADR 0003](adr/0003-core-architecture.md).
 
+## Try it: one command
+
+```sh
+tools/run.sh            # Zen if installed, otherwise Firefox; `tools/run.sh firefox` forces Firefox
+```
+
+It fetches Node and pnpm from nixpkgs if they are missing, installs the locked dependencies,
+and opens the browser on YouTube with a throw-away profile and BetterPiP loaded. Your own
+profile is not touched. Edits under `src/` rebuild and reload by themselves. Close the
+browser or press Ctrl+C to stop. Then press **Alt+Shift+P** on a video.
+
 ## Build
 
 Requires Node 24 and pnpm. On NixOS without them installed, use them from nixpkgs:
@@ -19,7 +30,7 @@ pnpm test               # core unit tests (Vitest)
 pnpm check              # svelte-check / TypeScript
 ```
 
-## Try it in your browser (Firefox ≥ 154 or Zen)
+## Load it into your own browser profile instead (Firefox ≥ 154 or Zen)
 
 1. Open `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on…** → pick
    `.output/firefox-mv3/manifest.json`. It stays until the browser restarts. `pnpm build`
