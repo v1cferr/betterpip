@@ -4,20 +4,73 @@
   "version": "0.0.1",
   "description": "Experimental probe for Document Picture-in-Picture extension contexts. Not product code.",
   "browser_specific_settings": {
-    "gecko": { "id": "m0-probe@betterpip.invalid", "strict_min_version": "128.0" }
+    "gecko": {
+      "id": "m0-probe@betterpip.invalid",
+      "strict_min_version": "128.0"
+    }
   },
-  "permissions": ["scripting", "activeTab", "storage"],
-  "host_permissions": ["http://127.0.0.1/*"],
-  "background": { "scripts": ["background.js"] },
-  "action": { "default_title": "BetterPiP M0 probe" },
+  "permissions": [
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_title": "BetterPiP M0 probe"
+  },
   "commands": {
     "open-pip": {
-      "suggested_key": { "default": "Alt+Shift+9" },
+      "suggested_key": {
+        "default": "Alt+Shift+9"
+      },
       "description": "Probe: open Document PiP from a keyboard command"
     }
   },
   "content_scripts": [
-    { "matches": ["http://127.0.0.1/*"], "js": ["cs-isolated.js"], "run_at": "document_idle" },
-    { "matches": ["http://127.0.0.1/*"], "js": ["cs-main.js"], "run_at": "document_idle", "world": "MAIN" }
+    {
+      "matches": [
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "cs-isolated.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "cs-main.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "http://127.0.0.1/site/csp.html*"
+      ],
+      "js": [
+        "cs-csp.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ext-probe.css"
+      ],
+      "matches": [
+        "http://127.0.0.1/*"
+      ]
+    }
   ]
 }

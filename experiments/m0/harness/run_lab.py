@@ -506,6 +506,25 @@ class Lab:
         ev = [e["type"] for e in self.m0("events") if e["type"].startswith(("media:", "pip:", "e3:"))]
         self.record("E3-audio-continuity", audioStreamsOnSink=streams, media=self.m0("snapshot()"), events=ev)
 
+    def e7_csp(self, policy):
+        """E7: page-world and content-script injections into a PiP opened from a page whose
+        Content-Security-Policy is `policy` (served by server.py), plus a video move."""
+        def fn():
+            self.load(f"/site/csp.html?csp={policy}")
+            out = {"policy": policy, "playable": None}
+            self.click("play")
+            time.sleep(1.5)
+            out["playable"] = self.js("const v = document.getElementById('v'); return {t: v.currentTime, paused: v.paused, error: v.error && v.error.code}")
+            self.click("csp-page")
+            out["pageWorld"] = self.wait(lambda: self.js("return window.__csp.page"), timeout=8)
+            self.click("close-pip")
+            self.wait(lambda: not self.pip_handles())
+            self.click("csp-cs")
+            out["contentScript"] = self.wait(lambda: self.attrs().get("csp-cs"), timeout=10)
+            out["openerViolations"] = self.js("return window.__csp.pageViolations")
+            self.record(f"E7-csp-{policy}", **out)
+        self.run(f"E7-csp-{policy}", fn)
+
     def e4_layout(self):
         pip, _, _ = self.open_video()
         out = {"modes": [], "resizes": []}
@@ -726,6 +745,8 @@ class Lab:
         self.run("E3-video-move", self.e3_video)
         self.run("E3-audio-continuity", self.e3_audio)
         self.run("E4-layout", self.e4_layout)
+        for policy in ("none", "strict", "tt"):
+            self.e7_csp(policy)
         self.run("E5-lifecycle-automated", self.e5_lifecycle)
         if self.compositor_enabled():
             self.run("E5-compositor", self.e5_compositor)

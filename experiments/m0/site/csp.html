@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BetterPiP M0 CSP probe (V1C-120)</title>
+  <!-- Served with a Content-Security-Policy header chosen by ?csp= (see harness/server.py).
+       No inline script or style here, so the page itself works under the strict policy. -->
+  <link rel="stylesheet" href="csp-page.css">
+</head>
+<body>
+  <h1>CSP probe</h1>
+  <video id="v" src="/fixtures/clock.webm" preload="auto" controls></video>
+  <p>
+    <button id="play">Play</button>
+    <button id="csp-page">Page world: open PiP and inject</button>
+    <button id="csp-cs">Content script: open PiP, inject, move video</button>
+    <button id="close-pip">Close PiP</button>
+  </p>
+  <script src="csp.js"></script>
+</body>
+</html>

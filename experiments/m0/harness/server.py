@@ -13,6 +13,18 @@ import sys
 import time
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlsplit
+
+# Page policies for the CSP probe (E7). "strict" is a typical locked-down site: no inline
+# script or style, same-origin resources only. "tt" adds Trusted Types enforcement, which
+# turns string-to-HTML sinks such as innerHTML into errors.
+_STRICT = ("default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; "
+           "media-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'")
+CSP_POLICIES = {
+    "none": None,
+    "strict": _STRICT,
+    "tt": _STRICT + "; require-trusted-types-for 'script'",
+}
 
 
 class LoggingHandler(SimpleHTTPRequestHandler):
@@ -21,6 +33,11 @@ class LoggingHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
         # No caching, so every fetch of the fixture is visible in the log.
         self.send_header("Cache-Control", "no-store")
+        # E7: /site/csp.html?csp=<name> is served with that policy as a response header.
+        if self.path.startswith("/site/csp.html"):
+            name = parse_qs(urlsplit(self.path).query).get("csp", ["none"])[0]
+            if CSP_POLICIES.get(name):
+                self.send_header("Content-Security-Policy", CSP_POLICIES[name])
         super().end_headers()
 
     def log_message(self, fmt, *args):  # keep stderr quiet; the JSONL log is the record
