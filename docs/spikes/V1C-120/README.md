@@ -4,7 +4,7 @@
 | --- | --- |
 | Jira | [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120) (parent [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119)) |
 | Date | 2026-11-08 |
-| Status | **CONDITIONAL GO**, pending the manual Hyprland checks below. V1C-120 is **not** done until those run. |
+| Status | **GO**, with the Wayland stacking constraint below. Manual Hyprland checks M1–M8 ran on 2026-11-08 for Firefox and Zen. |
 | Lab | [`experiments/m0/`](../../../experiments/m0/README.md) |
 | Matrix | [COMPATIBILITY.md](COMPATIBILITY.md) |
 | Decision | [ADR 0001 — PiP window backend](../../adr/0001-pip-window-backend.md) |
@@ -23,8 +23,10 @@ window is an ordinary `xdg_shell` toplevel. The page cannot make it float or sta
 applications; the compositor decides. That is Wayland's design ([Mozilla bug
 1621261](https://bugzilla.mozilla.org/show_bug.cgi?id=1621261)), not something an extension
 can fix. On Hyprland it most likely needs a window rule (float + pin) that the user owns.
-Whether that rule gives the required behaviour on the target desktop has **not been tested
-yet**; see [Manual checks](#manual-checks-pending).
+On Hyprland 0.57.1 the PiP window opened **floating** without any rule, and a runtime
+*pin* kept it visible over other applications and across workspaces, for Firefox and Zen
+(see [Manual checks](#manual-checks-hyprland)). The extension itself cannot set *pin*; that
+shapes a new requirement for a user-facing pin control (see [Pin control](#pin-control-new-requirement)).
 
 ## Questions and answers
 
@@ -32,12 +34,12 @@ yet**; see [Manual checks](#manual-checks-pending).
 | --- | --- | --- | --- |
 | 1 | Do the installed Firefox/Zen support Document PiP? | Yes: Firefox 159.0 and Zen 1.24b (Gecko 159) expose it by default. It shipped on desktop in Firefox 151 ([bug 2006594](https://bugzilla.mozilla.org/show_bug.cgi?id=2006594)); no flag was changed. | Automated (E1) |
 | 2 | Can a WebExtension use it in the right context? | Yes, from a user gesture in the page: isolated content script (direct or `wrappedJSObject`), MAIN-world script, page `keydown`. Not from background scripts (no activation) or cross-origin iframes (top-level only). Extension pages can open a PiP, but it belongs to the extension origin and cannot hold the page's video. | Automated (E1) |
-| 3 | Always-visible window with interactive HTML? | Interactive HTML: yes (trusted clicks). Always visible: **depends on the compositor**. Not established on Hyprland. | Automated (E2, E5); Manual pending |
+| 3 | Always-visible window with interactive HTML? | Interactive HTML: yes (trusted clicks). Always visible: **depends on the compositor**. On Hyprland: floating by default, and visible across applications and workspaces once pinned by the compositor. | Automated (E2, E5); Manual (M1–M4) |
 | 4 | Video and tools in the same window? | Yes. | Automated (E3, E4) |
 | 5 | Original video keeps working without restarting the stream? | Yes: 0 extra media requests, 1 audio stream, 0 audio gaps, no `emptied`/`loadstart`/`abort`; same on YouTube (MSE). | Automated (E3, E6) |
-| 6 | Manually resizable? | The compositor resizes it (tested on isolated sway). Physical drag on Hyprland: not tested. | Automated; Manual pending |
+| 6 | Manually resizable? | Yes: compositor resize on isolated sway, and physical edge/corner drag on Hyprland with the layout adapting. | Automated; Manual (M5) |
 | 7 | Content adapts to the size? | Yes: container queries switch Docked → Overlay → Minimal, keep 16:9 and never overflow the document. | Automated (E4, E5) |
-| 8 | Always on top across applications in the real environment? | **Not tested.** Expected to need a compositor rule. | Inferred + Manual pending |
+| 8 | Always on top across applications in the real environment? | **Yes on Hyprland with *pin*** (applied at runtime by the compositor, not by the browser). Without pin, the window floats above tiled windows of its workspace. | Manual (M2–M4) |
 | 9 | Firefox vs Zen differences? | Same behaviour in every page/content-script scenario. Zen titles the PiP window `… — Zen Browser` (app_id `zen-beta`) versus `… — Mozilla Firefox` (app_id `firefox`). In the lab's Zen launch mode the extension could not see any tab (`tabs.query({})` empty, no `sender.tab`), so the `commands` path failed there; this needs a check in a normal Zen profile (M8). Zen needed `zen.welcome-screen.seen` in a fresh profile. | Automated |
 | 10 | Public, sustainable alternatives? | Native video PiP (video only, no HTML) and an ordinary popup (no always-on-top flag, cannot hold the page's video). Neither meets the single-window requirement. No public Zen-specific mechanism was found. | Automated + documentation |
 
@@ -192,7 +194,7 @@ order-of-magnitude, single-sample values.
   GPU composition, idle wakeups, long-run leaks. These need a repeatable method on
   Hyprland, part of V1C-126.
 
-## Manual checks (pending)
+## Manual checks (Hyprland)
 
 These cannot be automated without opening windows on the user's desktop. One command runs
 them all, Firefox first, then Zen, each in a throw-away profile with the probe extension:
@@ -209,22 +211,43 @@ pins only the PiP window at runtime with Hyprland 0.57's Lua dispatchers
 `hl.dsp.window.pin`), then reads back `floating`/`pinned`; nothing is written to the config.
 Older `hyprctl dispatch pin title:…` syntax no longer parses on 0.57.
 
-| ID | Procedure | Expected | FX | Zen |
+| ID | Procedure | Expected | FX (both browsers unless noted) | Zen |
 | --- | --- | --- | --- | --- |
-| M1 | Click *E3/E4: move video + tools*. Note whether Hyprland floats the PiP window. | Window opens; record float/tile | NOT TESTED | NOT TESTED |
-| M2 | Without any rule, focus another application over the PiP | Record whether PiP stays visible | NOT TESTED | NOT TESTED |
-| M3 | Float and pin **only that window, at runtime** (done by the script, see above). Nothing is written to the config. A persistent rule matching title `^BetterPiP` is the user's choice. | PiP floats and is pinned | NOT TESTED | NOT TESTED |
-| M4 | With M3: switch workspace, focus other apps, fullscreen another app | PiP stays visible above other windows (record fullscreen behaviour) | NOT TESTED | NOT TESTED |
-| M5 | Drag PiP edges and corners | Layout goes Docked → Overlay → Minimal, no overflow, playback continues | NOT TESTED | NOT TESTED |
-| M6 | Minimise/hide the browser window, switch tabs, play for 1 min | PiP keeps playing; audio continuous | NOT TESTED | NOT TESTED |
-| M7 | Close PiP with its close button and with the browser's "return" button | Video back in page, same position, still playing | NOT TESTED | NOT TESTED |
-| M8 | Open the toolbar action button, then press `Alt+Shift+9`. On Zen, also open `about:debugging` → the probe → *Inspect* and run `await browser.tabs.query({})` in its console. | Record whether either opens PiP (activation from browser UI); on Zen, whether tabs are listed | NOT TESTED | NOT TESTED |
+| M1 | Click *E3/E4: move video + tools*. Note whether Hyprland floats the PiP window. | Window opens; record float/tile | PASS: opened **floating** without any rule (both); did not take keyboard focus (`focusHistoryID` 2, `pipHasFocus: false`); Hyprland did not honour the requested 640×400 (window 1280×1040) | same |
+| M2 | Without any rule, focus another application over the PiP | Record whether PiP stays visible | PASS (floating PiP stayed visible over other apps, same workspace) | same |
+| M3 | Float and pin **only that window, at runtime** (done by the script, see above). Nothing is written to the config. A persistent rule matching title `^BetterPiP` is the user's choice. | PiP floats and is pinned | PASS: `floating: true, pinned: true` read back after the runtime dispatch | same |
+| M4 | With M3: switch workspace, focus other apps, fullscreen another app | PiP stays visible above other windows (record fullscreen behaviour) | PASS by tester. Firefox: at capture time the window read back as tiled and unpinned, so the state had changed during the check; Zen stayed floating + pinned. Fullscreen behaviour was not described | see FX |
+| M5 | Drag PiP edges and corners | Layout goes Docked → Overlay → Minimal, no overflow, playback continues | PASS by tester; the script captured no `e4:container` events during the drag, so the layout evidence is the tester's report plus the automated sway resize (E4/E5) | see FX |
+| M6 | Minimise/hide the browser window, switch tabs, play for 1 min | PiP keeps playing; audio continuous | PASS by tester; 0 extra media requests. The automatic sample is too short to confirm 1 min of playback (Firefox was paused at capture) | see FX |
+| M7 | Close PiP with its close button and with the browser's "return" button | Video back in page, same position, still playing | PASS by tester; Firefox recorded the return (`currentTime` identical at close and after return, still playing). Zen's close was not captured by the script | see FX |
+| M8 | Open the toolbar action button, then press `Alt+Shift+9`. On Zen, also open `about:debugging` → the probe → *Inspect* and run `await browser.tabs.query({})` in its console. | Record whether either opens PiP (activation from browser UI); on Zen, whether tabs are listed | PASS by tester, but the entry point that opened PiP is unknown: Firefox's capture failed, and Zen recorded no action/command attempt. In the script's Zen launch the background now saw 1 tab but no `sender.tab`. Not relied on | see FX |
 | M9 | YouTube: move the player video, interact with YouTube's page controls, return | Record any UI breakage | NOT TESTED | NOT TESTED |
+
+Raw answers and automatic observations: `experiments/m0/results/manual-hyprland-*.json`.
+*PASS by tester* means the human reported it; where the script's own capture does not
+corroborate it, the row says so.
+
+## Pin control (new requirement)
+
+After M3/M4 the tester asked for an explicit, visible control in the PiP UI so the **user**
+decides two separate things: whether the window stays **above all other windows**, and
+whether it **follows workspace switches**. Findings that bound this:
+
+- On Hyprland, *pin* means both at once (floating, shown on every workspace). Staying above
+  windows on the current workspace only is what a plain floating window already does there;
+  whether it also stays above other floating or fullscreen windows was not measured.
+- A WebExtension cannot change compositor state. Document PiP has no stacking API, and
+  `windows.create`/`windows.update` have no always-on-top flag. A pin button therefore needs a
+  helper outside the browser: a **native messaging host** (`runtime.connectNative`, a public
+  WebExtensions API) that calls the compositor (`hyprctl` on Hyprland). Without the helper,
+  BetterPiP can only document a window rule matching its stable title.
+- This is not tested. It adds an installable native component per platform and compositor,
+  and it touches the "minimal permissions" principle. It needs its own decision and task.
 
 ## Decision
 
-**CONDITIONAL GO** for Document PiP as BetterPiP's primary window backend on Firefox ≥ 154
-and Zen built on it, with these conditions:
+**GO** for Document PiP as BetterPiP's primary window backend on Firefox ≥ 154 and Zen
+built on it, with these conditions:
 
 1. Always-on-top on Wayland is the **compositor's** responsibility. BetterPiP must document
    it and must not claim it. M2–M4 must confirm what users get on Hyprland.
@@ -249,8 +272,8 @@ Details, alternatives and consequences: [ADR 0001](../../adr/0001-pip-window-bac
 
 - Jira V1C-120 was read after the run (2026-11-08). Its acceptance criteria are covered: a
   dated matrix, the floating vs. always-on-top difference, and an ADR with go/no-go. Its
-  extra gate items remain open: always-on-top verified across applications, and manual
-  resize. Its scope lists **CSP** and focus, which the first run missed; both were then
+  extra gate items (always-on-top across applications, manual resize) were covered by the
+  manual Hyprland checks. Its scope lists **CSP** and focus, which the first run missed; both were then
   tested (E7, E8, 2026-11-08, same builds) and are reported above.
 - The repository docs say the backend is chosen "only after V1C-120". This report proposes it
-  (ADR 0001, status *Proposed*). Nothing in the repository conflicts with the findings.
+  (ADR 0001, *Accepted* on 2026-11-08). Nothing in the repository conflicts with the findings.

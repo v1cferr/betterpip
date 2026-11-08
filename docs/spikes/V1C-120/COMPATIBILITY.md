@@ -11,7 +11,7 @@ in the [spike report](README.md). **Nothing here is a support claim beyond these
 | FX-H | Firefox 159.0 (nixpkgs) | BuildID 20261022150525 | NixOS 26.05, Linux 7.3.1 | `-headless`, no compositor | Automated |
 | FX-W | Firefox 159.0 (nixpkgs) | BuildID 20261022150525 | NixOS 26.05, Linux 7.3.1 | Isolated headless **sway 1.12** (wlroots, Wayland, pixman) | Automated |
 | ZEN-W | Zen 1.24b (Gecko 159.0) | BuildID 20261029123729 | NixOS 26.05, Linux 7.3.1 | Isolated headless **sway 1.12** | Automated |
-| HYPR | Firefox 159 / Zen 1.24b | as above | NixOS 26.05, **Hyprland 0.57.1** (Wayland) | Host desktop | **Manual — NOT TESTED yet** |
+| HYPR | Firefox 159 / Zen 1.24b | as above | NixOS 26.05, **Hyprland 0.57.1** (Wayland) | Host desktop | Manual (tester) + script observations, 2026-11-08 |
 
 Not tested at all: Windows, macOS, X11 window managers, KDE/GNOME, Firefox ESR/Beta/Nightly,
 Firefox for Android, other Zen versions. Firefox 151–153 lack the isolated-world fix
@@ -35,7 +35,7 @@ platform correctly refuses something it should refuse.
 | Isolated content script, page `keydown` shortcut | PASS | PASS | PASS |
 | Background script (no activation) → `NotAllowedError` | Expected FAIL | Expected FAIL | Expected FAIL |
 | Extension `commands` shortcut → `scripting.executeScript` MAIN world¹ | not run | PASS (`isActive: true`) | **FAIL** — no tab resolved² |
-| Toolbar button → `scripting.executeScript` | NOT TESTED | NOT TESTED | NOT TESTED |
+| Toolbar button → `scripting.executeScript` | NOT TESTED | NOT TESTED | NOT TESTED (M8 reported a PiP opening, entry point not identified) |
 | Extension page (`moz-extension://`) opens its own PiP | not run | PASS (extension origin) | PASS (extension origin) |
 | Cross-origin iframe → `NotAllowedError: … only available in top-level contexts` | Expected FAIL | Expected FAIL | Expected FAIL |
 | Top page reading a cross-origin frame's `<video>` → `SecurityError` | Expected FAIL | Expected FAIL | Expected FAIL |
@@ -46,7 +46,8 @@ extension `commands` handler, but a physical keypress has not been tested.
 no tabs at all in this launch mode: `tabs.query({})` returned `[]`, and `runtime` messages
 from the content script arrived without `sender.tab`. Firefox, launched by geckodriver,
 reported the tab in both cases. Probably an artefact of launching Zen ourselves and attaching
-with `--connect-existing`; **unresolved** until the manual check M8 in a normal Zen profile.
+with `--connect-existing`. In the manual run (same launch mode, host desktop) the background saw
+1 tab but still no `sender.tab`. **Unresolved**; checking in a normal Zen profile remains open.
 
 ### HTML window, video and layout (E2–E4)
 
@@ -102,7 +103,7 @@ TESTED.
 | `keydown` shortcuts on the PiP document (`k`, `ArrowRight`), `isTrusted: true` | PASS | PASS |
 | Escape closes the PiP window | No (stays open) | No (stays open) |
 | Focus returns to the opener within 1 s of closing | **No** under sway (compositor-dependent) | **No** |
-| Same on Hyprland | NOT TESTED (M1, M7) | NOT TESTED |
+| Same on Hyprland: focus on open | **No** (M1) | **No** (M1) |
 
 ### Lifecycle (E5, automated part)
 
@@ -117,13 +118,13 @@ TESTED.
 
 | Scenario | FX-W | ZEN-W | HYPR |
 | --- | --- | --- | --- |
-| Document PiP toplevel role | plain `xdg_shell` toplevel, **tiled**, not sticky | same | NOT TESTED |
+| Document PiP toplevel role | plain `xdg_shell` toplevel, **tiled**, not sticky | same | **floating** by default (no rule), not pinned; requested size not honoured |
 | Native video PiP toplevel ("Picture-in-Picture") | plain toplevel, **tiled** | same | NOT TESTED |
 | `windows.create({type: "popup"})` | plain toplevel, tiled; `alwaysOnTop: false` | same | NOT TESTED |
-| Window title usable for a compositor rule | `<document title> — Mozilla Firefox`, app_id `firefox` | `<document title> — Zen Browser`, app_id `zen-beta` | NOT TESTED |
-| Float + sticky applied by the compositor (rule equivalent) | PASS | PASS | NOT TESTED |
-| **Always on top across other applications** | NOT TESTED (needs host desktop) | NOT TESTED | **NOT TESTED — manual** |
-| Manual edge/corner drag | NOT TESTED | NOT TESTED | **NOT TESTED — manual** |
+| Window title usable for a compositor rule | `<document title> — Mozilla Firefox`, app_id `firefox` | `<document title> — Zen Browser`, app_id `zen-beta` | same titles and classes (PASS) |
+| Float + sticky applied by the compositor (rule equivalent) | PASS | PASS | PASS (runtime float + pin, read back) |
+| **Always on top across other applications** | NOT TESTED (needs host desktop) | NOT TESTED | **PASS with pin** (tester, Firefox and Zen); fullscreen not described |
+| Manual edge/corner drag, layout adapts | NOT TESTED | NOT TESTED | PASS (tester) |
 
 ### Real player (E6)
 
