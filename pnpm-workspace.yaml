@@ -1,0 +1,5 @@
+# Native build scripts allowed to run on install (binaries for the toolchain).
+allowBuilds:
+  esbuild: true
+  "@tailwindcss/oxide": true
+  spawn-sync: false
