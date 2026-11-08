@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>frame</title></head>
+<body>
+  <video src="/fixtures/clock.webm" width="240" muted></video>
+  <button id="open">Open Document PiP from iframe</button>
+  <script>
+    document.getElementById("open").addEventListener("click", async () => {
+      const report = (v) => parent.postMessage(v, "*");
+      if (!("documentPictureInPicture" in window)) return report({ exposed: false });
+      try {
+        await documentPictureInPicture.requestWindow({ width: 300, height: 200 });
+        report({ exposed: true, ok: true });
+      } catch (e) {
+        report({ exposed: true, ok: false, name: e.name, message: e.message });
+      }
+    });
+  </script>
+</body>
+</html>

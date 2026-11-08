@@ -1,0 +1,37 @@
+/* Minimal layout probe for E4 (V1C-120). Not the product design: it only has to show
+   that one PiP document can switch Minimal / Overlay / Docked inside a fixed outer size
+   and fall back from Docked when the container is narrow. */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; color: #f4f4f5; font: 13px/1.35 system-ui, sans-serif; overflow: hidden; }
+
+.bp-root { container: bp / size; width: 100%; height: 100%; }
+.bp-shell { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; height: 100%; }
+.bp-stage { position: relative; min-width: 0; min-height: 0; background: #000; }
+.bp-stage video { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+.bp-bar { position: absolute; left: 8px; right: 8px; bottom: 8px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.bp-bar button, .bp-panel button { font: inherit; color: inherit; background: rgb(39 39 42 / 0.85); border: 1px solid rgb(255 255 255 / 0.25); border-radius: 6px; padding: 4px 8px; cursor: pointer; }
+.bp-bar button:focus-visible, .bp-panel button:focus-visible { outline: 2px solid #60a5fa; outline-offset: 1px; }
+.bp-status { padding: 2px 6px; border-radius: 6px; background: rgb(0 0 0 / 0.6); font-variant-numeric: tabular-nums; }
+
+.bp-panel { display: none; min-width: 0; min-height: 0; overflow: auto; padding: 8px; }
+.bp-panel ol { margin: 0; padding-left: 20px; }
+
+/* Overlay: translucent panel over the video. Blur is opt-in (data-blur) and scoped to the panel. */
+.bp-shell[data-mode="overlay"] .bp-panel { display: block; position: absolute; top: 8px; right: 8px; bottom: 52px; width: min(280px, 60%); background: rgb(24 24 27 / 0.72); border-radius: 10px; }
+.bp-shell[data-blur="on"] .bp-panel { backdrop-filter: blur(8px); }
+
+/* Docked: video left, tools right, same window. */
+.bp-shell[data-mode="docked"] { grid-template-columns: minmax(0, 1fr) clamp(180px, 34%, 320px); }
+.bp-shell[data-mode="docked"] .bp-panel { display: block; position: static; background: #18181b; border-left: 1px solid #3f3f46; }
+
+/* Fallback: Docked does not fit, so the same panel becomes an overlay. Width only; the
+   outer window is never resized by the page. */
+@container bp (max-width: 559px) {
+  .bp-shell[data-mode="docked"] { grid-template-columns: minmax(0, 1fr); }
+  .bp-shell[data-mode="docked"] .bp-panel { position: absolute; top: 8px; right: 8px; bottom: 52px; width: min(280px, 60%); background: rgb(24 24 27 / 0.72); border-radius: 10px; border-left: 0; }
+}
+/* Very small: drop to Minimal. */
+@container bp (max-width: 299px) or (max-height: 179px) {
+  .bp-shell .bp-panel { display: none !important; }
+}

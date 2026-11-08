@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>BetterPiP M0 iframe probe</title></head>
+<body>
+  <p>Top-level page on 127.0.0.1. The frame below is served from <code>localhost</code>, a different origin.</p>
+  <iframe id="f" title="cross-origin frame" width="480" height="200"></iframe>
+  <script>
+    // Same server, other host name: http://localhost:<port> is cross-origin to http://127.0.0.1:<port>.
+    document.getElementById("f").src = `http://localhost:${location.port}/site/frame.html`;
+    window.__frameResult = null;
+    addEventListener("message", (e) => { window.__frameResult = e.data; });
+    window.__tryVideoAccess = () => {
+      try { return { ok: true, videos: frames[0].document.querySelectorAll("video").length }; }
+      catch (e) { return { ok: false, name: e.name, message: e.message }; }
+    };
+  </script>
+</body>
+</html>

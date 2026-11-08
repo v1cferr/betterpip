@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BetterPiP M0 lab (V1C-120)</title>
+  <style>
+    body { font: 14px/1.4 system-ui, sans-serif; margin: 16px; background: #fafafa; color: #111; }
+    #slot { width: 640px; max-width: 100%; aspect-ratio: 16 / 9; background: #000; }
+    #slot video { width: 100%; height: 100%; object-fit: contain; }
+    fieldset { margin: 12px 0; }
+    button { margin: 2px; }
+    pre { max-height: 240px; overflow: auto; background: #eee; padding: 8px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>BetterPiP M0 lab</h1>
+  <p>Experimental fixture for <a href="https://v1cferr.atlassian.net/browse/V1C-120">V1C-120</a>. Not product code.</p>
+
+  <div id="slot"><video id="v" src="/fixtures/clock.webm" preload="auto" controls playsinline></video></div>
+
+  <fieldset>
+    <legend>Page main world (baseline)</legend>
+    <button id="play">Play</button>
+    <button id="open-html">E2: open PiP with HTML only</button>
+    <button id="open-video">E3/E4: move video + tools into PiP</button>
+    <button id="close-pip">Close PiP</button>
+    <button id="native-pip">B: native video PiP</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Extension contexts (bound by the probe extension, if installed)</legend>
+    <button id="cs-open-isolated">Isolated content script</button>
+    <button id="cs-open-wrapped">Isolated via wrappedJSObject</button>
+    <button id="cs-open-main">MAIN-world content script</button>
+    <button id="cs-move-video">Isolated: move video into PiP</button>
+    <button id="cs-popup-window">C: windows.create popup</button>
+    <button id="cs-ext-page">Open extension page tab</button>
+  </fieldset>
+
+  <pre id="log" aria-live="polite"></pre>
+  <script type="module" src="lab.js"></script>
+</body>
+</html>
