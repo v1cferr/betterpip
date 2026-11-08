@@ -53,14 +53,27 @@ browser.commands.onCommand.addListener(async (name, tab) => {
     ?? (await browser.tabs.query({ active: true, lastFocusedWindow: true }))[0];
   const httpTabs = await browser.tabs.query({ active: true, url: "http://127.0.0.1/*" });
   tab ??= httpTabs[0];
-  await save("command-tab", { passedTab, found: !!tab, activeHttpTabs: httpTabs.length });
+  // Every tab the background can see, to tell "no tab passed" from "tabs not visible".
+  const all = await browser.tabs.query({});
+  const windows = await browser.windows.getAll().catch((e) => [{ error: String(e) }]);
+  await save("command-tab", {
+    passedTab, found: !!tab, activeHttpTabs: httpTabs.length,
+    allTabs: all.map((t) => ({ id: t.id, windowId: t.windowId, active: t.active, hidden: t.hidden, url: t.url?.slice(0, 60) })),
+    windows: windows.map((w) => ({ id: w.id, focused: w.focused, type: w.type })),
+  });
   if (!tab) return save("command-exec-main", { ok: false, message: "no active tab found" });
   viaExecuteScript(tab, "command");
 });
 
 // 3. Option C: an ordinary extension popup window. The WebExtensions windows API has no
 //    always-on-top flag in Firefox, so stacking is up to the window manager.
-browser.runtime.onMessage.addListener(async (msg) => {
+browser.runtime.onMessage.addListener(async (msg, sender) => {
+  // Tab visibility outside commands.onCommand: does this browser report the sender's tab?
+  if (msg?.cmd === "tabs-probe") {
+    const all = await browser.tabs.query({});
+    const active = await browser.tabs.query({ active: true, currentWindow: true });
+    return { senderTab: !!sender.tab, senderTabId: sender.tab?.id, allTabs: all.length, activeCurrentWindow: active.length };
+  }
   if (msg?.cmd === "ext-page") {
     await browser.tabs.create({ url: "ext-page.html" });
     return { ok: true };

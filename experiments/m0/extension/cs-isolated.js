@@ -89,6 +89,8 @@ document.getElementById("cs-ext-page")?.addEventListener("click", () => {
   browser.runtime.sendMessage({ cmd: "ext-page" });
 });
 
+browser.runtime.sendMessage({ cmd: "tabs-probe" }).then((r) => report("tabs-probe", r), (e) => report("tabs-probe", errInfo(e)));
+
 // The background reports its own attempts through storage; mirror them into the DOM.
 async function mirrorBackground() {
   const all = await browser.storage.local.get(null);
