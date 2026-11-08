@@ -39,11 +39,32 @@ Proceed to implementation only after a documented go/no-go decision. Preserve an
 
 See the [MDN API overview](https://developer.mozilla.org/en-US/docs/Web/API/Document_Picture-in-Picture_API) and [specification](https://wicg.github.io/document-picture-in-picture/).
 
-## Proposed architecture
+## Technology decision (2026-11-08)
 
-WXT · TypeScript · React · shadcn/ui · Lucide · pnpm.
+**Initial approved stack (pending M0 browser/API feasibility):**
 
-This is a proposed stack, subject to feasibility, licensing and compatibility review; versions are not pinned yet. Separate the media/session core, capability contracts, window backends, secure messaging, UI and site adapters. Core playback must remain useful without a site adapter.
+| Concern | Choice |
+| --- | --- |
+| Browser-extension framework | WXT |
+| Language / media core / content scripts | TypeScript (framework-free) |
+| Interactive PiP UI only | Svelte 5 |
+| Accessible UI components | shadcn-svelte + Bits UI |
+| Styling | Tailwind CSS v4 |
+| Icons | Lucide for Svelte (`@lucide/svelte`) |
+| Animation | Native Svelte transitions; Motion for Svelte only where justified |
+| Package manager | pnpm |
+| Testing (planned) | Vitest + Playwright; real-browser manual validation |
+| CI (planned, not installed) | GitHub Actions |
+
+**No Next.js, React, SvelteKit, application backend or telemetry is required for the MVP.** shadcn-svelte components should be selectively imported, not treated as a UI bundle to load on every website.
+
+The universal HTML5 detector, media/session state machine, capability contracts, secure messaging, storage interfaces and site adapters are **plain TypeScript**. **Svelte is confined to the interactive PiP UI and loaded on demand**, not in always-running content scripts. Keep UI and playback logic independent so an unavailable capability can be disabled or hidden without breaking the video. Prefer events over polling and limit DOM observers to relevant scopes.
+
+WXT packages the extension; the renderer/window backend is chosen **only after V1C-120 validates** actual Firefox/Zen versions, page-vs-extension execution contexts, user activation, window lifecycle, cross-origin limits and always-on-top behavior. A regular extension popup is *not* guaranteed to stay on top. No claim of universal compatibility is made.
+
+The stack is an **initial architecture decision, not a claim of implemented support**. Pin dependency versions, review licenses and record bundle size, idle CPU/memory, runtime update cost and potential observer/listener leaks during implementation. Revisit the decision with measurable evidence if M0 exposes constraints.
+
+Read [ARCHITECTURE.md](docs/ARCHITECTURE.md) for boundaries, compatibility gates, quality criteria and decision ownership; [CLAUDE.md](CLAUDE.md) provides repository-specific instructions to coding agents.
 
 ## Roadmap and tracking
 
