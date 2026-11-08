@@ -112,6 +112,9 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
 3. How should each adapter handle a site's own UI while its `<video>` is away? (V1C-123)
 4. DRM/EME and Shadow-DOM players: does the move work, or is the fallback required?
 5. Non-Wayland platforms: does Firefox keep Document PiP on top natively?
+6. Does a strict page CSP inherited by the PiP document block the extension's injected UI
+   and styles? Not tested in M0, although it is in the V1C-120 scope. It decides how the
+   renderer is injected (V1C-121).
 
 ## 10. Conditions to advance to M1 (V1C-121)
 

@@ -120,6 +120,11 @@ yet**; see [Manual checks](#manual-checks-pending).
 - **Cross-origin iframes.** Embedded players in cross-origin frames cannot be moved, and
   their content script cannot open Document PiP (top-level only). Needs a frame-aware design
   (V1C-121) or a native-PiP fallback.
+- **CSP not tested.** The PiP document starts as `about:blank` and inherits the opener's
+  policy container, so a strict page CSP (`style-src`/`script-src`) may also apply inside
+  the PiP window. This could block the inline styles or UI the extension injects there. The
+  fixture page has no CSP and YouTube was not checked for this. Listed in the V1C-120 scope;
+  open.
 - **Not tested at all.** DRM/EME-protected media (out of scope to bypass; expected to keep
   working only if the browser allows the element to move, otherwise fallback), Shadow-DOM
   players (`<video>` inside a shadow root is still a movable element, but not exercised),
@@ -200,8 +205,10 @@ Details, alternatives and consequences: [ADR 0001](../../adr/0001-pip-window-bac
 
 ## Jira and documentation divergences
 
-- Jira was **not accessible** during this run (connector not authorized), so V1C-119/V1C-120
-  acceptance criteria, comments and status could not be read or compared. That comparison and
-  the Jira update are pending.
+- Jira V1C-120 was read after the run (2026-11-08). Its acceptance criteria are covered: a
+  dated matrix, the floating vs. always-on-top difference, and an ADR with go/no-go. Its
+  extra gate items remain open: always-on-top verified across applications, and manual
+  resize. Its scope lists **CSP**, which this run did not test (added above and to the ADR
+  open questions). Keyboard focus inside the PiP window was not tested either.
 - The repository docs say the backend is chosen "only after V1C-120". This report proposes it
   (ADR 0001, status *Proposed*). Nothing in the repository conflicts with the findings.
