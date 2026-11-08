@@ -31,7 +31,7 @@ OUT = Path(__file__).resolve().parent / "out"
 
 class PreviewLab(Lab):
     def pack_extension(self):
-        src = ROOT / ".output" / "firefox-mv3"
+        src = ROOT / ".output" / ("firefox-mv3-dev" if self.args.dev else "firefox-mv3")
         out = Path(tempfile.mkdtemp(prefix="bp-preview-")) / "betterpip.xpi"
         with zipfile.ZipFile(out, "w") as z:
             for f in src.rglob("*"):
@@ -153,6 +153,7 @@ def main():
     p.add_argument("--geckodriver", default=shutil.which("geckodriver"))
     p.add_argument("--port", type=int, default=47160)
     p.add_argument("--out", default=str(OUT))
+    p.add_argument("--dev", action="store_true", help="check the dev build that tools/run.sh serves")
     p.add_argument("--declare", action="store_true", help="lab-only declared injection (Zen attach mode)")
     a = p.parse_args()
     a.headless, a.only, a.youtube, a.host_compositor = False, None, None, False
