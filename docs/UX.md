@@ -79,3 +79,21 @@ with `aria-pressed` and a visible state. Decided in
   rule matching the `BetterPiP` title. Nothing fails silently.
 - BetterPiP never writes to the user's compositor or browser configuration, and the helper
   is never required for the rest of the player.
+
+## Clean view (preview feedback, 2026-11-08)
+
+After trying the preview, the user asked for a window that is "clean, just the video":
+
+- The window opens video-only. The tools panel starts closed; `t`, the panel button or the
+  current-chapter label opens it. Asking for it from Minimal switches to Overlay.
+- There is no title strip. Pin and return-to-tab are a small icon cluster in the top-right
+  corner.
+- All controls appear only while the pointer is over the window, or while a control has
+  keyboard focus. They hide when the pointer leaves, paused or not.
+- Chapters stay visible without the panel: marks on the seek bar and the current chapter's
+  name next to the time.
+- The page's video always fills the stage, centered at its own aspect ratio.
+
+The row with the page address at the top of the window belongs to the browser. Firefox
+shows it on Document Picture-in-Picture windows, and no web or WebExtension API removes
+it. BetterPiP does not change browser configuration to hide it.

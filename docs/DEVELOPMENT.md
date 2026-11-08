@@ -82,3 +82,6 @@ pnpm check              # svelte-check / TypeScript
   page gets no styles, and saves screenshots to `tests/browser/out/`. Run it as in
   [experiments/m0/README.md](../experiments/m0/README.md); pass `--declare` for Zen, whose
   extension cannot see tabs in that lab mode.
+- `preview_lab.py --youtube <watch URL>`: the YouTube adapter on a real page (needs
+  network). It checks the clean idle view, chapters, jumping to a chapter, and in-page
+  navigation. See [ADAPTERS.md](ADAPTERS.md).
