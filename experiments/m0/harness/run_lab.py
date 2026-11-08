@@ -574,12 +574,17 @@ class Lab:
 
     def e5_compositor(self):
         """How the compositor manages the PiP toplevel, plus compositor-side resizes (like a drag)."""
+        self.load()
+        before = {w["id"] for w in (self.compositor() or [])}
         pip, _, _ = self.open_video()
         self.click("bp-docked", pip)
         time.sleep(0.5)
         wins = self.compositor() or []
-        target = next((w for w in wins if "M0 lab" not in (w.get("title") or "")), None)
-        out = {"kind": self.compositor_kind(), "windows": wins, "pipWindow": target, "resizes": []}
+        # The PiP toplevel is the one that appeared; titles are not reliable (Zen titles
+        # every window "Zen Browser").
+        new = [w for w in wins if w["id"] not in before]
+        target = new[0] if len(new) == 1 else None
+        out = {"kind": self.compositor_kind(), "windows": wins, "newWindows": len(new), "pipWindow": target, "resizes": []}
         if target:
             for w, h in [(900, 420), (480, 320), (280, 180), (700, 400)]:
                 msg = self.compositor_resize(target["id"], w, h)

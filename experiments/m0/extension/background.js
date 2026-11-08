@@ -47,7 +47,14 @@ async function viaExecuteScript(tab, source) {
 browser.action.onClicked.addListener((tab) => viaExecuteScript(tab, "action"));
 browser.commands.onCommand.addListener(async (name, tab) => {
   if (name !== "open-pip") return;
-  tab ??= (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+  // Record how the tab was found: Zen 1.24b passed no tab in the M0 runs.
+  const passedTab = !!tab;
+  tab ??= (await browser.tabs.query({ active: true, currentWindow: true }))[0]
+    ?? (await browser.tabs.query({ active: true, lastFocusedWindow: true }))[0];
+  const httpTabs = await browser.tabs.query({ active: true, url: "http://127.0.0.1/*" });
+  tab ??= httpTabs[0];
+  await save("command-tab", { passedTab, found: !!tab, activeHttpTabs: httpTabs.length });
+  if (!tab) return save("command-exec-main", { ok: false, message: "no active tab found" });
   viaExecuteScript(tab, "command");
 });
 
