@@ -60,3 +60,22 @@ The **same extensible tool layer** works in Overlay and Docked modes. Initial to
 [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120) must experimentally confirm on real Firefox/Zen builds that a **single interactive, resizable, always-on-top window** can contain the video surface and HTML tool layer, while retaining playback and restoring origin state. Test closing, refocusing, user activation, background tab lifecycle, iframe/cross-origin restrictions, DRM and fallback. If the browser cannot satisfy this central interaction model through supported APIs, document the failure and reassess the product approach before shipping an inferior lookalike.
 
 This is a UX specification, not evidence that Firefox/Zen APIs already meet the requirements.
+
+## Window pin control (V1C-129)
+
+The PiP window offers a pin control with two toggles, both **off by default** and owned by the
+user: **Above others** and **Follow workspaces**. Each toggle is a keyboard-reachable button
+with `aria-pressed` and a visible state. Decided in
+[ADR 0002](adr/0002-pip-window-pin-control.md).
+
+- **With the optional helper installed** (a native messaging host): the toggles apply
+  immediately through the compositor and show the state the compositor reports. On the
+  compositors tested (Hyprland, sway), Follow workspaces needs a floating window. Turning
+  it on therefore also turns on Above others, and turning Above others off also turns off
+  Follow workspaces. The UI shows that coupling instead of pretending the toggles are
+  independent.
+- **Without the helper**, or on an unsupported compositor: the toggles stay visible but
+  disabled, with a short reason. A link explains how to install the helper or add a window
+  rule matching the `BetterPiP` title. Nothing fails silently.
+- BetterPiP never writes to the user's compositor or browser configuration, and the helper
+  is never required for the rest of the player.
