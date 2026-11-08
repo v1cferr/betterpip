@@ -41,6 +41,14 @@ evidence existed. This ADR picks the backend.
   This holds for a local fixture and for YouTube's MSE player. Minimal/Overlay/Docked
   switch inside a fixed outer size and fall back with container queries. On Wayland the
   window is a plain toplevel and is not kept on top by the browser.
+- **A and CSP:** the PiP document inherits the opener's Content-Security-Policy. Under a
+  strict policy, page-world `<style>`, `style` attributes and `data:` images are blocked, and
+  with Trusted Types `innerHTML` throws. The same changes made from the isolated content
+  script all apply, as do `moz-extension://` stylesheets and `adoptedStyleSheets`. The video
+  move still works.
+- **A and keyboard:** tool buttons are reachable with Tab/Shift+Tab, activated with
+  Space/Enter, and the PiP document receives trusted `keydown` shortcuts. Under sway the
+  window does not take focus when it opens, and focus does not return to the opener on close.
 - **B** works for video only; no HTML can be added. It has the same Wayland stacking
   behaviour as A.
 - **C** opens, but `windows.create` has no always-on-top property, and an extension page
@@ -72,6 +80,9 @@ evidence existed. This ADR picks the backend.
 - **One PiP per tab**, closed when the opener navigates or closes, and closed when the opener
   moves between windows ([bug 2009192](https://bugzilla.mozilla.org/show_bug.cgi?id=2009192), open).
 - **Site UIs** may react to their `<video>` leaving the page; adapters must handle this.
+- **CSP:** the page's policy applies inside the PiP window. Only isolated-world DOM work is
+  exempt, so no BetterPiP UI code may run in the MAIN world or as a page script.
+- **Focus:** whether the window receives keyboard focus on open is up to the compositor.
 - DRM/EME media, Shadow-DOM players, X11, Windows and macOS were not tested.
 
 ## 7. Decision (proposed)
@@ -82,7 +93,8 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
 - **Opening path:** a content-script-handled gesture in the page (click on an on-demand
   affordance, or a page-level `keydown` shortcut), calling the isolated-world API directly.
   Use the MAIN world only where isolation blocks a need, since `wrappedJSObject` loses Xray
-  protection.
+  protection. **The UI itself is always built from the isolated world**, because only that
+  world is exempt from the page CSP that the PiP window inherits.
 - **Fallback:** where A is unavailable (Firefox < 151, iframe players, refused activation,
   unsupported sites), offer **native video PiP (B)** as "video only", or state clearly that
   the page is unsupported. **C is rejected** as a primary or fallback backend.
@@ -98,6 +110,12 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
 - The renderer runs inside the PiP document. Svelte and styles are injected into that
   document on demand, never into the host page. Layout responds to the PiP document's own
   container size.
+- The renderer runs in the isolated content script and reaches the PiP document through Xray
+  wrappers. Styles ship as a web-accessible `moz-extension://` stylesheet or as constructable
+  stylesheets. V1C-121 must confirm that Svelte 5's DOM operations work across Xrays,
+  because E7 tested plain DOM calls, not Svelte.
+- Keyboard: a visible focus order through the tools, PiP-scoped shortcuts, and no assumption
+  that the window has focus when it opens.
 - Documentation must state the Wayland always-on-top dependency and provide tested
   compositor recipes, starting with Hyprland.
 - Minimum versions: Firefox 154 for the isolated-world path. Zen versions are tracked by
@@ -107,14 +125,15 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
 
 1. Hyprland: does a float + pin rule give always-on-top across applications, workspaces and
    fullscreen? (spike M2–M4)
-2. Does a physical toolbar click or a real `commands` shortcut grant page activation? Why did
-   Zen's `commands` handler resolve no tab? (M8)
+2. Does a physical toolbar click or a real `commands` shortcut grant page activation? Does
+   the extension see Zen's tabs in a normal profile? In the lab's launch mode it saw none.
+   (M8)
 3. How should each adapter handle a site's own UI while its `<video>` is away? (V1C-123)
 4. DRM/EME and Shadow-DOM players: does the move work, or is the fallback required?
 5. Non-Wayland platforms: does Firefox keep Document PiP on top natively?
-6. Does a strict page CSP inherited by the PiP document block the extension's injected UI
-   and styles? Not tested in M0, although it is in the V1C-120 scope. It decides how the
-   renderer is injected (V1C-121).
+6. ~~Does a strict page CSP block the extension's injected UI?~~ Answered by E7: it blocks
+   page-world injections but not isolated-world ones. Still open: real-site and nonce-based
+   policies, and Svelte across Xrays (V1C-121).
 
 ## 10. Conditions to advance to M1 (V1C-121)
 
