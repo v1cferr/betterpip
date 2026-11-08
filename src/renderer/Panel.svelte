@@ -13,16 +13,13 @@
   import Button from "./ui/Button.svelte";
   import { cn } from "./ui/utils";
   import { formatTime } from "./format";
+  import { chapterIndexAt } from "../core/adapters/youtube-parse";
   import type { LayoutMode } from "../core/contracts/commands";
   import type { Player, PanelTab } from "./player.svelte";
 
   let { p, glass, onOpenSettings }: { p: Player; glass: boolean; onOpenSettings: () => void } = $props();
 
-  const activeChapter = $derived.by(() => {
-    let idx = -1;
-    p.chapters.forEach((c, i) => { if (c.start <= p.media.time) idx = i; });
-    return idx;
-  });
+  const activeChapter = $derived(chapterIndexAt(p.chapters, p.media.time));
 
   const trigger = "flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground data-[state=active]:bg-white/12 data-[state=active]:text-foreground [&_svg]:size-3.5";
   const layoutItem = "flex flex-1 flex-col items-center gap-1 rounded-md border border-transparent px-2 py-2 text-[11px] text-muted-foreground transition-colors hover:bg-white/8 hover:text-foreground data-[state=on]:border-primary/50 data-[state=on]:bg-primary/15 data-[state=on]:text-foreground [&_svg]:size-4";
@@ -63,7 +60,7 @@
         <div class="flex h-full flex-col items-center justify-center gap-2 px-4 py-6 text-center">
           <ListVideo class="size-6 text-muted-foreground/70" />
           <p class="text-sm font-medium">No chapters on this page</p>
-          <p class="text-xs text-muted-foreground">Chapters appear when the video provides them. Site support (YouTube first) is coming.</p>
+          <p class="text-xs text-muted-foreground">Chapters appear when the video or the site provides them.</p>
         </div>
       {/if}
     </Tabs.Content>

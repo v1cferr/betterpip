@@ -72,7 +72,11 @@
         case "1": p.setLayout("minimal"); return true;
         case "2": p.setLayout("overlay"); return true;
         case "3": p.setLayout("docked"); return true;
-        case "t": p.panelOpen = !p.panelOpen; return true;
+        case "t":
+          // The panel has no place in Minimal; asking for it switches to Overlay.
+          if (p.effective === "minimal" && p.preferred === "minimal") p.setLayout("overlay");
+          else p.panelOpen = !p.panelOpen;
+          return true;
         default: return false;
       }
     })();

@@ -13,6 +13,7 @@
   import { isSupported } from "../core/contracts/capabilities";
   import Button from "./ui/Button.svelte";
   import { formatTime } from "./format";
+  import { chapterIndexAt } from "../core/adapters/youtube-parse";
   import type { Player } from "./player.svelte";
 
   let { p, compact }: { p: Player; compact: boolean } = $props();
@@ -22,6 +23,16 @@
   const fill = $derived(duration ? (p.media.time / duration) * 100 : 0);
   const buffer = $derived(duration ? (p.media.buffered / duration) * 100 : 0);
   const volPct = $derived(p.media.muted ? 0 : p.media.volume * 100);
+  const chapterIdx = $derived(chapterIndexAt(p.chapters, p.media.time));
+  const chapter = $derived(chapterIdx >= 0 ? p.chapters[chapterIdx] : undefined);
+  // Gaps in the seek bar where chapters start, like the site's own player.
+  const marks = $derived(duration ? p.chapters.filter((c) => c.start > 0 && c.start < duration).map((c) => (c.start / duration) * 100) : []);
+
+  function showChapters() {
+    p.tab = "chapters";
+    if (p.preferred === "minimal") p.setLayout("overlay");
+    p.panelOpen = true;
+  }
 
   function nextRate() {
     const i = PLAYBACK_RATES.indexOf(p.media.rate as (typeof PLAYBACK_RATES)[number]);
@@ -31,6 +42,7 @@
 
 <div class="pointer-events-auto flex flex-col gap-1 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-3 pt-8 pb-2">
   {#if canSeek}
+    <div class="relative">
     <input
       class="bp-range w-full"
       type="range"
@@ -44,6 +56,10 @@
       aria-valuetext="{formatTime(p.media.time)} of {formatTime(p.media.duration)}"
       oninput={(e) => p.seek(Number(e.currentTarget.value))}
     />
+    {#each marks as left, i (i)}
+      <span class="pointer-events-none absolute top-1/2 h-1 w-0.5 -translate-x-1/2 -translate-y-1/2 bg-black/70" style:left="{left}%"></span>
+    {/each}
+    </div>
   {/if}
 
   <div class="flex items-center gap-0.5">
@@ -74,6 +90,12 @@
     <span class="ml-1 font-mono text-xs tabular-nums text-white/85">
       {formatTime(p.media.time)}{#if p.media.duration !== null}<span class="text-white/50">&nbsp;/ {formatTime(p.media.duration)}</span>{:else if isSupported(p.caps.live)}<span class="ml-1.5 rounded bg-red-600 px-1 py-px text-[10px] font-semibold tracking-wide text-white">LIVE</span>{/if}
     </span>
+    {#if chapter && !compact}
+      <button type="button" onclick={showChapters} title="Chapters (t)" aria-label="Chapter: {chapter.title}. Show chapters"
+        class="ml-1 min-w-0 truncate rounded px-1 py-0.5 text-left text-xs text-white/85 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
+        <span class="text-white/45">·</span> {chapter.title}
+      </button>
+    {/if}
 
     <div class="ml-auto flex items-center gap-0.5">
       {#if isSupported(p.caps.rate)}
