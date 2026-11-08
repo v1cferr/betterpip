@@ -1,0 +1,281 @@
+{
+ "meta": {
+  "label": "firefox",
+  "browser": "/nix/store/vk5drhp6vl299ivwrwh2xzj6243g17zz-firefox-159.0/bin/firefox",
+  "headless": false,
+  "date": "2026-11-08T15:30:54-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "Hyprland",
+  "wayland_display": true,
+  "display": ":0",
+  "versionString": "Mozilla Firefox 159.0",
+  "browserName": "firefox",
+  "browserVersion": "159.0",
+  "platformName": "linux",
+  "note": "Manual checks M1-M8 on the host Hyprland 0.57.1 desktop, 2026-11-08, run with harness/manual-check.sh. 'answer' is the tester's own report; 'observed' is what the script captured automatically at the moment the answer was entered."
+ },
+ "checks": {
+  "M1": {
+   "answer": "pass",
+   "observed": {
+    "pipWindow": {
+     "address": "0x5c5510c37ff0",
+     "class": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": true,
+     "pinned": false,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      1006,
+      191
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    },
+    "focusAtOpen": {
+     "openerHasFocus": true,
+     "pipHasFocus": false
+    }
+   }
+  },
+  "M2": {
+   "answer": "pass",
+   "observed": {
+    "pipWindow": {
+     "address": "0x5c550ee96150",
+     "class": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": true,
+     "pinned": false,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      1024,
+      247
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M3": {
+   "answer": "pass (typed 'yes', clarified by the tester)",
+   "observed": {
+    "dispatch": [
+     "ok",
+     "ok"
+    ],
+    "pipWindow": {
+     "address": "0x5c550ee96150",
+     "class": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": true,
+     "pinned": true,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      1024,
+      247
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M4": {
+   "answer": "pass (typed 'yes', clarified by the tester)",
+   "observed": {
+    "pipWindow": {
+     "address": "0x5c550ee96150",
+     "class": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": false,
+     "pinned": false,
+     "size": [
+      2518,
+      1380
+     ],
+     "at": [
+      21,
+      47
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 1,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M5": {
+   "answer": "pass (typed 'yes', clarified by the tester)",
+   "observed": {
+    "containerEvents": [],
+    "pipWindow": {
+     "address": "0x5c550ee96150",
+     "class": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": false,
+     "pinned": false,
+     "size": [
+      2518,
+      1380
+     ],
+     "at": [
+      21,
+      47
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 1,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M6": {
+   "answer": "pass",
+   "observed": {
+    "before": {
+     "currentSrc": "http://127.0.0.1:47130/fixtures/clock.webm",
+     "currentTime": 36.12,
+     "droppedFrames": 26,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": true,
+     "playbackRate": 1.5,
+     "readyState": 4,
+     "totalFrames": 4905,
+     "volume": 0.5,
+     "wall": 253479
+    },
+    "after": {
+     "currentSrc": "http://127.0.0.1:47130/fixtures/clock.webm",
+     "currentTime": 36.12,
+     "droppedFrames": 26,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": true,
+     "playbackRate": 1.5,
+     "readyState": 4,
+     "totalFrames": 4905,
+     "volume": 0.5,
+     "wall": 258913
+    },
+    "extraMediaRequests": 0
+   }
+  },
+  "M7": {
+   "answer": "pass",
+   "observed": {
+    "restore": {
+     "afterReturn": {
+      "currentSrc": "http://127.0.0.1:47130/fixtures/clock.webm",
+      "currentTime": 55.975,
+      "droppedFrames": 9,
+      "muted": true,
+      "networkState": 1,
+      "ownerIsPip": false,
+      "paused": false,
+      "playbackRate": 1,
+      "readyState": 4,
+      "totalFrames": 1680,
+      "volume": 1,
+      "wall": 100471
+     },
+     "atClose": {
+      "currentSrc": "http://127.0.0.1:47130/fixtures/clock.webm",
+      "currentTime": 55.975,
+      "droppedFrames": 9,
+      "muted": true,
+      "networkState": 1,
+      "ownerIsPip": true,
+      "paused": false,
+      "playbackRate": 1,
+      "readyState": 4,
+      "totalFrames": 1680,
+      "volume": 1,
+      "wall": 100465
+     }
+    },
+    "events": [
+     {
+      "openerHasFocus": false,
+      "t": 259847,
+      "type": "pip:blur"
+     },
+     {
+      "t": 259862,
+      "type": "opener:focus"
+     },
+     {
+      "openerHasFocus": false,
+      "t": 260617,
+      "type": "pip:blur"
+     },
+     {
+      "t": 260633,
+      "type": "opener:focus"
+     },
+     {
+      "openerHasFocus": false,
+      "t": 264352,
+      "type": "pip:blur"
+     },
+     {
+      "t": 264369,
+      "type": "opener:focus"
+     }
+    ]
+   }
+  },
+  "M8": {
+   "answer": "pass",
+   "observed": {
+    "extension": {
+     "error": "Message: Failed to decode response from marionette"
+    }
+   }
+  }
+ },
+ "notes_translated": "Tester note (translated from Portuguese): 'I wrote \"yes\" but it means pass. About pin: make it clear and add a pin icon so the user decides whether the PiP stays above all windows, and also whether it follows workspace switches. Both options must be offered for the user to decide.'"
+}

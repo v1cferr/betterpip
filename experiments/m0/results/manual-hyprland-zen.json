@@ -1,0 +1,256 @@
+{
+ "meta": {
+  "label": "zen",
+  "browser": "/nix/store/lb24swp3dfiamis03h5482jdhfyccp5j-zen-beta-guarded/bin/zen-beta",
+  "headless": false,
+  "date": "2026-11-08T15:36:59-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "Hyprland",
+  "wayland_display": true,
+  "display": ":0",
+  "versionString": "Mozilla Zen 1.24b",
+  "browserName": "firefox",
+  "browserVersion": "1.24b",
+  "platformName": "linux",
+  "note": "Manual checks M1-M8 on the host Hyprland 0.57.1 desktop, 2026-11-08, run with harness/manual-check.sh. 'answer' is the tester's own report; 'observed' is what the script captured automatically at the moment the answer was entered."
+ },
+ "checks": {
+  "M1": {
+   "answer": "pass",
+   "observed": {
+    "pipWindow": {
+     "address": "0x5c550e888ee0",
+     "class": "zen-beta",
+     "title": "BetterPiP M0 \u2014 Zen Browser",
+     "floating": true,
+     "pinned": false,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      943,
+      202
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    },
+    "focusAtOpen": {
+     "openerHasFocus": true,
+     "pipHasFocus": false
+    }
+   }
+  },
+  "M2": {
+   "answer": "pass",
+   "observed": {
+    "pipWindow": {
+     "address": "0x5c550e888ee0",
+     "class": "zen-beta",
+     "title": "BetterPiP M0 \u2014 Zen Browser",
+     "floating": true,
+     "pinned": false,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      943,
+      202
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M3": {
+   "answer": "pass (typed twice)",
+   "observed": {
+    "dispatch": [
+     "ok",
+     "ok"
+    ],
+    "pipWindow": {
+     "address": "0x5c550e888ee0",
+     "class": "zen-beta",
+     "title": "BetterPiP M0 \u2014 Zen Browser",
+     "floating": true,
+     "pinned": true,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      943,
+      202
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M4": {
+   "answer": "pass",
+   "observed": {
+    "pipWindow": {
+     "address": "0x5c550e888ee0",
+     "class": "zen-beta",
+     "title": "BetterPiP M0 \u2014 Zen Browser",
+     "floating": true,
+     "pinned": true,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      943,
+      202
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M5": {
+   "answer": "pass",
+   "observed": {
+    "containerEvents": [],
+    "pipWindow": {
+     "address": "0x5c550e888ee0",
+     "class": "zen-beta",
+     "title": "BetterPiP M0 \u2014 Zen Browser",
+     "floating": true,
+     "pinned": true,
+     "size": [
+      1280,
+      1040
+     ],
+     "at": [
+      943,
+      202
+     ],
+     "workspace": {
+      "address": "3",
+      "id": 3,
+      "type": "normal",
+      "name": "3"
+     },
+     "focusHistoryID": 2,
+     "fullscreen": 0,
+     "xwayland": false
+    }
+   }
+  },
+  "M6": {
+   "answer": "pass",
+   "observed": {
+    "before": {
+     "currentSrc": "http://127.0.0.1:47130/fixtures/clock.webm",
+     "currentTime": 31.952,
+     "droppedFrames": 6,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 1132,
+     "volume": 0.40000000000000013,
+     "wall": 42211
+    },
+    "after": {
+     "currentSrc": "http://127.0.0.1:47130/fixtures/clock.webm",
+     "currentTime": 32.674,
+     "droppedFrames": 6,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 1154,
+     "volume": 0.40000000000000013,
+     "wall": 42936
+    },
+    "extraMediaRequests": 0
+   }
+  },
+  "M7": {
+   "answer": "pass",
+   "observed": {
+    "restore": null,
+    "events": [
+     {
+      "openerHasFocus": false,
+      "t": 7746,
+      "type": "pip:blur"
+     },
+     {
+      "t": 7751,
+      "type": "opener:focus"
+     },
+     {
+      "openerHasFocus": false,
+      "t": 9722,
+      "type": "pip:blur"
+     },
+     {
+      "t": 9724,
+      "type": "opener:focus"
+     },
+     {
+      "openerHasFocus": false,
+      "t": 32634,
+      "type": "pip:blur"
+     },
+     {
+      "t": 32641,
+      "type": "opener:focus"
+     }
+    ]
+   }
+  },
+  "M8": {
+   "answer": "pass",
+   "observed": {
+    "extension": {
+     "tabs-probe": {
+      "activeCurrentWindow": 0,
+      "allTabs": 1,
+      "senderTab": false
+     }
+    }
+   }
+  }
+ },
+ "notes": ""
+}
