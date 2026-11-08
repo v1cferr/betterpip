@@ -1,0 +1,324 @@
+{
+ "meta": {
+  "label": "zen-1.24b",
+  "browser": "/nix/store/lb24swp3dfiamis03h5482jdhfyccp5j-zen-beta-guarded/bin/zen-beta",
+  "headless": false,
+  "date": "2026-11-08T16:51:02-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "sway-headless",
+  "wayland_display": true,
+  "display": null,
+  "versionString": "Mozilla Zen 1.24b",
+  "browserName": "firefox",
+  "browserVersion": "1.24b",
+  "platformName": "linux",
+  "note": "V1C-121 spike: Svelte 5.57.3 mounted from an isolated content script into Document PiP, isolated headless sway, 2026-11-08. Bundle 64,067 B minified (esbuild 0.27.2)."
+ },
+ "scenarios": {
+  "svelte-none": {
+   "policy": "none",
+   "mount": {
+    "ok": true,
+    "mountMs": 2,
+    "styleApplied": true,
+    "styleElements": 1,
+    "styleInPageDoc": false,
+    "nodesOwnedByPip": true,
+    "listItems": 5
+   },
+   "echo": "abc",
+   "timeAdvances": true,
+   "click": {
+    "clicks": 2,
+    "isTrusted": true
+   },
+   "effect": {
+    "clicks": 2,
+    "text": "abc",
+    "open": true
+   },
+   "outroVisible": {
+    "toggle": {
+     "at": 5577,
+     "open": false,
+     "hidden": false
+    },
+    "end": {
+     "at": 5885
+    }
+   },
+   "tabSwitch": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "handlesAfterTabSwitch": 3,
+   "tabSwitchAfter500ms": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "pipStillOpen": true,
+   "introWhileHidden_opacity": "1",
+   "introHidden": {
+    "toggle": {
+     "at": 7499,
+     "open": true,
+     "hidden": false
+    },
+    "end": {
+     "at": 7806
+    }
+   },
+   "violations": [],
+   "unmount": {
+    "ok": true,
+    "before": 1,
+    "after": 0
+   },
+   "destroyed": {
+    "ok": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 20.0,
+    "audibleSeconds": 10.5,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 6,
+     "app_id": "zen-beta",
+     "title": "BetterPiP svelte spike \u2014 Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "svelte-strict": {
+   "policy": "strict",
+   "mount": {
+    "ok": true,
+    "mountMs": 1,
+    "styleApplied": true,
+    "styleElements": 1,
+    "styleInPageDoc": false,
+    "nodesOwnedByPip": true,
+    "listItems": 5
+   },
+   "echo": "abc",
+   "timeAdvances": true,
+   "click": {
+    "clicks": 2,
+    "isTrusted": true
+   },
+   "effect": {
+    "clicks": 2,
+    "text": "abc",
+    "open": true
+   },
+   "outroVisible": {
+    "toggle": {
+     "at": 5517,
+     "open": false,
+     "hidden": false
+    },
+    "end": {
+     "at": 5827
+    }
+   },
+   "tabSwitch": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "handlesAfterTabSwitch": 3,
+   "tabSwitchAfter500ms": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "pipStillOpen": true,
+   "introWhileHidden_opacity": "1",
+   "introHidden": {
+    "toggle": {
+     "at": 7357,
+     "open": true,
+     "hidden": false
+    },
+    "end": {
+     "at": 7661
+    }
+   },
+   "violations": [],
+   "unmount": {
+    "ok": true,
+    "before": 1,
+    "after": 0
+   },
+   "destroyed": {
+    "ok": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 20.0,
+    "audibleSeconds": 10.7,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 7,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 8,
+     "app_id": "zen-beta",
+     "title": "BetterPiP svelte spike \u2014 Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "svelte-tt": {
+   "policy": "tt",
+   "mount": {
+    "ok": true,
+    "mountMs": 3,
+    "styleApplied": true,
+    "styleElements": 1,
+    "styleInPageDoc": false,
+    "nodesOwnedByPip": true,
+    "listItems": 5
+   },
+   "echo": "abc",
+   "timeAdvances": true,
+   "click": {
+    "clicks": 2,
+    "isTrusted": true
+   },
+   "effect": {
+    "clicks": 2,
+    "text": "abc",
+    "open": true
+   },
+   "outroVisible": {
+    "toggle": {
+     "at": 5502,
+     "open": false,
+     "hidden": false
+    },
+    "end": {
+     "at": 5812
+    }
+   },
+   "tabSwitch": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "handlesAfterTabSwitch": 3,
+   "tabSwitchAfter500ms": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "pipStillOpen": true,
+   "introWhileHidden_opacity": "1",
+   "introHidden": {
+    "toggle": {
+     "at": 7339,
+     "open": true,
+     "hidden": false
+    },
+    "end": {
+     "at": 7644
+    }
+   },
+   "violations": [],
+   "unmount": {
+    "ok": true,
+    "before": 1,
+    "after": 0
+   },
+   "destroyed": {
+    "ok": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 20.0,
+    "audibleSeconds": 10.7,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 9,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 10,
+     "app_id": "zen-beta",
+     "title": "BetterPiP svelte spike \u2014 Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  }
+ },
+ "perf": []
+}

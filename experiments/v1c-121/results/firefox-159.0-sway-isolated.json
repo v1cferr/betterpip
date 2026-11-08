@@ -1,0 +1,324 @@
+{
+ "meta": {
+  "label": "firefox-159.0",
+  "browser": "/nix/store/vk5drhp6vl299ivwrwh2xzj6243g17zz-firefox-159.0/bin/firefox",
+  "headless": false,
+  "date": "2026-11-08T16:50:09-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "sway-headless",
+  "wayland_display": true,
+  "display": null,
+  "versionString": "Mozilla Firefox 159.0",
+  "browserName": "firefox",
+  "browserVersion": "159.0",
+  "platformName": "linux",
+  "note": "V1C-121 spike: Svelte 5.57.3 mounted from an isolated content script into Document PiP, isolated headless sway, 2026-11-08. Bundle 64,067 B minified (esbuild 0.27.2)."
+ },
+ "scenarios": {
+  "svelte-none": {
+   "policy": "none",
+   "mount": {
+    "ok": true,
+    "mountMs": 4,
+    "styleApplied": true,
+    "styleElements": 1,
+    "styleInPageDoc": false,
+    "nodesOwnedByPip": true,
+    "listItems": 5
+   },
+   "echo": "abc",
+   "timeAdvances": true,
+   "click": {
+    "clicks": 2,
+    "isTrusted": true
+   },
+   "effect": {
+    "clicks": 2,
+    "text": "abc",
+    "open": true
+   },
+   "outroVisible": {
+    "toggle": {
+     "at": 5495,
+     "open": false,
+     "hidden": false
+    },
+    "end": {
+     "at": 5798
+    }
+   },
+   "tabSwitch": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "handlesAfterTabSwitch": 3,
+   "tabSwitchAfter500ms": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "pipStillOpen": true,
+   "introWhileHidden_opacity": "1",
+   "introHidden": {
+    "toggle": {
+     "at": 7330,
+     "open": true,
+     "hidden": false
+    },
+    "end": {
+     "at": 7653
+    }
+   },
+   "violations": [],
+   "unmount": {
+    "ok": true,
+    "before": 1,
+    "after": 0
+   },
+   "destroyed": {
+    "ok": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 16.0,
+    "audibleSeconds": 10.6,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 CSP probe (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 6,
+     "app_id": "firefox",
+     "title": "BetterPiP svelte spike \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "svelte-strict": {
+   "policy": "strict",
+   "mount": {
+    "ok": true,
+    "mountMs": 9,
+    "styleApplied": true,
+    "styleElements": 1,
+    "styleInPageDoc": false,
+    "nodesOwnedByPip": true,
+    "listItems": 5
+   },
+   "echo": "abc",
+   "timeAdvances": true,
+   "click": {
+    "clicks": 2,
+    "isTrusted": true
+   },
+   "effect": {
+    "clicks": 2,
+    "text": "abc",
+    "open": true
+   },
+   "outroVisible": {
+    "toggle": {
+     "at": 5538,
+     "open": false,
+     "hidden": false
+    },
+    "end": {
+     "at": 5843
+    }
+   },
+   "tabSwitch": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "handlesAfterTabSwitch": 3,
+   "tabSwitchAfter500ms": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "pipStillOpen": true,
+   "introWhileHidden_opacity": "1",
+   "introHidden": {
+    "toggle": {
+     "at": 7365,
+     "open": true,
+     "hidden": false
+    },
+    "end": {
+     "at": 7670
+    }
+   },
+   "violations": [],
+   "unmount": {
+    "ok": true,
+    "before": 1,
+    "after": 0
+   },
+   "destroyed": {
+    "ok": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 16.0,
+    "audibleSeconds": 10.3,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 7,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 CSP probe (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 8,
+     "app_id": "firefox",
+     "title": "BetterPiP svelte spike \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "svelte-tt": {
+   "policy": "tt",
+   "mount": {
+    "ok": true,
+    "mountMs": 5,
+    "styleApplied": true,
+    "styleElements": 1,
+    "styleInPageDoc": false,
+    "nodesOwnedByPip": true,
+    "listItems": 5
+   },
+   "echo": "abc",
+   "timeAdvances": true,
+   "click": {
+    "clicks": 2,
+    "isTrusted": true
+   },
+   "effect": {
+    "clicks": 2,
+    "text": "abc",
+    "open": true
+   },
+   "outroVisible": {
+    "toggle": {
+     "at": 5524,
+     "open": false,
+     "hidden": false
+    },
+    "end": {
+     "at": 5829
+    }
+   },
+   "tabSwitch": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "handlesAfterTabSwitch": 3,
+   "tabSwitchAfter500ms": {
+    "openerDocShellActive": true,
+    "openerSelected": false,
+    "selectedIsBlank": true
+   },
+   "pipStillOpen": true,
+   "introWhileHidden_opacity": "1",
+   "introHidden": {
+    "toggle": {
+     "at": 7363,
+     "open": true,
+     "hidden": false
+    },
+    "end": {
+     "at": 7669
+    }
+   },
+   "violations": [],
+   "unmount": {
+    "ok": true,
+    "before": 1,
+    "after": 0
+   },
+   "destroyed": {
+    "ok": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 16.0,
+    "audibleSeconds": 10.4,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 9,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 CSP probe (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 10,
+     "app_id": "firefox",
+     "title": "BetterPiP svelte spike \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  }
+ },
+ "perf": []
+}
