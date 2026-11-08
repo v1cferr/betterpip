@@ -1,0 +1,77 @@
+/* BetterPiP renderer styles. Compiled by Tailwind v4 and injected into the PiP document only
+   (imported with ?inline). Tokens follow shadcn-svelte's naming so its components fit. */
+@import "tailwindcss" source("../");
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.16 0.01 270);
+  --foreground: oklch(0.97 0 0);
+  --muted: oklch(0.27 0.01 270);
+  --muted-foreground: oklch(0.72 0.01 270);
+  --accent: oklch(0.32 0.02 270);
+  --accent-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.72 0.16 250);
+  --primary-foreground: oklch(0.16 0.02 260);
+  --border: oklch(1 0 0 / 12%);
+  --ring: oklch(0.72 0.16 250 / 70%);
+  --glass: oklch(0.14 0.01 270 / 62%);
+  --glass-strong: oklch(0.14 0.01 270 / 82%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: ui-sans-serif, system-ui, "Inter", "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html, body { height: 100%; margin: 0; background: #000; color: var(--foreground); overflow: hidden; }
+  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+}
+
+/* Native range input styled as a slider: keyboard accessible and independent of the page. */
+@layer components {
+  .bp-range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 1rem;
+    cursor: pointer;
+    --fill: 0%;
+    --buffer: 0%;
+  }
+  .bp-range::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(to right, oklch(1 0 0 / 35%) var(--buffer), oklch(1 0 0 / 18%) var(--buffer));
+  }
+  .bp-range::-moz-range-progress { height: 4px; border-radius: 999px; background: var(--primary); }
+  .bp-range::-moz-range-thumb {
+    width: 12px; height: 12px; border: 0; border-radius: 999px; background: white;
+    box-shadow: 0 0 0 4px oklch(0.72 0.16 250 / 0%); transition: box-shadow 120ms, transform 120ms;
+  }
+  .bp-range:hover::-moz-range-thumb, .bp-range:focus-visible::-moz-range-thumb {
+    transform: scale(1.15); box-shadow: 0 0 0 4px oklch(0.72 0.16 250 / 35%);
+  }
+  .bp-range:focus-visible { outline: none; }
+}
