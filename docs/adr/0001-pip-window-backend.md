@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Status | **Proposed**, 2026-11-08 (CONDITIONAL GO; becomes *Accepted* once the manual checks in the spike report pass) |
+| Status | **Accepted**, 2026-11-08 (GO; manual Hyprland checks M1–M8 passed for Firefox and Zen) |
 | Jira | [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120) |
 | Evidence | [Spike report](../spikes/V1C-120/README.md), [compatibility matrix](../spikes/V1C-120/COMPATIBILITY.md), [lab results](../../experiments/m0/results/) |
 
@@ -55,6 +55,9 @@ evidence existed. This ADR picks the backend.
   cannot hold the web page's `<video>`. Showing the video there would need a second stream
   or capture pipeline, which violates requirement 2.
 - **D**: no public, documented Zen mechanism was found. Zen behaves like Firefox for A.
+- **Hyprland 0.57.1 (manual):** A opens as a floating window without any rule, does not take
+  focus, and stays visible over other applications and across workspaces once the compositor
+  pins it. Edge/corner drags resize it and the layout adapts.
 
 ## 5. Trade-offs
 
@@ -71,7 +74,8 @@ evidence existed. This ADR picks the backend.
 
 - **Wayland:** clients cannot keep a window above others. BetterPiP can set a stable,
   matchable document title (`BetterPiP …`) and document compositor rules. It cannot
-  guarantee always-on-top by itself. Hyprland behaviour is still to be confirmed manually.
+  guarantee always-on-top by itself. On Hyprland, *pin* delivers it (and also shows the
+  window on every workspace).
 - **Activation:** opening requires a gesture in the page. Background scripts are refused
   ([bug 2047870](https://bugzilla.mozilla.org/show_bug.cgi?id=2047870) is open). Toolbar
   entry and Zen's `commands` tab resolution are not established.
@@ -85,7 +89,7 @@ evidence existed. This ADR picks the backend.
 - **Focus:** whether the window receives keyboard focus on open is up to the compositor.
 - DRM/EME media, Shadow-DOM players, X11, Windows and macOS were not tested.
 
-## 7. Decision (proposed)
+## 7. Decision
 
 Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the page's own
 `<video>` element into the PiP document, and return it on `pagehide`.
@@ -118,6 +122,11 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
   that the window has focus when it opens.
 - Documentation must state the Wayland always-on-top dependency and provide tested
   compositor recipes, starting with Hyprland.
+- **Pin control (requested by the user after M3/M4):** a visible control so the user picks
+  "stay above other windows" and "follow workspace switches" separately. An extension cannot
+  change compositor state, so this needs a native messaging host that calls the compositor
+  (`hyprctl` on Hyprland), or falls back to a documented rule. It is a separate decision
+  (future ADR) and task, not part of this backend choice.
 - Minimum versions: Firefox 154 for the isolated-world path. Zen versions are tracked by
   their Gecko base.
 
@@ -135,12 +144,15 @@ Use **Document PiP (A)** as the primary window backend for Firefox/Zen. Move the
    page-world injections but not isolated-world ones. Still open: real-site and nonce-based
    policies, and Svelte across Xrays (V1C-121).
 
+7. Pin control: is a native messaging helper acceptable (install burden, permissions,
+   per-compositor support)? How do "above others" and "follow workspaces" map onto each
+   compositor, given that Hyprland's *pin* couples them?
+
 ## 10. Conditions to advance to M1 (V1C-121)
 
-- Manual checks M1–M7 executed on Hyprland for Firefox and Zen, with results recorded in
-  the compatibility matrix.
-- Always-on-top classified per desktop as *native*, *with documented rule* or *not possible*.
-  If Hyprland cannot achieve it even with a rule, revisit scope before M1.
-- V1C-120 updated in Jira with this evidence. The Jira acceptance criteria are compared with
-  this ADR and any divergence is resolved.
-- This ADR's status moves to *Accepted* (or is superseded).
+- ✅ Manual checks M1–M8 executed on Hyprland for Firefox and Zen, with results recorded in
+  the compatibility matrix (2026-11-08).
+- ✅ Always-on-top classified per desktop: Hyprland = *with compositor pin / documented
+  rule*; other desktops not tested.
+- ✅ V1C-120 updated in Jira with this evidence and compared with its acceptance criteria.
+- ✅ This ADR is *Accepted*.
