@@ -1,0 +1,893 @@
+{
+ "meta": {
+  "label": "fx-e7e8",
+  "browser": "/nix/store/vk5drhp6vl299ivwrwh2xzj6243g17zz-firefox-159.0/bin/firefox",
+  "headless": false,
+  "date": "2026-11-08T15:08:35-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "sway-headless",
+  "wayland_display": true,
+  "display": null,
+  "versionString": "Mozilla Firefox 159.0",
+  "browserName": "firefox",
+  "browserVersion": "159.0",
+  "platformName": "linux",
+  "note": "E7 (CSP), E8 (keyboard focus) and tab-visibility reruns, 2026-11-08; complements firefox-159.0-wayland-isolated.json"
+ },
+ "scenarios": {
+  "E7-csp-none": {
+   "policy": "none",
+   "playable": {
+    "error": null,
+    "paused": false,
+    "t": 1.487125
+   },
+   "pageWorld": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": true,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "violations": []
+   },
+   "contentScript": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": true,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "video": {
+     "error": null,
+     "inPip": true,
+     "paused": false,
+     "t0": 3.17,
+     "t1": 5.16
+    },
+    "violations": []
+   },
+   "openerViolations": [],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 10.0,
+    "audibleSeconds": 5.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 6,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 CSP probe (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 7,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E7-csp-strict": {
+   "policy": "strict",
+   "playable": {
+    "error": null,
+    "paused": false,
+    "t": 1.456104
+   },
+   "pageWorld": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": false,
+     "inline-script": false,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": false,
+     "style-element": false
+    },
+    "imgEvent": "error",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "style-src-elem",
+      "sample": ""
+     },
+     {
+      "blocked": "inline",
+      "directive": "style-src-attr",
+      "sample": ""
+     },
+     {
+      "blocked": "inline",
+      "directive": "script-src-elem",
+      "sample": ""
+     },
+     {
+      "blocked": "data",
+      "directive": "img-src",
+      "sample": ""
+     }
+    ]
+   },
+   "contentScript": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": false,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "video": {
+     "error": null,
+     "inPip": true,
+     "paused": false,
+     "t0": 3.13,
+     "t1": 5.12
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "script-src-elem",
+      "sample": ""
+     }
+    ]
+   },
+   "openerViolations": [],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 10.0,
+    "audibleSeconds": 5.3,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 6,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 8,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 CSP probe (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 10,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E7-csp-tt": {
+   "policy": "tt",
+   "playable": {
+    "error": null,
+    "paused": false,
+    "t": 1.475833
+   },
+   "pageWorld": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": false,
+     "inline-script": false,
+     "innerHTML": false,
+     "link": true,
+     "style-attr": false,
+     "style-element": false
+    },
+    "imgEvent": "error",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": {
+      "message": "HTMLScriptElement.textContent setter: Sink type mismatch violation blocked by CSP",
+      "name": "TypeError"
+     },
+     "innerHTML": {
+      "message": "Element.innerHTML setter: Sink type mismatch violation blocked by CSP",
+      "name": "TypeError"
+     },
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "style-src-elem",
+      "sample": ""
+     },
+     {
+      "blocked": "inline",
+      "directive": "style-src-attr",
+      "sample": ""
+     },
+     {
+      "blocked": "trusted-types-sink",
+      "directive": "require-trusted-types-for",
+      "sample": "HTMLScriptElement textContent|window.__i"
+     },
+     {
+      "blocked": "trusted-types-sink",
+      "directive": "require-trusted-types-for",
+      "sample": "Element innerHTML|<b id=\"m-inner\">x</b>"
+     },
+     {
+      "blocked": "data",
+      "directive": "img-src",
+      "sample": ""
+     }
+    ]
+   },
+   "contentScript": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": false,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "video": {
+     "error": null,
+     "inPip": true,
+     "paused": false,
+     "t0": 3.2,
+     "t1": 5.19
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "script-src-elem",
+      "sample": ""
+     }
+    ]
+   },
+   "openerViolations": [],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 10.0,
+    "audibleSeconds": 5.3,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 6,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 11,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 CSP probe (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 13,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E8-keyboard-focus": {
+   "atOpen": {
+    "openerHasFocus": true,
+    "pipHasFocus": false
+   },
+   "afterOpen": {
+    "active": "BODY",
+    "openerHasFocus": true,
+    "pipHasFocus": false
+   },
+   "afterSwitch": {
+    "active": "BODY",
+    "hasFocus": true,
+    "paused": false,
+    "t": 4.32
+   },
+   "tabSequence": [
+    "v",
+    "v",
+    "v",
+    "v",
+    "v",
+    "v",
+    "bp-play",
+    "bp-back",
+    "bp-fwd",
+    "bp-vol",
+    "bp-rate",
+    "bp-minimal",
+    "bp-overlay",
+    "bp-docked"
+   ],
+   "shiftTabTo": "bp-blur",
+   "spaceOnPlay": {
+    "before": {
+     "active": "bp-play",
+     "hasFocus": true,
+     "paused": false,
+     "t": 9.11
+    },
+    "after": {
+     "active": "bp-play",
+     "hasFocus": true,
+     "paused": true,
+     "t": 9.11
+    },
+    "toggled": true
+   },
+   "enterOnFwd": {
+    "before": {
+     "active": "bp-fwd",
+     "hasFocus": true,
+     "paused": true,
+     "t": 9.11
+    },
+    "after": {
+     "active": "bp-fwd",
+     "hasFocus": true,
+     "paused": true,
+     "t": 19.11
+    },
+    "jumped": true
+   },
+   "shortcutK": {
+    "toggled": true,
+    "after": {
+     "active": "BODY",
+     "hasFocus": true,
+     "paused": false,
+     "t": 19.43
+    }
+   },
+   "shortcutArrowRight": {
+    "jumped": true,
+    "before": 19.43,
+    "after": 24.68
+   },
+   "pipOpenAfterEscape": true,
+   "closedAt": 12315,
+   "openerFocusAfterClose": [
+    {
+     "t": 13322,
+     "type": "opener:focus"
+    }
+   ],
+   "events": [
+    {
+     "t": 6008,
+     "type": "opener:blur"
+    },
+    {
+     "openerHasFocus": false,
+     "t": 6010,
+     "type": "pip:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 6023,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "active": "v",
+     "pipHasFocus": true,
+     "t": 6026,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 6335,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 6650,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 6962,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 7271,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 7578,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 7886,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-play",
+     "pipHasFocus": true,
+     "t": 7888,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 8212,
+     "target": "bp-play",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-back",
+     "pipHasFocus": true,
+     "t": 8219,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 8541,
+     "target": "bp-back",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-fwd",
+     "pipHasFocus": true,
+     "t": 8543,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 8850,
+     "target": "bp-fwd",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-vol",
+     "pipHasFocus": true,
+     "t": 8852,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 9158,
+     "target": "bp-vol",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-rate",
+     "pipHasFocus": true,
+     "t": 9160,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 9466,
+     "target": "bp-rate",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-minimal",
+     "pipHasFocus": true,
+     "t": 9468,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 9775,
+     "target": "bp-minimal",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-overlay",
+     "pipHasFocus": true,
+     "t": 9778,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 10091,
+     "target": "bp-overlay",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-docked",
+     "pipHasFocus": true,
+     "t": 10094,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Shift",
+     "t": 10402,
+     "target": "bp-docked",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 10407,
+     "target": "bp-docked",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-blur",
+     "pipHasFocus": true,
+     "t": 10410,
+     "type": "e8:focus"
+    },
+    {
+     "active": "bp-play",
+     "pipHasFocus": true,
+     "t": 10718,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": " ",
+     "t": 10727,
+     "target": "bp-play",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-fwd",
+     "pipHasFocus": true,
+     "t": 11045,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Enter",
+     "t": 11057,
+     "target": "bp-fwd",
+     "type": "e8:key"
+    },
+    {
+     "action": "toggle",
+     "isTrusted": true,
+     "key": "k",
+     "t": 11371,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "action": "+5s",
+     "isTrusted": true,
+     "key": "ArrowRight",
+     "t": 11684,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Escape",
+     "t": 11996,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "openerHasFocus": false,
+     "t": 12326,
+     "type": "pip:blur"
+    },
+    {
+     "t": 13322,
+     "type": "opener:focus"
+    }
+   ],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 16.0,
+    "audibleSeconds": 9.9,
+    "silenceGapsMsWhilePlaying": [
+     640,
+     40
+    ],
+    "blips": 10,
+    "blipIntervalsMin": 0.99,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-toolbar-command": {
+   "widgetId": null,
+   "bg-command-exec-main": {
+    "activeBefore": true,
+    "at": 1794161510902,
+    "ok": true
+   },
+   "bg-command-tab": {
+    "activeHttpTabs": 1,
+    "allTabs": [
+     {
+      "active": true,
+      "hidden": false,
+      "id": 1,
+      "url": "http://127.0.0.1:47120/site/index.html",
+      "windowId": 1
+     }
+    ],
+    "at": 1794161510751,
+    "found": true,
+    "passedTab": true,
+    "windows": [
+     {
+      "focused": true,
+      "id": 1,
+      "type": "normal"
+     }
+    ]
+   },
+   "pipHandles": 1,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 8.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 6,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-detect": {
+   "detect": {
+    "backdropFilter": true,
+    "captureStream": "function",
+    "containerQueries": true,
+    "hasDocumentPictureInPicture": true,
+    "hasOnEnter": true,
+    "initialWindow": null,
+    "isSecureContext": true,
+    "isTopLevel": true,
+    "mediaSession": true,
+    "mozCaptureStream": "function",
+    "pictureInPictureElement": true,
+    "pictureInPictureEnabled": true,
+    "requestVideoFrameCallback": "function",
+    "requestWindowType": "function",
+    "userActivationApi": true,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0",
+    "videoRequestPictureInPicture": "function"
+   },
+   "noActivation": {
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+    "name": "NotAllowedError",
+    "opened": false
+   },
+   "extension": {
+    "bg-background-direct": {
+     "at": 1794161549725,
+     "has": true,
+     "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+     "name": "NotAllowedError",
+     "ok": false
+    },
+    "cs-isolated-detect": {
+     "extensionPageUrl": "moz-extension://85e55cb0-8058-442e-b9a8-fff9084d24fb/ext-page.html",
+     "has": true,
+     "requestWindowType": "function"
+    },
+    "cs-main-detect": {
+     "has": true,
+     "hasBrowserApi": "undefined"
+    },
+    "tabs-probe": {
+     "activeCurrentWindow": 1,
+     "allTabs": 1,
+     "senderTab": true,
+     "senderTabId": 1
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  }
+ },
+ "perf": []
+}

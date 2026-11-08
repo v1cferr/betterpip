@@ -1,0 +1,872 @@
+{
+ "meta": {
+  "label": "zen-e7e8",
+  "browser": "/nix/store/lb24swp3dfiamis03h5482jdhfyccp5j-zen-beta-guarded/bin/zen-beta",
+  "headless": false,
+  "date": "2026-11-08T15:10:20-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "sway-headless",
+  "wayland_display": true,
+  "display": null,
+  "versionString": "Mozilla Zen 1.24b",
+  "browserName": "firefox",
+  "browserVersion": "1.24b",
+  "platformName": "linux",
+  "note": "E7 (CSP), E8 (keyboard focus) and tab-visibility reruns, 2026-11-08; complements zen-1.24b-wayland-isolated.json. E8 here used 14 Tab presses as in the Firefox file."
+ },
+ "scenarios": {
+  "E7-csp-none": {
+   "policy": "none",
+   "playable": {
+    "error": null,
+    "paused": false,
+    "t": 1.449854
+   },
+   "pageWorld": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": true,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "violations": []
+   },
+   "contentScript": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": true,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "video": {
+     "error": null,
+     "inPip": true,
+     "paused": false,
+     "t0": 3.45,
+     "t1": 5.45
+    },
+    "violations": []
+   },
+   "openerViolations": [],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 14.0,
+    "audibleSeconds": 4.4,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 5,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 6,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 8,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E7-csp-strict": {
+   "policy": "strict",
+   "playable": {
+    "error": null,
+    "paused": false,
+    "t": 1.46275
+   },
+   "pageWorld": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": false,
+     "inline-script": false,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": false,
+     "style-element": false
+    },
+    "imgEvent": "error",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "style-src-elem",
+      "sample": ""
+     },
+     {
+      "blocked": "inline",
+      "directive": "style-src-attr",
+      "sample": ""
+     },
+     {
+      "blocked": "inline",
+      "directive": "script-src-elem",
+      "sample": ""
+     },
+     {
+      "blocked": "data",
+      "directive": "img-src",
+      "sample": ""
+     }
+    ]
+   },
+   "contentScript": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": false,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "video": {
+     "error": null,
+     "inPip": true,
+     "paused": false,
+     "t0": 3.54,
+     "t1": 5.56
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "script-src-elem",
+      "sample": ""
+     }
+    ]
+   },
+   "openerViolations": [],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 14.0,
+    "audibleSeconds": 4.6,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 5,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 9,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 11,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E7-csp-tt": {
+   "policy": "tt",
+   "playable": {
+    "error": null,
+    "paused": false,
+    "t": 1.486229
+   },
+   "pageWorld": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": false,
+     "inline-script": false,
+     "innerHTML": false,
+     "link": true,
+     "style-attr": false,
+     "style-element": false
+    },
+    "imgEvent": "error",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": {
+      "message": "HTMLScriptElement.textContent setter: Sink type mismatch violation blocked by CSP",
+      "name": "TypeError"
+     },
+     "innerHTML": {
+      "message": "Element.innerHTML setter: Sink type mismatch violation blocked by CSP",
+      "name": "TypeError"
+     },
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "style-src-elem",
+      "sample": ""
+     },
+     {
+      "blocked": "inline",
+      "directive": "style-src-attr",
+      "sample": ""
+     },
+     {
+      "blocked": "trusted-types-sink",
+      "directive": "require-trusted-types-for",
+      "sample": "HTMLScriptElement textContent|window.__i"
+     },
+     {
+      "blocked": "trusted-types-sink",
+      "directive": "require-trusted-types-for",
+      "sample": "Element innerHTML|<b id=\"m-inner\">x</b>"
+     },
+     {
+      "blocked": "data",
+      "directive": "img-src",
+      "sample": ""
+     }
+    ]
+   },
+   "contentScript": {
+    "applied": {
+     "adopted": true,
+     "cssom": true,
+     "img-data": true,
+     "inline-script": false,
+     "innerHTML": true,
+     "link": true,
+     "style-attr": true,
+     "style-element": true
+    },
+    "imgEvent": "load",
+    "linkEvent": "load",
+    "ok": true,
+    "tries": {
+     "adopted": "ok",
+     "cssom": "ok",
+     "img-data": "ok",
+     "inline-script": "ok",
+     "innerHTML": "ok",
+     "link": "ok",
+     "style-attr": "ok",
+     "style-element": "ok"
+    },
+    "video": {
+     "error": null,
+     "inPip": true,
+     "paused": false,
+     "t0": 4.04,
+     "t1": 6.03
+    },
+    "violations": [
+     {
+      "blocked": "inline",
+      "directive": "script-src-elem",
+      "sample": ""
+     }
+    ]
+   },
+   "openerViolations": [],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 16.0,
+    "audibleSeconds": 6.1,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 7,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 12,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 14,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E8-keyboard-focus": {
+   "atOpen": {
+    "openerHasFocus": true,
+    "pipHasFocus": false
+   },
+   "afterOpen": {
+    "active": "BODY",
+    "openerHasFocus": true,
+    "pipHasFocus": false
+   },
+   "afterSwitch": {
+    "active": "BODY",
+    "hasFocus": true,
+    "paused": false,
+    "t": 5.03
+   },
+   "tabSequence": [
+    "v",
+    "v",
+    "v",
+    "v",
+    "v",
+    "v",
+    "bp-play",
+    "bp-back",
+    "bp-fwd",
+    "bp-vol",
+    "bp-rate",
+    "bp-minimal",
+    "bp-overlay",
+    "bp-docked"
+   ],
+   "shiftTabTo": "bp-blur",
+   "spaceOnPlay": {
+    "before": {
+     "active": "bp-play",
+     "hasFocus": true,
+     "paused": false,
+     "t": 9.89
+    },
+    "after": {
+     "active": "bp-play",
+     "hasFocus": true,
+     "paused": true,
+     "t": 9.89
+    },
+    "toggled": true
+   },
+   "enterOnFwd": {
+    "before": {
+     "active": "bp-fwd",
+     "hasFocus": true,
+     "paused": true,
+     "t": 9.89
+    },
+    "after": {
+     "active": "bp-fwd",
+     "hasFocus": true,
+     "paused": true,
+     "t": 19.89
+    },
+    "jumped": true
+   },
+   "shortcutK": {
+    "toggled": true,
+    "after": {
+     "active": "BODY",
+     "hasFocus": true,
+     "paused": false,
+     "t": 20.19
+    }
+   },
+   "shortcutArrowRight": {
+    "jumped": true,
+    "before": 20.19,
+    "after": 25.41
+   },
+   "pipOpenAfterEscape": true,
+   "closedAt": 14059,
+   "openerFocusAfterClose": [
+    {
+     "t": 15087,
+     "type": "opener:focus"
+    }
+   ],
+   "events": [
+    {
+     "t": 7650,
+     "type": "opener:blur"
+    },
+    {
+     "openerHasFocus": false,
+     "t": 7653,
+     "type": "pip:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 7670,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "active": "v",
+     "pipHasFocus": true,
+     "t": 7672,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 7983,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 8295,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 8607,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 8916,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 9241,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 9558,
+     "target": "v",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-play",
+     "pipHasFocus": true,
+     "t": 9561,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 9897,
+     "target": "bp-play",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-back",
+     "pipHasFocus": true,
+     "t": 9899,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 10210,
+     "target": "bp-back",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-fwd",
+     "pipHasFocus": true,
+     "t": 10211,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 10521,
+     "target": "bp-fwd",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-vol",
+     "pipHasFocus": true,
+     "t": 10523,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 10835,
+     "target": "bp-vol",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-rate",
+     "pipHasFocus": true,
+     "t": 10837,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 11145,
+     "target": "bp-rate",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-minimal",
+     "pipHasFocus": true,
+     "t": 11147,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 11455,
+     "target": "bp-minimal",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-overlay",
+     "pipHasFocus": true,
+     "t": 11457,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 11770,
+     "target": "bp-overlay",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-docked",
+     "pipHasFocus": true,
+     "t": 11772,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Shift",
+     "t": 12093,
+     "target": "bp-docked",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Tab",
+     "t": 12105,
+     "target": "bp-docked",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-blur",
+     "pipHasFocus": true,
+     "t": 12114,
+     "type": "e8:focus"
+    },
+    {
+     "active": "bp-play",
+     "pipHasFocus": true,
+     "t": 12440,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": " ",
+     "t": 12448,
+     "target": "bp-play",
+     "type": "e8:key"
+    },
+    {
+     "active": "bp-fwd",
+     "pipHasFocus": true,
+     "t": 12770,
+     "type": "e8:focus"
+    },
+    {
+     "isTrusted": true,
+     "key": "Enter",
+     "t": 12777,
+     "target": "bp-fwd",
+     "type": "e8:key"
+    },
+    {
+     "action": "toggle",
+     "isTrusted": true,
+     "key": "k",
+     "t": 13087,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "action": "+5s",
+     "isTrusted": true,
+     "key": "ArrowRight",
+     "t": 13409,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "isTrusted": true,
+     "key": "Escape",
+     "t": 13716,
+     "target": "BODY",
+     "type": "e8:key"
+    },
+    {
+     "openerHasFocus": false,
+     "t": 14078,
+     "type": "pip:blur"
+    },
+    {
+     "t": 15087,
+     "type": "opener:focus"
+    }
+   ],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 22.0,
+    "audibleSeconds": 10.8,
+    "silenceGapsMsWhilePlaying": [
+     630,
+     70
+    ],
+    "blips": 11,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.71,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 15,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-toolbar-command": {
+   "widgetId": "m0-probe_betterpip_invalid-browser-action",
+   "bg-command-exec-main": {
+    "at": 1794161429506,
+    "message": "no active tab found",
+    "ok": false
+   },
+   "bg-command-tab": {
+    "activeHttpTabs": 0,
+    "allTabs": [],
+    "at": 1794161429505,
+    "found": false,
+    "passedTab": false,
+    "windows": [
+     {
+      "focused": true,
+      "id": 1,
+      "type": "normal"
+     }
+    ]
+   },
+   "pipHandles": 0,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 10.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-detect": {
+   "detect": {
+    "backdropFilter": true,
+    "captureStream": "function",
+    "containerQueries": true,
+    "hasDocumentPictureInPicture": true,
+    "hasOnEnter": true,
+    "initialWindow": null,
+    "isSecureContext": true,
+    "isTopLevel": true,
+    "mediaSession": true,
+    "mozCaptureStream": "function",
+    "pictureInPictureElement": true,
+    "pictureInPictureEnabled": true,
+    "requestVideoFrameCallback": "function",
+    "requestWindowType": "function",
+    "userActivationApi": true,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0",
+    "videoRequestPictureInPicture": "function"
+   },
+   "noActivation": {
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+    "name": "NotAllowedError",
+    "opened": false
+   },
+   "extension": {
+    "bg-background-direct": {
+     "at": 1794161543827,
+     "has": true,
+     "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+     "name": "NotAllowedError",
+     "ok": false
+    },
+    "cs-isolated-detect": {
+     "extensionPageUrl": "moz-extension://402d17a8-c9cc-4c6f-bd47-a1d552d6db1e/ext-page.html",
+     "has": true,
+     "requestWindowType": "function"
+    },
+    "cs-main-detect": {
+     "has": true,
+     "hasBrowserApi": "undefined"
+    },
+    "tabs-probe": {
+     "activeCurrentWindow": 0,
+     "allTabs": 0,
+     "senderTab": false
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 8.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "zen-beta",
+     "title": "Zen Browser",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  }
+ },
+ "perf": []
+}
