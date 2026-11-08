@@ -27,7 +27,7 @@ See [architecture decision and boundaries](docs/ARCHITECTURE.md) and [Claude Cod
 
 ## M0 — Feasibility
 
-Produce a dated browser/OS/context matrix and an architecture decision. Validate interaction, always-on-top, opening/closing, media state preservation, permissions and fallback. A failed central requirement triggers scope review before M1. No Firefox/Zen API support is claimed yet.
+Produce a dated browser/OS/context matrix and an architecture decision. Validate interaction, always-on-top, opening/closing, **one interactive window containing video + panels**, manual window resizing and internal layout responsiveness, media state preservation, permissions and fallback. A failed central requirement triggers scope review before M1. No Firefox/Zen API support is claimed yet.
 
 ## M1 — Foundation and generic core
 
@@ -35,7 +35,9 @@ Define capability-driven contracts, secure page/extension messaging and window b
 
 ## M2 — Firefox/Zen MVP
 
-First adapter: YouTube, including SPA navigation and chapter/timestamp sources. Normalize chapters and available subtitle tracks. A timestamp of 03:27 seeks to 207 seconds. Test malformed/duplicate timestamps, missing chapters, live media and unavailable capabilities. Review compact/expanded layouts, themes, keyboard shortcuts, focus and accessibility.
+First adapter: YouTube, including SPA navigation and chapter/timestamp sources. Normalize chapters and available subtitle tracks. A timestamp of 03:27 seeks to 207 seconds. Test malformed/duplicate timestamps, missing chapters, live media and unavailable capabilities.
+
+**Single-window adaptive UX ([specification](docs/UX.md)):** Minimal (video-first), Overlay / Glass (tools over video), and Docked / Split (video left, tools right) **inside one manually resizable PiP window**. Switching modes and resizing must not create windows, resize outer bounds on its own, restart streams, stretch/crop video by default or permanently hide essential controls. On narrow dimensions, degrade Docked to Overlay/Minimal while preserving user preference. Accessible focus, keyboard interaction, contrast/opacity, reduced motion and affordable glass compositing are acceptance criteria for V1C-125. Comments are deferred.
 
 ## M3 — Quality and alpha readiness
 
@@ -47,7 +49,7 @@ Evaluate API/Manifest/background differences and retain shared core behavior wit
 
 ## Deferred scope
 
-Public plugin ecosystem, chat, AI/transcription, screenshots and next-video navigation need separate refinement. Protected/inaccessible media is a documented compatibility boundary; universal coverage is not an acceptance promise.
+YouTube comments, playlists, public plugin ecosystem, chat, AI/transcription, screenshots and next-video navigation need separate refinement. These would use the same tool layer if feasible, not an extra window. Protected/inaccessible media is a documented compatibility boundary; universal coverage is not an acceptance promise.
 
 ## Definition of done
 
