@@ -29,6 +29,19 @@ The intended player shows the current chapter, a clickable chapter list and prev
 - Optional site adapters: YouTube first; Vimeo, Twitch and educational players are later candidates.
 - Local preferences, minimal permissions, no required account/backend and no telemetry by default.
 
+## Adaptive single-window player (UX decision, 2026-11-08)
+
+BetterPiP is **one manually resizable PiP window**, not a separate video window plus extra tool windows. The video remains primary. The interface rearranges **inside the size chosen by the user** (subject to browser/OS limits); opening chapters or subtitles must not automatically enlarge the outer window.
+
+- **Minimal:** near-unobstructed video, with essential controls available contextually.
+- **Overlay / Glass:** tools appear *over the video* in an interactive, dismissible translucent panel; readable glass styling with optional limited blur and accessible contrast.
+- **Docked / Split:** video and tools share the **same window**, video on the left and scrollable panel on the right; keep the media aspect ratio.
+- Responsive container-based sizing: when the window is too small for Docked, temporarily use Overlay/Minimal; never crop or stretch the source video merely to make room.
+- A common capability-aware tool layer serves playback controls, chapters/timestamps and available captions. YouTube comments and other webpage-adjacent tools are **future integrations, not MVP**.
+- Avoid unnecessary compositing/blur and framework injection into normal pages; measure impact during resizing, Overlay and Docked usage.
+
+See the [detailed UX specification](docs/UX.md) and [architecture](docs/ARCHITECTURE.md). **Feasibility must verify** that a real Firefox/Zen PiP window can render this interactive single-window experience before claiming support.
+
 ## Feasibility first
 
 The first milestone must validate interactive PiP and always-on-top behavior on actual Firefox and Zen versions. Do not assume Document Picture-in-Picture support from the earlier discussion or from another browser's support.
