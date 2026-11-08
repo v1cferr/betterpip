@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "BetterPiP pin-control probe (V1C-129)",
+  "version": "0.0.1",
+  "description": "Experimental probe: PiP pin toggles through a native messaging helper. Not product code.",
+  "browser_specific_settings": {
+    "gecko": { "id": "pin-probe@betterpip.invalid", "strict_min_version": "128.0" }
+  },
+  "permissions": ["nativeMessaging"],
+  "host_permissions": ["http://127.0.0.1/*"],
+  "background": { "scripts": ["background.js"] },
+  "content_scripts": [
+    { "matches": ["http://127.0.0.1/*"], "js": ["content.js"], "run_at": "document_idle" }
+  ]
+}
