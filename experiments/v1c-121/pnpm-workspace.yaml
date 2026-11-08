@@ -1,0 +1,5 @@
+allowBuilds:
+  esbuild: set this to true or false
+# esbuild comes from nixpkgs (ESBUILD_BINARY_PATH); its download script is not needed.
+ignoredBuiltDependencies:
+  - esbuild

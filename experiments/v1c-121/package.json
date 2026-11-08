@@ -1,0 +1,11 @@
+{
+  "name": "betterpip-v1c-121-svelte-xray",
+  "private": true,
+  "description": "Throw-away spike (V1C-121): Svelte 5 mounted from an isolated content script into a Document PiP window. Not product code.",
+  "type": "module",
+  "scripts": { "build": "node build.mjs" },
+  "devDependencies": {
+    "esbuild": "0.27.2",
+    "svelte": "5.57.3"
+  }
+}

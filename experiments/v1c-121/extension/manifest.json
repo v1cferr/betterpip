@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "BetterPiP Svelte/Xray probe (V1C-121)",
+  "version": "0.0.1",
+  "description": "Experimental probe: Svelte 5 mounted from an isolated content script into Document PiP. Not product code.",
+  "browser_specific_settings": { "gecko": { "id": "svelte-probe@betterpip.invalid", "strict_min_version": "128.0" } },
+  "host_permissions": ["http://127.0.0.1/*"],
+  "content_scripts": [
+    { "matches": ["http://127.0.0.1/*"], "js": ["content.js"], "run_at": "document_idle" }
+  ]
+}
