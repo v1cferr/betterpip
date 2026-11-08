@@ -323,6 +323,25 @@ minified, 24 KB gzip, for the Svelte runtime plus one component with a transitio
   session running, and zero listeners after `dispose()`.
 - The pin control and its helper follow ADR 0002. Packaging the helper is V1C-127.
 
+## 13a. Preview build (2026-11-08)
+
+The first runnable build follows this ADR. Details are in [DEVELOPMENT.md](../DEVELOPMENT.md).
+Deviations and findings:
+
+- **TypeScript 6.0.3, not 7.x.** `svelte-check` 4.7 supports TypeScript 5 and 6 only.
+- **The renderer is still bundled with the detector** in one injected script (≈ 223 kB).
+  That is acceptable while it is injected only after a user action, but §12 still wants
+  the split (open question 1).
+- **Shortcut gesture:** on Firefox 159, the extension shortcut opened Document PiP
+  directly from the injected content script (`navigator.userActivation.isActive` was
+  true). This partly answers open question 2. The in-page button stays as the fallback.
+  In the Zen lab attach mode the command still reaches no tab, so the background now falls
+  back to the active tab of the focused window.
+- **Svelte inside PiP:** `<svelte:document>` and `<svelte:window>` bind the content
+  script's globals, i.e. the **host page**. PiP-document listeners must be added on
+  `element.ownerDocument`. Bits UI Tabs and ToggleGroup work in PiP; components that use
+  global `document` or portals are unverified.
+
 ## 14. Open questions
 
 1. Can the renderer chunk be loaded lazily from a content script in Firefox, for example
