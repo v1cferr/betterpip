@@ -75,3 +75,13 @@
   }
   .bp-range:focus-visible { outline: none; }
 }
+
+/* The page's own <video> on the stage. Sites keep rewriting its inline size and position
+   (YouTube sets width/height/left/top on every resize), so these rules win with !important:
+   the video always fills the stage, centered, at its own aspect ratio. */
+.bp-stage { position: absolute; inset: 0; background: #000; }
+.bp-stage > video {
+  position: absolute !important; inset: 0 !important; left: 0 !important; top: 0 !important;
+  width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important;
+  margin: 0 !important; transform: none !important; object-fit: contain !important;
+}
