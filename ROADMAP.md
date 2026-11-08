@@ -19,6 +19,12 @@ Milestones represent acceptance gates, not scheduled releases. Jira items carry 
 | [V1C-127](https://v1cferr.atlassian.net/browse/V1C-127) | M3 | Definir contribuição, manutenção e distribuição Firefox/Zen | V1C-120, V1C-126 |
 | [V1C-128](https://v1cferr.atlassian.net/browse/V1C-128) | M4 | Avaliar portabilidade Chromium e expansão de adaptadores | V1C-126, V1C-127 |
 
+## Technology decision (2026-11-08)
+
+Initial stack: **WXT + TypeScript + Svelte 5 + shadcn-svelte/Bits UI + Tailwind CSS v4 + Lucide Svelte + native Svelte transitions (Motion selectively) + pnpm**. Content scripts, HTML5 detection, media/session core, capabilities and site adapters use framework-free TypeScript. Svelte is loaded **only for interactive PiP UI on demand**. Vitest, Playwright and GitHub Actions are planned, not installed. No Next.js/React/SvelteKit/backend is needed for the MVP.
+
+See [architecture decision and boundaries](docs/ARCHITECTURE.md) and [Claude Code instructions](CLAUDE.md). **M0 remains the blocking gate**: verify actual Firefox/Zen interactive PiP and always-on-top behavior before initiating implementation. Establish performance baselines (bundle size, injected footprint, idle CPU/memory, active playback/update cost and listener leaks) with reproducible fixtures; don't assert unmeasured thresholds.
+
 ## M0 — Feasibility
 
 Produce a dated browser/OS/context matrix and an architecture decision. Validate interaction, always-on-top, opening/closing, media state preservation, permissions and fallback. A failed central requirement triggers scope review before M1. No Firefox/Zen API support is claimed yet.
