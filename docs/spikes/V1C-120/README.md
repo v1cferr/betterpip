@@ -194,18 +194,26 @@ order-of-magnitude, single-sample values.
 
 ## Manual checks (pending)
 
-These cannot be automated without opening windows on the user's desktop. Run them on the
-Hyprland session, with the fixture page served locally (`python3 experiments/m0/harness/server.py
-experiments/m0 47120 /tmp/m0-req.jsonl`, then open `http://127.0.0.1:47120/site/index.html`),
-in a **separate temporary profile** (`firefox -no-remote -profile $(mktemp -d)`; for Zen,
-`zen-beta -no-remote -profile $(mktemp -d)`) with the probe extension loaded through
-`about:debugging` → *Load Temporary Add-on* → `experiments/m0/extension/manifest.json`.
+These cannot be automated without opening windows on the user's desktop. One command runs
+them all, Firefox first, then Zen, each in a throw-away profile with the probe extension:
+
+```sh
+experiments/m0/harness/manual-check.sh   # or: manual-check.sh firefox | zen
+```
+
+The terminal walks through each check and records the answer, plus what the script can
+observe on its own: `hyprctl clients` state of the PiP window, page and media events, and
+extension results. Output: `experiments/m0/out/manual-<browser>.json`. For M3 it floats and
+pins only the PiP window at runtime with Hyprland 0.57's Lua dispatchers
+(`hyprctl dispatch 'hl.dsp.window.float({ action = "enable", window = "address:…" })'` and
+`hl.dsp.window.pin`), then reads back `floating`/`pinned`; nothing is written to the config.
+Older `hyprctl dispatch pin title:…` syntax no longer parses on 0.57.
 
 | ID | Procedure | Expected | FX | Zen |
 | --- | --- | --- | --- | --- |
 | M1 | Click *E3/E4: move video + tools*. Note whether Hyprland floats the PiP window. | Window opens; record float/tile | NOT TESTED | NOT TESTED |
 | M2 | Without any rule, focus another application over the PiP | Record whether PiP stays visible | NOT TESTED | NOT TESTED |
-| M3 | Float and pin **only that window, at runtime** (e.g. `hyprctl dispatch setfloating title:^BetterPiP` then `hyprctl dispatch pin title:^BetterPiP`; check the dispatcher syntax for the installed Hyprland). Nothing is written to the config. A persistent rule matching title `^BetterPiP` is the user's choice. | PiP floats and is pinned | NOT TESTED | NOT TESTED |
+| M3 | Float and pin **only that window, at runtime** (done by the script, see above). Nothing is written to the config. A persistent rule matching title `^BetterPiP` is the user's choice. | PiP floats and is pinned | NOT TESTED | NOT TESTED |
 | M4 | With M3: switch workspace, focus other apps, fullscreen another app | PiP stays visible above other windows (record fullscreen behaviour) | NOT TESTED | NOT TESTED |
 | M5 | Drag PiP edges and corners | Layout goes Docked → Overlay → Minimal, no overflow, playback continues | NOT TESTED | NOT TESTED |
 | M6 | Minimise/hide the browser window, switch tabs, play for 1 min | PiP keeps playing; audio continuous | NOT TESTED | NOT TESTED |

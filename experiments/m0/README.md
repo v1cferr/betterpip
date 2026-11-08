@@ -17,6 +17,7 @@ code**: no WXT, no Svelte, no build step. Findings live in
 | `extension/` | Temporary MV3 probe: isolated, `wrappedJSObject`, MAIN-world, keydown, background, command → `scripting.executeScript`, extension page and `windows.create` contexts. Also the content-script CSP probe (`cs-csp.js`, E7) and a tab-visibility probe. |
 | `harness/server.py` | Static server on 127.0.0.1 that logs every media request (evidence for "no second stream"). |
 | `harness/run_lab.py` | Selenium + geckodriver driver; writes one JSON file per browser run. |
+| `harness/manual-check.sh`, `harness/manual_check.py` | Guided manual checks M1–M8 on the host Hyprland desktop (opens real windows on purpose). |
 | `harness/isolated-wayland.sh` | Runs a command in an invisible headless sway session with a temporary null audio sink. |
 | `results/` | Curated JSON output of the runs cited by the spike report. |
 
