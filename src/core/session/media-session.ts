@@ -16,6 +16,7 @@ export class MediaSession {
   private listeners = new Set<(e: MediaEvent) => void>();
   private waiting = false;
   private adapterCaps: CapabilityMap = {};
+  private adapterChapters: Chapter[] | null = null;
 
   constructor(readonly video: HTMLVideoElement, private readonly scope: Scope) {
     const opts = { signal: scope.signal };
@@ -44,6 +45,12 @@ export class MediaSession {
   setAdapterCapabilities(caps: CapabilityMap) {
     this.adapterCaps = caps;
     this.emitCapabilities();
+  }
+
+  /** Chapters from a site adapter; they replace the generic track-based ones. */
+  setAdapterChapters(items: Chapter[]) {
+    this.adapterChapters = items;
+    this.emit({ type: "chapters", items });
   }
 
   capabilities(): CapabilityMap {
@@ -115,6 +122,7 @@ export class MediaSession {
 
   /** Generic chapters: a <track kind="chapters"> on the element, when the site provides one. */
   async chapters(): Promise<Chapter[]> {
+    if (this.adapterChapters) return this.adapterChapters;
     const track = this.textTracks().find((t) => t.kind === "chapters");
     if (!track) return [];
     if (track.mode === "disabled") track.mode = "hidden";

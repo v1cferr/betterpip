@@ -14,6 +14,8 @@ export interface AdapterContext {
 export interface AdapterHandle extends Disposable {
   capabilities(): CapabilityMap;
   chapters?(): Promise<Chapter[]>;
+  /** Called when the chapter list changes, e.g. after in-page navigation to another video. */
+  onChaptersChanged?(fn: (items: Chapter[]) => void): void;
   onElementAway?(): void;
   onElementBack?(): void;
 }

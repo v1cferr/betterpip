@@ -3,6 +3,7 @@
 // and on that click (a page gesture) opens Document PiP with the Svelte renderer.
 import { attachAdapter } from "../core/adapters/registry";
 import { ADAPTERS } from "../core/adapters";
+import type { Chapter } from "../core/contracts/commands";
 import { createScope, type Scope } from "../core/contracts/dispose";
 import { findBestVideo } from "../core/discovery/find-video";
 import { MediaSession } from "../core/session/media-session";
@@ -72,7 +73,16 @@ export default defineContentScript({
       }, { once: true });
 
       const adapter = await attachAdapter(ADAPTERS, { video, url: new URL(location.href), scope, log: (e) => console.debug("BetterPiP adapter:", e) });
-      if (adapter.kind === "adapter") session.setAdapterCapabilities(adapter.handle.capabilities());
+      if (adapter.kind === "adapter") {
+        const { handle } = adapter;
+        const apply = (items: Chapter[]) => {
+          session.setAdapterCapabilities(handle.capabilities());
+          session.setAdapterChapters(items);
+        };
+        handle.onChaptersChanged?.(apply);
+        if (handle.chapters) apply(await handle.chapters());
+        else session.setAdapterCapabilities(handle.capabilities());
+      }
     }
   },
 });

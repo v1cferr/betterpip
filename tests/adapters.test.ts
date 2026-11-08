@@ -62,3 +62,21 @@ describe("attachAdapter", () => {
     vi.useRealTimers();
   });
 });
+
+describe("youtube adapter matching", async () => {
+  const { youtube, youtubeVideoId } = await import("../src/core/adapters/youtube");
+  it("matches YouTube pages only", () => {
+    for (const u of ["https://www.youtube.com/watch?v=abc", "https://youtube.com/", "https://m.youtube.com/watch?v=x"]) {
+      expect(youtube.matches(new URL(u))).toBe(true);
+    }
+    for (const u of ["https://music.youtube.com/watch?v=x", "https://youtube.com.evil.example/watch?v=x", "https://example.org/watch?v=x"]) {
+      expect(youtube.matches(new URL(u))).toBe(false);
+    }
+  });
+  it("extracts the video id from watch and live URLs only", () => {
+    expect(youtubeVideoId(new URL("https://www.youtube.com/watch?v=NVUTOpBm258&t=4"))).toBe("NVUTOpBm258");
+    expect(youtubeVideoId(new URL("https://www.youtube.com/live/abcdefghijk?si=1"))).toBe("abcdefghijk");
+    expect(youtubeVideoId(new URL("https://www.youtube.com/?themeRefresh=1"))).toBeNull();
+    expect(youtubeVideoId(new URL("https://example.org/watch?v=x"))).toBeNull();
+  });
+});
