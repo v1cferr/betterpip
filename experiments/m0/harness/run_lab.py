@@ -111,6 +111,10 @@ class Lab:
             o.add_argument("-headless")
         o.set_preference("media.autoplay.default", 0)  # let the fixture play after a click
         o.set_preference("browser.shell.checkDefaultBrowser", False)
+        # Without the isolated null sink (see isolated-wayland.sh), scale the audio output to zero below the DOM, so video.volume and
+        # volumechange still behave normally but nothing reaches the host's speakers.
+        if not os.environ.get("M0_AUDIO_SINK"):
+            o.set_preference("media.volume_scale", "0.0")
         # Chrome-context access is needed only by the toolbar/command probe (E1), test profile only.
         env = {**os.environ, "MOZ_REMOTE_ALLOW_SYSTEM_ACCESS": "1"}
         env.pop("LD_LIBRARY_PATH", None)
@@ -180,6 +184,9 @@ class Lab:
 
     def record(self, sid, **data):
         data["mediaRequestsInScenario"] = len(self.media_requests()) - self.req_mark
+        audio = self.audio_stop()
+        if audio is not None:
+            data["audio"] = audio
         if self.compositor_enabled():
             data["compositor"] = self.compositor()
         self.results["scenarios"][sid] = data
@@ -190,27 +197,130 @@ class Lab:
             return
         try:
             self.req_mark = len(self.media_requests())
+            self.audio_start()
             self.start()
             fn()
         except Exception as e:  # keep going: one failed scenario is still evidence
             self.record(sid, status="ERROR", error=f"{type(e).__name__}: {e}")
         finally:
             self.stop()
+            if getattr(self, "audio_proc", None) and self.audio_proc.poll() is None:
+                self.audio_proc.terminate()
 
-    # -- Hyprland observation (read-only)
+    # -- audio observation (only with the isolated null sink)
+    AUDIO_RATE = 8000
+
+    def audio_start(self):
+        sink = os.environ.get("M0_AUDIO_SINK")
+        self.audio_proc = None
+        if not sink or not shutil.which("parec"):
+            return
+        self.audio_file = Path(tempfile.mkstemp(prefix="m0-audio-", suffix=".raw")[1])
+        self.audio_proc = subprocess.Popen(["parec", "-d", sink + ".monitor", "--raw", "--format=s16le",
+                                            f"--rate={self.AUDIO_RATE}", "--channels=1", str(self.audio_file)])
+
+    def sink_inputs(self):
+        """Audio streams currently playing into the isolated sink (duplicate audio => >1)."""
+        sink = os.environ.get("M0_AUDIO_SINK")
+        if not sink:
+            return None
+        sinks = subprocess.run(["pactl", "-f", "json", "list", "sinks"], capture_output=True, text=True).stdout
+        idx = next((x["index"] for x in json.loads(sinks) if x["name"] == sink), None)
+        inputs = json.loads(subprocess.run(["pactl", "-f", "json", "list", "sink-inputs"], capture_output=True, text=True).stdout)
+        return sum(1 for x in inputs if x.get("sink") == idx)
+
+    def audio_stop(self):
+        """Envelope analysis of the recorded sink monitor.
+
+        The fixture is a continuous 440 Hz bed plus a 50 ms 1 kHz blip every media second.
+        A silence gap while playing means an interruption; blip spacing well under the
+        expected 1 s / playbackRate would mean a second, out-of-phase copy of the audio.
+        """
+        if not getattr(self, "audio_proc", None):
+            return None
+        time.sleep(0.3)
+        self.audio_proc.terminate()
+        self.audio_proc.wait(timeout=5)
+        import array
+        data = array.array("h", self.audio_file.read_bytes()[: (self.audio_file.stat().st_size // 2) * 2])
+        self.audio_file.unlink(missing_ok=True)
+        win = self.AUDIO_RATE // 100  # 10 ms
+        env = [(sum(v * v for v in data[i:i + win]) / win) ** 0.5 for i in range(0, len(data) - win, win)]
+        if not env:
+            return {"seconds": 0}
+        peak = max(env)
+        bed = sorted(env)[int(len(env) * 0.6)]  # typical level while the tone bed plays
+        audible = [e > max(200, bed * 0.3) for e in env]
+        first = next((i for i, a in enumerate(audible) if a), None)
+        last = len(audible) - 1 - next((i for i, a in enumerate(reversed(audible)) if a), 0)
+        gaps, run = [], 0
+        for a in audible[first:last + 1] if first is not None else []:
+            if not a:
+                run += 1
+            else:
+                if run:
+                    gaps.append(run * 10)
+                run = 0
+        thr = bed + (peak - bed) * 0.5
+        onsets = []
+        for i in range(1, len(env)):  # rising edges, debounced to one per 150 ms
+            if env[i] > thr >= env[i - 1] and (not onsets or i - onsets[-1] >= 15):
+                onsets.append(i)
+        intervals = [round((b - a) / 100, 2) for a, b in zip(onsets, onsets[1:])]
+        return {"seconds": round(len(data) / self.AUDIO_RATE, 1), "audibleSeconds": round(sum(audible) / 100, 1),
+                "silenceGapsMsWhilePlaying": sorted(gaps, reverse=True)[:8], "blips": len(onsets),
+                "blipIntervalsMin": min(intervals) if intervals else None, "blipIntervalsMax": max(intervals) if intervals else None,
+                "blipIntervalsUnder0_5s": sum(1 for x in intervals if x < 0.5)}
+
+    # -- compositor observation
+    # "sway": the isolated headless session from isolated-wayland.sh (default when present).
+    # "hyprland": the HOST desktop; only with --host-compositor, because it opens real
+    # windows on the user's workspace.
+    def compositor_kind(self):
+        if self.args.headless:
+            return None
+        if os.environ.get("XDG_CURRENT_DESKTOP") == "sway-headless" and os.environ.get("SWAYSOCK"):
+            return "sway"
+        if self.args.host_compositor and os.environ.get("HYPRLAND_INSTANCE_SIGNATURE"):
+            return "hyprland"
+        return None
+
     def compositor_enabled(self):
-        return not self.args.headless and bool(os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")) and shutil.which("hyprctl")
+        return self.compositor_kind() is not None
 
     def compositor(self):
-        """Browser-owned toplevels as Hyprland sees them: floating/pinned/size/xwayland."""
+        """Browser-owned toplevels as the compositor sees them (floating/sticky/pinned/size)."""
+        kind = self.compositor_kind()
         try:
-            clients = json.loads(subprocess.run(["hyprctl", "clients", "-j"], capture_output=True, text=True, timeout=5).stdout)
+            if kind == "hyprland":
+                clients = json.loads(subprocess.run(["hyprctl", "clients", "-j"], capture_output=True, text=True, timeout=5).stdout)
+                return [{"id": c.get("address"), "app_id": c.get("class"), "title": c.get("title"), "floating": c.get("floating"),
+                         "pinned": c.get("pinned"), "size": c.get("size"), "xwayland": c.get("xwayland")}
+                        for c in clients if c.get("pid") == self.browser_pid]
+            if kind == "sway":
+                tree = json.loads(subprocess.run(["swaymsg", "-t", "get_tree", "-r"], capture_output=True, text=True, timeout=5).stdout)
+                out = []
+                def walk(n, floating=False):
+                    if n.get("pid") == self.browser_pid:
+                        out.append({"id": n["id"], "app_id": n.get("app_id"), "title": n.get("name"), "floating": floating or n.get("type") == "floating_con",
+                                    "sticky": n.get("sticky"), "size": [n["rect"]["width"], n["rect"]["height"]], "shell": n.get("shell")})
+                    for c in n.get("nodes", []):
+                        walk(c, floating)
+                    for c in n.get("floating_nodes", []):
+                        walk(c, True)
+                walk(tree)
+                return out
         except (OSError, ValueError, subprocess.TimeoutExpired) as e:
             return {"error": str(e)}
-        pid = self.browser_pid
-        return [{k: c.get(k) for k in ("address", "class", "title", "floating", "pinned", "xwayland", "size", "at", "workspace", "fullscreen")}
-                | {"workspace": c.get("workspace", {}).get("name")}
-                for c in clients if c.get("pid") == pid]
+        return None
+
+    def compositor_resize(self, win_id, w, h):
+        if self.compositor_kind() == "hyprland":
+            cmd = ["hyprctl", "dispatch", "resizewindowpixel", f"exact {w} {h},address:{win_id}"]
+        else:
+            cmd = ["swaymsg", f"[con_id={win_id}]", "resize", "set", "width", f"{w}px", "height", f"{h}px"]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        return (r.stdout + r.stderr).strip()[:200]
 
     # ------------------------------------------------------------------ scenarios
     def e1_detect(self):
@@ -314,6 +424,7 @@ class Lab:
     def e3_video(self):
         pip, n_before, before_click = self.open_video()
         e3 = self.m0("results.e3")
+        streams = {"afterMove": self.sink_inputs()}
         time.sleep(3)
         during = self.m0("snapshot()")
         for b in ["bp-play", "bp-play", "bp-fwd", "bp-vol", "bp-rate"]:
@@ -329,13 +440,28 @@ class Lab:
         self.d.switch_to.window(self.main)
         time.sleep(1.5)
         restore = self.m0("results.restore")
+        streams["afterReturn"] = self.sink_inputs()
         time.sleep(2)
         after_return = self.m0("snapshot()")
         n_after = len(self.media_requests())
         ev = [e for e in self.m0("events") if e["type"].startswith(("media:", "e3:", "pip:"))]
         self.record("E3-video-move", beforeClick=before_click, e3=e3, during=during, afterControls=after_controls,
                     still=still, restore=restore, afterReturn=after_return, mediaRequestsBeforeMove=n_before,
-                    mediaRequestsAfterAll=n_after, mediaRequests=self.media_requests(), events=ev)
+                    mediaRequestsAfterAll=n_after, audioStreamsOnSink=streams, events=ev)
+
+    def e3_audio(self):
+        """Audio continuity across move and return only: no seeks, pauses or rate changes."""
+        pip, _, _ = self.open_video(play_seconds=4)
+        streams = {"afterMove": self.sink_inputs()}
+        time.sleep(4)
+        self.d.switch_to.window(pip)
+        self.d.close()
+        self.d.switch_to.window(self.main)
+        time.sleep(1)
+        streams["afterReturn"] = self.sink_inputs()
+        time.sleep(3)
+        ev = [e["type"] for e in self.m0("events") if e["type"].startswith(("media:", "pip:", "e3:"))]
+        self.record("E3-audio-continuity", audioStreamsOnSink=streams, media=self.m0("snapshot()"), events=ev)
 
     def e4_layout(self):
         pip, _, _ = self.open_video()
@@ -404,23 +530,23 @@ class Lab:
         self.record("E5-lifecycle-automated", **out)
 
     def e5_compositor(self):
-        """Hyprland: how the PiP toplevel is managed, and a compositor-side resize (like a drag)."""
+        """How the compositor manages the PiP toplevel, plus compositor-side resizes (like a drag)."""
         pip, _, _ = self.open_video()
         self.click("bp-docked", pip)
         time.sleep(0.5)
-        wins = self.compositor()
-        target = next((w for w in wins if w["title"] not in ("BetterPiP M0 lab (V1C-120)",) and "M0 lab" not in (w["title"] or "")), None)
-        out = {"windows": wins, "pipWindow": target, "resizes": []}
+        wins = self.compositor() or []
+        target = next((w for w in wins if "M0 lab" not in (w.get("title") or "")), None)
+        out = {"kind": self.compositor_kind(), "windows": wins, "pipWindow": target, "resizes": []}
         if target:
             for w, h in [(900, 420), (480, 320), (280, 180), (700, 400)]:
-                r = subprocess.run(["hyprctl", "dispatch", "resizewindowpixel", f"exact {w} {h},address:{target['address']}"], capture_output=True, text=True)
+                msg = self.compositor_resize(target["id"], w, h)
                 time.sleep(0.8)
                 self.d.switch_to.window(self.main)
                 st = self.js("""const a = window.__m0.pipApi, p = a.pip; return {inner:[p.innerWidth,p.innerHeight], outer:[p.outerWidth,p.outerHeight], effective:a.effectiveMode(), video:a.videoBox()}""")
-                now = next((x for x in self.compositor() if x["address"] == target["address"]), None)
-                out["resizes"].append({"requested": [w, h], "dispatch": r.stdout.strip(), "compositorSize": now and now["size"], "floating": now and now["floating"], **st})
+                now = next((x for x in (self.compositor() or []) if x["id"] == target["id"]), None)
+                out["resizes"].append({"requested": [w, h], "compositorReply": msg, "compositorSize": now and now["size"], "floating": now and now["floating"], **st})
         out["playback"] = self.m0("snapshot()")
-        self.record("E5-compositor-hyprland", **out)
+        self.record("E5-compositor", **out)
 
     def b_native(self):
         self.load()
@@ -536,10 +662,11 @@ class Lab:
         self.run("E1-iframe-cross-origin", self.e1_iframe)
         self.run("E2-html-window", self.e2_html)
         self.run("E3-video-move", self.e3_video)
+        self.run("E3-audio-continuity", self.e3_audio)
         self.run("E4-layout", self.e4_layout)
         self.run("E5-lifecycle-automated", self.e5_lifecycle)
         if self.compositor_enabled():
-            self.run("E5-compositor-hyprland", self.e5_compositor)
+            self.run("E5-compositor", self.e5_compositor)
         self.run("B-native-pip", self.b_native)
         self.run("C-popup-window", self.c_popup)
         if not self.args.headless:
@@ -566,6 +693,8 @@ def main():
     p.add_argument("--out", default=str(LAB / "out"))
     p.add_argument("--only", type=lambda s: s.split(","), default=None)
     p.add_argument("--youtube")
+    p.add_argument("--host-compositor", action="store_true",
+                   help="observe the host Hyprland session (opens windows on the user's desktop)")
     args = p.parse_args()
     lab = Lab(args)
     try:
