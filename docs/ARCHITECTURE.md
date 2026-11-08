@@ -1,6 +1,6 @@
 # BetterPiP — Architecture and Technology Decision
 
-Status: **proposed architecture, approved stack; no implementation yet**. Updated 2026-11-08. The M0 feasibility gate [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120) precedes implementation. See [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119) for canonical project scope and [ROADMAP](../ROADMAP.md) for dependencies.
+Status: **accepted architecture, approved stack; no product code yet**. Updated 2026-11-08. The M0 feasibility gate [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120) passed (**GO**). Decisions: [ADR 0001 — window backend](adr/0001-pip-window-backend.md), [ADR 0002 — pin control](adr/0002-pip-window-pin-control.md), [ADR 0003 — core architecture and contracts](adr/0003-core-architecture.md). See [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119) for canonical project scope and [ROADMAP](../ROADMAP.md) for dependencies.
 
 ## Technology stack
 
@@ -17,7 +17,7 @@ Status: **proposed architecture, approved stack; no implementation yet**. Update
 2. **Media/session core (plain TypeScript):** playback actions/events, lifecycle, cleanup, origin restoration, secure messages; prefer platform events, distinguish VOD/live and unavailable functions.
 3. **Capability registry (plain TypeScript):** expose supported seek, duration, rate, volume, captions and chapters; UI must never imply unsupported controls work.
 4. **Site adapters (plain TypeScript):** progressively enhance known origins (YouTube first), handle SPA navigation, missing metadata and markup changes without breaking generic playback.
-5. **Window backend:** Document PiP vs native PiP vs extension popup based on experimentally verified browser/API capabilities. **An ordinary popup does not guarantee always-on-top**.
+5. **Window backend:** Document PiP vs native PiP vs extension popup based on experimentally verified browser/API capabilities. **An ordinary popup does not guarantee always-on-top**. Decided in [ADR 0001](adr/0001-pip-window-backend.md): Document PiP primary, native video PiP as the video-only fallback, popup rejected. Stacking on Wayland is the compositor's; an optional pin control goes through a native helper ([ADR 0002](adr/0002-pip-window-pin-control.md)).
 6. **PiP renderer + adaptive layout (Svelte 5, loaded on demand):** single-window Minimal / Overlay-Glass / Docked-Split states; responsive composition inside user-selected window bounds, with shared tool panel and capability-driven controls. Preserve the video's aspect ratio and focus/keyboard accessibility. Use localized translucency/optional blur rather than costly full-surface effects; isolate styles from host websites and minimize JS/CSS bundle impact.
 7. **Local settings:** versioned browser storage, minimal origin permissions, explicit grants where possible.
 
@@ -35,7 +35,7 @@ The player must not reset or duplicate streams upon resize, layout change or pan
 
 ## Feasibility gate — V1C-120
 
-On actual Firefox and Zen builds, record OS, browser version and test context (page vs content script vs extension). Check `documentPictureInPicture`, user activation, window ownership/lifecycle, always-on-top **across apps**, original video preservation, duplicate audio/stream behavior, focus restoration, SPA navigation, iframe cross-origin and CSP restrictions. Verify results with reproducible evidence; API presence alone is insufficient. If central interactive always-on-top functionality is not viable, write an ADR, choose an honest fallback or revisit scope before starting M1.
+**Result (2026-11-08): GO** — see the [V1C-120 spike report](spikes/V1C-120/README.md). Original gate text: on actual Firefox and Zen builds, record OS, browser version and test context (page vs content script vs extension). Check `documentPictureInPicture`, user activation, window ownership/lifecycle, always-on-top **across apps**, original video preservation, duplicate audio/stream behavior, focus restoration, SPA navigation, iframe cross-origin and CSP restrictions. Verify results with reproducible evidence; API presence alone is insufficient. If central interactive always-on-top functionality is not viable, write an ADR, choose an honest fallback or revisit scope before starting M1.
 
 ## Performance and quality
 
