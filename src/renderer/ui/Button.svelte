@@ -12,6 +12,7 @@
         outline: "border border-border bg-transparent hover:bg-white/8",
       },
       size: {
+        "icon-sm": "size-7 [&_svg]:size-3.5",
         icon: "size-8 [&_svg]:size-4",
         "icon-lg": "size-10 [&_svg]:size-5",
         sm: "h-7 px-2.5 text-xs [&_svg]:size-3.5",

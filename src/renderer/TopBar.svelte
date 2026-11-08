@@ -1,4 +1,5 @@
-<!-- Top strip over the video: page title, pin toggles (ADR 0002) and return-to-tab. -->
+<!-- Small icon cluster over the video's top-right corner: pin toggles (ADR 0002) and
+     return-to-tab. No title: the window stays video-only (UX.md "Clean view"). -->
 <script lang="ts">
   import Pin from "@lucide/svelte/icons/pin";
   import Layers from "@lucide/svelte/icons/layers";
@@ -11,9 +12,9 @@
   const pinHint = $derived(p.stack.available ? "" : ` — ${p.stack.reason ?? "unavailable"}`);
 </script>
 
-<div class="pointer-events-auto flex items-center gap-1 bg-gradient-to-b from-black/75 to-transparent px-2 pt-1.5 pb-6">
-  <span class="min-w-0 flex-1 truncate px-1 text-xs font-medium text-white/85" title={p.title}>{p.title}</span>
+<div class="pointer-events-auto flex items-center gap-0.5 rounded-lg bg-black/45 p-0.5 backdrop-saturate-150">
   <Button
+    size="icon-sm"
     pressed={p.stack.above}
     aria-pressed={p.stack.above}
     aria-disabled={!p.stack.available}
@@ -23,6 +24,7 @@
     onclick={() => (p.stack.available ? p.setStacking("above", !p.stack.above) : ((p.tab = "window"), (p.panelOpen = true)))}
   ><Pin /></Button>
   <Button
+    size="icon-sm"
     pressed={p.stack.followWorkspaces}
     aria-pressed={p.stack.followWorkspaces}
     aria-disabled={!p.stack.available}
@@ -31,5 +33,5 @@
     title="Show on all workspaces{pinHint}"
     onclick={() => (p.stack.available ? p.setStacking("followWorkspaces", !p.stack.followWorkspaces) : ((p.tab = "window"), (p.panelOpen = true)))}
   ><Layers /></Button>
-  <Button onclick={onClose} aria-label="Return video to the tab" title="Return to tab"><Undo2 /></Button>
+  <Button size="icon-sm" onclick={onClose} aria-label="Return video to the tab" title="Return to tab"><Undo2 /></Button>
 </div>

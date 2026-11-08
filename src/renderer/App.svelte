@@ -12,7 +12,9 @@
 
   let root: HTMLDivElement;
   let stageHost: HTMLDivElement;
-  let chromeVisible = $state(true);
+  // Clean view (UX.md): controls show only while the user is interacting with the window.
+  let chromeVisible = $state(false);
+  let pointerInside = $state(false);
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
 
   const compact = $derived(p.width < 420);
@@ -40,8 +42,19 @@
     chromeVisible = true;
     clearTimeout(hideTimer);
     hideTimer = setTimeout(() => {
-      if (!p.media.paused) chromeVisible = false;
+      // Paused with the pointer over the video: keep the controls up. Keyboard focus on a
+      // control also keeps them, so keyboard users never lose what they are operating.
+      const focused = root.ownerDocument.activeElement;
+      const focusInChrome = !!focused && focused !== root.ownerDocument.body && root.contains(focused) && focused.matches(":focus-visible");
+      if (!(p.media.paused && pointerInside) && !focusInChrome) chromeVisible = false;
     }, 2500);
+  }
+
+  function leave() {
+    pointerInside = false;
+    clearTimeout(hideTimer);
+    const focused = root.ownerDocument.activeElement;
+    if (!(focused && root.contains(focused) && focused.matches(":focus-visible"))) chromeVisible = false;
   }
 
   function onKey(e: KeyboardEvent) {
@@ -66,10 +79,11 @@
     if (handled) { e.preventDefault(); wake(); }
   }
 
-  const showChrome = $derived(chromeVisible || p.media.paused);
+  const showChrome = $derived(chromeVisible);
 </script>
 
-<div bind:this={root} class="dark flex h-dvh w-dvw overflow-hidden bg-black font-sans text-foreground" data-layout={p.effective}>
+<div bind:this={root} class="dark flex h-dvh w-dvw overflow-hidden bg-black font-sans text-foreground" data-layout={p.effective} data-chrome={showChrome ? "shown" : "hidden"}
+  role="presentation" onpointerenter={() => { pointerInside = true; wake(); }} onpointerleave={leave}>
   <div
     class={cn("relative min-w-0 flex-1", !showChrome && "cursor-none")}
     role="presentation"
@@ -85,17 +99,17 @@
       </div>
     {/if}
 
-    <div class={cn("pointer-events-none absolute inset-x-0 top-0 transition-opacity duration-300", showChrome ? "opacity-100" : "opacity-0")}>
+    <div class={cn("absolute top-2 right-2 transition-opacity duration-300", showChrome ? "opacity-100" : "pointer-events-none opacity-0 [&_*]:pointer-events-none")}>
       <TopBar {p} {onClose} />
     </div>
 
     {#if p.effective === "overlay" && p.panelOpen}
-      <div class="absolute top-11 right-2 bottom-20 w-[min(320px,46%)]">
+      <div class="absolute top-11 right-2 bottom-24 w-[min(320px,46%)]">
         <Panel {p} glass {onOpenSettings} />
       </div>
     {/if}
 
-    <div class={cn("pointer-events-none absolute inset-x-0 bottom-0 transition-opacity duration-300", showChrome ? "opacity-100" : "opacity-0")}>
+    <div class={cn("absolute inset-x-0 bottom-0 transition-opacity duration-300", showChrome ? "opacity-100" : "pointer-events-none opacity-0 [&_*]:pointer-events-none")}>
       <Controls {p} {compact} />
     </div>
 

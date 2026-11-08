@@ -23,7 +23,8 @@ export class Player {
 
   preferred = $state<LayoutMode>("overlay");
   blur = $state(false);
-  panelOpen = $state(true);
+  // Closed by default: the window opens as plain video; `t` or the panel button opens tools.
+  panelOpen = $state(false);
   tab = $state<PanelTab>("chapters");
   width = $state(0);
   height = $state(0);
