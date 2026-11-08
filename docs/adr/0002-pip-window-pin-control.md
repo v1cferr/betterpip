@@ -3,7 +3,7 @@
 | | |
 | --- | --- |
 | Status | **Proposed**, 2026-11-08 |
-| Jira | Follow-up of [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120); own task to be created under [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119) |
+| Jira | [V1C-129](https://v1cferr.atlassian.net/browse/V1C-129) (follow-up of [V1C-120](https://v1cferr.atlassian.net/browse/V1C-120), under [V1C-119](https://v1cferr.atlassian.net/browse/V1C-119)) |
 | Depends on | [ADR 0001 — PiP window backend](0001-pip-window-backend.md) (Accepted) |
 | Evidence | [Spike report, "Pin control"](../spikes/V1C-120/README.md#pin-control-new-requirement), [manual Hyprland results](../../experiments/m0/results/) |
 
