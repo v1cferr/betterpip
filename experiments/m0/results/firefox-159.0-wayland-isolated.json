@@ -1,0 +1,2261 @@
+{
+ "meta": {
+  "label": "firefox-159.0-wayland-isolated",
+  "browser": "/nix/store/vk5drhp6vl299ivwrwh2xzj6243g17zz-firefox-159.0/bin/firefox",
+  "headless": false,
+  "date": "2026-11-08T12:30:42-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "sway-headless",
+  "wayland_display": true,
+  "display": null,
+  "versionString": "Mozilla Firefox 159.0",
+  "browserName": "firefox",
+  "browserVersion": "159.0",
+  "platformName": "linux"
+ },
+ "scenarios": {
+  "E1-detect": {
+   "detect": {
+    "backdropFilter": true,
+    "captureStream": "function",
+    "containerQueries": true,
+    "hasDocumentPictureInPicture": true,
+    "hasOnEnter": true,
+    "initialWindow": null,
+    "isSecureContext": true,
+    "isTopLevel": true,
+    "mediaSession": true,
+    "mozCaptureStream": "function",
+    "pictureInPictureElement": true,
+    "pictureInPictureEnabled": true,
+    "requestVideoFrameCallback": "function",
+    "requestWindowType": "function",
+    "userActivationApi": true,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0",
+    "videoRequestPictureInPicture": "function"
+   },
+   "noActivation": {
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+    "name": "NotAllowedError",
+    "opened": false
+   },
+   "extension": {
+    "bg-background-direct": {
+     "at": 1794151844163,
+     "has": true,
+     "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+     "name": "NotAllowedError",
+     "ok": false
+    },
+    "cs-isolated-detect": {
+     "extensionPageUrl": "moz-extension://4560d85c-291f-48f5-b3c2-37e41a5a15a0/ext-page.html",
+     "has": true,
+     "requestWindowType": "function"
+    },
+    "cs-main-detect": {
+     "has": true,
+     "hasBrowserApi": "undefined"
+    }
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-isolated": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "label": "cs-isolated",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1,
+   "innerClick": {
+    "clicks": 1,
+    "isTrusted": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 6,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 7,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-wrapped": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "label": "cs-wrapped",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1,
+   "innerClick": {
+    "clicks": 1,
+    "isTrusted": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 8,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 9,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-main": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "ok": true
+   },
+   "pipHandles": 1,
+   "innerClick": {
+    "clicks": 1,
+    "isTrusted": true
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 10,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 11,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-isolated-move-video": {
+   "result": {
+    "inPip": true,
+    "paused": true,
+    "t0": 0,
+    "t1": 0
+   },
+   "pipHandles": 1,
+   "innerClick": null,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 12,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 13,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-keydown": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "label": "cs-keydown",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 14,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 15,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-background": {
+   "result": {
+    "at": 1794151877327,
+    "has": true,
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+    "name": "NotAllowedError",
+    "ok": false
+   },
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 16,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-ctx-toolbar-command": {
+   "widgetId": null,
+   "bg-command-exec-main": {
+    "activeBefore": true,
+    "at": 1794152641441,
+    "ok": true
+   },
+   "bg-command-tab": {
+    "activeHttpTabs": 1,
+    "at": 1794152641315,
+    "found": true,
+    "passedTab": true
+   },
+   "pipHandles": 1,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 5,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 6,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ],
+   "rerun": "2026-11-08T12:43:56-0300"
+  },
+  "E1-ctx-extension-page": {
+   "url": "ext-page.html",
+   "result": {
+    "ok": true,
+    "origin": "moz-extension://a3ae26b8-03ad-4eda-b095-fdde71c0421e",
+    "inner": [
+     320,
+     200
+    ]
+   },
+   "pipHandles": 2,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 8.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 19,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 extension page \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 20,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E1-iframe-cross-origin": {
+   "frameResult": {
+    "exposed": true,
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture is only available in top-level contexts",
+    "name": "NotAllowedError",
+    "ok": false
+   },
+   "topReadsFrameVideo": {
+    "message": "Permission denied to access property \"document\" on cross-origin object",
+    "name": "SecurityError",
+    "ok": false
+   },
+   "pipHandles": 0,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 21,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 iframe probe \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E2-html-window": {
+   "e2": {
+    "clicks": [
+     {
+      "active": true,
+      "isTrusted": true,
+      "n": 1
+     },
+     {
+      "active": true,
+      "isTrusted": true,
+      "n": 2
+     }
+    ],
+    "open": {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      480,
+      320
+     ],
+     "locationHref": "about:blank",
+     "ms": 170,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      480,
+      361
+     ],
+     "requested": {
+      "height": 320,
+      "width": 480
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      1340,
+      580
+     ],
+     "title": ""
+    }
+   },
+   "statusText": "clicked 2",
+   "webdriverRect": {
+    "x": 0,
+    "y": 0,
+    "width": 956,
+    "height": 1052
+   },
+   "events": [
+    {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      480,
+      320
+     ],
+     "locationHref": "about:blank",
+     "ms": 170,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      480,
+      361
+     ],
+     "requested": {
+      "height": 320,
+      "width": 480
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      1340,
+      580
+     ],
+     "t": 1791,
+     "title": "",
+     "type": "pip:open"
+    },
+    {
+     "inner": [
+      480,
+      320
+     ],
+     "outer": [
+      480,
+      361
+     ],
+     "t": 1794,
+     "type": "pip:resize"
+    },
+    {
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "t": 1827,
+     "type": "pip:resize"
+    },
+    {
+     "isTrusted": true,
+     "n": 1,
+     "t": 2191,
+     "type": "e2:click"
+    },
+    {
+     "isTrusted": true,
+     "n": 2,
+     "t": 2463,
+     "type": "e2:click"
+    },
+    {
+     "col": true,
+     "outer": [
+      956,
+      1052
+     ],
+     "t": 2738,
+     "type": "e2:toggle"
+    }
+   ],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 22,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 23,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 E2 \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E3-video-move": {
+   "beforeClick": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 2.939,
+    "droppedFrames": 1,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": false,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 88,
+    "volume": 1,
+    "wall": 4723
+   },
+   "e3": {
+    "after": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 3.33,
+     "droppedFrames": 1,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 100,
+     "volume": 1,
+     "wall": 5148
+    },
+    "before": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 3.173,
+     "droppedFrames": 1,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": false,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 96,
+     "volume": 1,
+     "wall": 4987
+    },
+    "css": "load",
+    "moveMs": 0,
+    "open": {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      640,
+      400
+     ],
+     "locationHref": "about:blank",
+     "ms": 154,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      640,
+      441
+     ],
+     "requested": {
+      "height": 400,
+      "width": 640
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      1180,
+      500
+     ],
+     "title": ""
+    },
+    "pageVideoCount": 0,
+    "pipVideoCount": 1
+   },
+   "during": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 6.933,
+    "droppedFrames": 6,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 208,
+    "volume": 1,
+    "wall": 8717
+   },
+   "afterControls": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 20.557,
+    "droppedFrames": 9,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1.5,
+    "readyState": 4,
+    "totalFrames": 318,
+    "volume": 0.5,
+    "wall": 13114
+   },
+   "still": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 23.538,
+    "droppedFrames": 10,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1.5,
+    "readyState": 4,
+    "totalFrames": 407,
+    "volume": 0.5,
+    "wall": 15117
+   },
+   "restore": {
+    "afterReturn": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 23.578,
+     "droppedFrames": 10,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": false,
+     "paused": false,
+     "playbackRate": 1.5,
+     "readyState": 4,
+     "totalFrames": 408,
+     "volume": 0.5,
+     "wall": 15149
+    },
+    "atClose": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 23.578,
+     "droppedFrames": 10,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1.5,
+     "readyState": 4,
+     "totalFrames": 408,
+     "volume": 0.5,
+     "wall": 15140
+    }
+   },
+   "afterReturn": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 28.938,
+    "droppedFrames": 14,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": false,
+    "paused": false,
+    "playbackRate": 1.5,
+    "readyState": 4,
+    "totalFrames": 569,
+    "volume": 0.5,
+    "wall": 18691
+   },
+   "mediaRequestsBeforeMove": 12,
+   "mediaRequestsAfterAll": 12,
+   "audioStreamsOnSink": {
+    "afterMove": 1,
+    "afterReturn": 1
+   },
+   "events": [
+    {
+     "currentTime": 0,
+     "ownerIsPip": false,
+     "t": 147,
+     "type": "media:loadedmetadata"
+    },
+    {
+     "currentTime": 0,
+     "ownerIsPip": false,
+     "t": 1714,
+     "type": "media:play"
+    },
+    {
+     "currentTime": 0,
+     "ownerIsPip": false,
+     "t": 1715,
+     "type": "media:playing"
+    },
+    {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      640,
+      400
+     ],
+     "locationHref": "about:blank",
+     "ms": 154,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      640,
+      441
+     ],
+     "requested": {
+      "height": 400,
+      "width": 640
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      1180,
+      500
+     ],
+     "t": 5141,
+     "title": "",
+     "type": "pip:open"
+    },
+    {
+     "inner": [
+      640,
+      400
+     ],
+     "outer": [
+      640,
+      441
+     ],
+     "t": 5149,
+     "type": "pip:resize"
+    },
+    {
+     "after": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 3.33,
+      "droppedFrames": 1,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": true,
+      "paused": false,
+      "playbackRate": 1,
+      "readyState": 4,
+      "totalFrames": 100,
+      "volume": 1,
+      "wall": 5148
+     },
+     "before": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 3.173,
+      "droppedFrames": 1,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": false,
+      "paused": false,
+      "playbackRate": 1,
+      "readyState": 4,
+      "totalFrames": 96,
+      "volume": 1,
+      "wall": 4987
+     },
+     "css": "load",
+     "moveMs": 0,
+     "open": {
+      "activeBefore": true,
+      "baseURI": "http://127.0.0.1:47120/site/index.html",
+      "dpipWindowMatches": true,
+      "inner": [
+       640,
+       400
+      ],
+      "locationHref": "about:blank",
+      "ms": 154,
+      "origin": "http://127.0.0.1:47120",
+      "outer": [
+       640,
+       441
+      ],
+      "requested": {
+       "height": 400,
+       "width": 640
+      },
+      "sameOrigin": true,
+      "screenXY": [
+       1180,
+       500
+      ],
+      "title": ""
+     },
+     "pageVideoCount": 0,
+     "pipVideoCount": 1,
+     "t": 5192,
+     "type": "e3:moved"
+    },
+    {
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "t": 5200,
+     "type": "pip:resize"
+    },
+    {
+     "isTrusted": true,
+     "t": 8996,
+     "type": "e3:toggle"
+    },
+    {
+     "currentTime": 7.247,
+     "ownerIsPip": true,
+     "t": 8999,
+     "type": "media:pause"
+    },
+    {
+     "isTrusted": true,
+     "t": 9883,
+     "type": "e3:toggle"
+    },
+    {
+     "currentTime": 7.247,
+     "ownerIsPip": true,
+     "t": 9886,
+     "type": "media:play"
+    },
+    {
+     "currentTime": 7.247,
+     "ownerIsPip": true,
+     "t": 9888,
+     "type": "media:playing"
+    },
+    {
+     "currentTime": 18.125,
+     "ownerIsPip": true,
+     "t": 10768,
+     "type": "media:seeking"
+    },
+    {
+     "currentTime": 18.125,
+     "ownerIsPip": true,
+     "t": 10770,
+     "type": "media:waiting"
+    },
+    {
+     "currentTime": 18.125,
+     "ownerIsPip": true,
+     "t": 10820,
+     "type": "media:seeked"
+    },
+    {
+     "currentTime": 18.125,
+     "ownerIsPip": true,
+     "t": 10823,
+     "type": "media:playing"
+    },
+    {
+     "currentTime": 18.921,
+     "ownerIsPip": true,
+     "t": 11643,
+     "type": "media:volumechange"
+    },
+    {
+     "currentTime": 19.737,
+     "ownerIsPip": true,
+     "t": 12502,
+     "type": "media:ratechange"
+    },
+    {
+     "t": 15136,
+     "type": "pip:pagehide"
+    },
+    {
+     "afterReturn": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 23.578,
+      "droppedFrames": 10,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": false,
+      "paused": false,
+      "playbackRate": 1.5,
+      "readyState": 4,
+      "totalFrames": 408,
+      "volume": 0.5,
+      "wall": 15149
+     },
+     "atClose": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 23.578,
+      "droppedFrames": 10,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": true,
+      "paused": false,
+      "playbackRate": 1.5,
+      "readyState": 4,
+      "totalFrames": 408,
+      "volume": 0.5,
+      "wall": 15140
+     },
+     "t": 15149,
+     "type": "e3:restored"
+    }
+   ],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 22.0,
+    "audibleSeconds": 15.7,
+    "silenceGapsMsWhilePlaying": [
+     890,
+     80,
+     20
+    ],
+    "blips": 10,
+    "blipIntervalsMin": 1.0,
+    "blipIntervalsMax": 1.88,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 24,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E3-audio-continuity": {
+   "audioStreamsOnSink": {
+    "afterMove": 1,
+    "afterReturn": 1
+   },
+   "media": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 13.145,
+    "droppedFrames": 6,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": false,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 394,
+    "volume": 1,
+    "wall": 14954
+   },
+   "events": [
+    "media:loadedmetadata",
+    "media:play",
+    "media:playing",
+    "pip:open",
+    "pip:resize",
+    "pip:resize",
+    "e3:moved",
+    "pip:pagehide",
+    "e3:restored"
+   ],
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 18.0,
+    "audibleSeconds": 11.9,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 12,
+    "blipIntervalsMin": 0.99,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 26,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E4-layout": {
+   "modes": [
+    {
+     "effective": "overlay",
+     "inner": [
+      956,
+      1011
+     ],
+     "outerAfter": [
+      956,
+      1052
+     ],
+     "outerBefore": [
+      956,
+      1052
+     ],
+     "requested": "overlay",
+     "t": 5833,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       956,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       956,
+       538
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outerAfter": [
+      956,
+      1052
+     ],
+     "outerBefore": [
+      956,
+      1052
+     ],
+     "requested": "docked",
+     "t": 6516,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "effective": "minimal",
+     "inner": [
+      956,
+      1011
+     ],
+     "outerAfter": [
+      956,
+      1052
+     ],
+     "outerBefore": [
+      956,
+      1052
+     ],
+     "requested": "minimal",
+     "t": 7199,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       956,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       956,
+       538
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outerAfter": [
+      956,
+      1052
+     ],
+     "outerBefore": [
+      956,
+      1052
+     ],
+     "requested": "docked",
+     "t": 7881,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    }
+   ],
+   "resizes": [
+    {
+     "requested": [
+      900,
+      420
+     ],
+     "webdriverRect": {
+      "x": 0,
+      "y": 0,
+      "width": 956,
+      "height": 1052
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": false,
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      520,
+      360
+     ],
+     "webdriverRect": {
+      "x": 0,
+      "y": 0,
+      "width": 956,
+      "height": 1052
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": false,
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      320,
+      240
+     ],
+     "webdriverRect": {
+      "x": 0,
+      "y": 0,
+      "width": 956,
+      "height": 1052
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": false,
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      260,
+      170
+     ],
+     "webdriverRect": {
+      "x": 0,
+      "y": 0,
+      "width": 956,
+      "height": 1052
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": false,
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      800,
+      450
+     ],
+     "webdriverRect": {
+      "x": 0,
+      "y": 0,
+      "width": 956,
+      "height": 1052
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      956,
+      1011
+     ],
+     "outer": [
+      956,
+      1052
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": false,
+     "video": {
+      "element": [
+       636,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       636,
+       358
+      ],
+      "sourceRatio": 1.7778
+     }
+    }
+   ],
+   "playback": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 12.202,
+    "droppedFrames": 6,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 366,
+    "volume": 1,
+    "wall": 13858
+   },
+   "pipHandles": 1,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 16.0,
+    "audibleSeconds": 11.1,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 12,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 28,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 29,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E5-lifecycle-automated": {
+   "afterTabSwitch": {
+    "pipOpen": true,
+    "media": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 5.963,
+     "droppedFrames": 4,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 178,
+     "volume": 1,
+     "wall": 7624
+    },
+    "visibility": "visible"
+   },
+   "afterMinimize": {
+    "pipOpen": true,
+    "media": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 13.001,
+     "droppedFrames": 5,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 390,
+     "volume": 1,
+     "wall": 14659
+    },
+    "handles": 2
+   },
+   "afterOpenerNavigation": {
+    "pipHandles": 0,
+    "playingBefore": true
+   },
+   "afterOpenerClosed": {
+    "remainingHandles": 1,
+    "pipStillListed": false
+   },
+   "mediaRequestsInScenario": 4,
+   "audio": {
+    "seconds": 24.0,
+    "audibleSeconds": 15.6,
+    "silenceGapsMsWhilePlaying": [
+     3020
+    ],
+    "blips": 16,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 3.58,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 30,
+     "app_id": "firefox",
+     "title": "Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E5-compositor": {
+   "kind": "sway",
+   "windows": [
+    {
+     "id": 7,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 8,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ],
+   "newWindows": 1,
+   "pipWindow": {
+    "id": 8,
+    "app_id": "firefox",
+    "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+    "floating": false,
+    "sticky": false,
+    "size": [
+     960,
+     1054
+    ],
+    "shell": "xdg_shell"
+   },
+   "resizes": [
+    {
+     "requested": [
+      900,
+      420
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositorSize": [
+      900,
+      1054
+     ],
+     "floating": false,
+     "effective": "docked",
+     "inner": [
+      896,
+      1011
+     ],
+     "outer": [
+      896,
+      1052
+     ],
+     "video": {
+      "element": [
+       591,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       591,
+       333
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      480,
+      320
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositorSize": [
+      480,
+      1054
+     ],
+     "floating": false,
+     "effective": "overlay",
+     "inner": [
+      476,
+      1011
+     ],
+     "outer": [
+      476,
+      1052
+     ],
+     "video": {
+      "element": [
+       476,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       476,
+       268
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      280,
+      180
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositorSize": [
+      280,
+      1054
+     ],
+     "floating": false,
+     "effective": "minimal",
+     "inner": [
+      276,
+      1011
+     ],
+     "outer": [
+      276,
+      1052
+     ],
+     "video": {
+      "element": [
+       276,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       276,
+       155
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      700,
+      400
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositorSize": [
+      700,
+      1054
+     ],
+     "floating": false,
+     "effective": "docked",
+     "inner": [
+      696,
+      1011
+     ],
+     "outer": [
+      696,
+      1052
+     ],
+     "video": {
+      "element": [
+       459,
+       1011
+      ],
+      "objectFit": "contain",
+      "picture": [
+       459,
+       258
+      ],
+      "sourceRatio": 1.7778
+     }
+    }
+   ],
+   "ruleApplied": "[\n  {\n    \"success\": true\n  },\n  {\n    \"success\": true\n  }\n]",
+   "floatingResizes": [
+    {
+     "requested": [
+      960,
+      420
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositor": {
+      "id": 8,
+      "app_id": "firefox",
+      "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       644,
+       443
+      ],
+      "shell": "xdg_shell"
+     },
+     "effective": "docked",
+     "inner": [
+      640,
+      400
+     ],
+     "outer": [
+      640,
+      441
+     ],
+     "overflow": false,
+     "video": {
+      "element": [
+       422,
+       400
+      ],
+      "objectFit": "contain",
+      "picture": [
+       422,
+       238
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      520,
+      340
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositor": {
+      "id": 8,
+      "app_id": "firefox",
+      "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       520,
+       314
+      ],
+      "shell": "xdg_shell"
+     },
+     "effective": "overlay",
+     "inner": [
+      516,
+      271
+     ],
+     "outer": [
+      516,
+      312
+     ],
+     "overflow": false,
+     "video": {
+      "element": [
+       516,
+       271
+      ],
+      "objectFit": "contain",
+      "picture": [
+       482,
+       271
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      300,
+      200
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositor": {
+      "id": 8,
+      "app_id": "firefox",
+      "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       300,
+       174
+      ],
+      "shell": "xdg_shell"
+     },
+     "effective": "minimal",
+     "inner": [
+      296,
+      131
+     ],
+     "outer": [
+      296,
+      172
+     ],
+     "overflow": false,
+     "video": {
+      "element": [
+       296,
+       131
+      ],
+      "objectFit": "contain",
+      "picture": [
+       233,
+       131
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      240,
+      135
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositor": {
+      "id": 8,
+      "app_id": "firefox",
+      "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       240,
+       109
+      ],
+      "shell": "xdg_shell"
+     },
+     "effective": "minimal",
+     "inner": [
+      236,
+      66
+     ],
+     "outer": [
+      236,
+      107
+     ],
+     "overflow": false,
+     "video": {
+      "element": [
+       236,
+       66
+      ],
+      "objectFit": "contain",
+      "picture": [
+       117,
+       66
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      720,
+      405
+     ],
+     "compositorReply": "[\n  {\n    \"success\": true\n  }\n]",
+     "compositor": {
+      "id": 8,
+      "app_id": "firefox",
+      "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+      "floating": true,
+      "sticky": true,
+      "size": [
+       720,
+       379
+      ],
+      "shell": "xdg_shell"
+     },
+     "effective": "docked",
+     "inner": [
+      716,
+      336
+     ],
+     "outer": [
+      716,
+      377
+     ],
+     "overflow": false,
+     "video": {
+      "element": [
+       473,
+       336
+      ],
+      "objectFit": "contain",
+      "picture": [
+       473,
+       266
+      ],
+      "sourceRatio": 1.7778
+     }
+    }
+   ],
+   "playback": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 11.926,
+    "droppedFrames": 6,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 358,
+    "volume": 1,
+    "wall": 13524
+   },
+   "mediaRequestsInScenario": 2,
+   "audio": {
+    "seconds": 18.0,
+    "audibleSeconds": 11.6,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 12,
+    "blipIntervalsMin": 0.98,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 7,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 8,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 \u2014 Mozilla Firefox",
+     "floating": true,
+     "sticky": true,
+     "size": [
+      720,
+      379
+     ],
+     "shell": "xdg_shell"
+    }
+   ],
+   "rerun": "2026-11-08T12:42:02-0300"
+  },
+  "B-native-pip": {
+   "result": {
+    "element": true,
+    "height": 360,
+    "ok": true,
+    "width": 640
+   },
+   "handles": 1,
+   "note": "Native PiP is a browser-owned player window; no page HTML can be placed in it.",
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 6.0,
+    "audibleSeconds": 1.3,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 2,
+    "blipIntervalsMin": 1.01,
+    "blipIntervalsMax": 1.01,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 35,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 36,
+     "app_id": "firefox",
+     "title": "Picture-in-Picture",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "C-popup-window": {
+   "result": {
+    "alwaysOnTop": false,
+    "height": 1052,
+    "id": 27,
+    "ok": true,
+    "state": "normal",
+    "type": "popup",
+    "width": 956
+   },
+   "handles": 2,
+   "mediaRequestsInScenario": 1,
+   "audio": {
+    "seconds": 4.0,
+    "audibleSeconds": 0.0,
+    "silenceGapsMsWhilePlaying": [],
+    "blips": 0,
+    "blipIntervalsMin": null,
+    "blipIntervalsMax": null,
+    "blipIntervalsUnder0_5s": 0
+   },
+   "compositor": [
+    {
+     "id": 37,
+     "app_id": "firefox",
+     "title": "BetterPiP M0 lab (V1C-120) \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    },
+    {
+     "id": 38,
+     "app_id": "firefox",
+     "title": "Extension: (BetterPiP M0 probe (V1C-120)) - BetterPiP M0 extension page \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      960,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  },
+  "E6-youtube": {
+   "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+   "pre": {
+    "inShadow": false,
+    "mediaKeys": false,
+    "mse": true,
+    "paused": false,
+    "src": "blob:",
+    "t": 5.849208
+   },
+   "moved": {
+    "error": null,
+    "moved": {
+     "paused": false,
+     "t0": 6.166125,
+     "t1": 6.245354
+    }
+   },
+   "samplesInPip": [
+    [
+     9.8,
+     false,
+     4
+    ],
+    [
+     11.81,
+     false,
+     4
+    ],
+    [
+     13.83,
+     false,
+     4
+    ],
+    [
+     15.84,
+     false,
+     4
+    ]
+   ],
+   "playerError": null,
+   "returned": {
+    "attached": true,
+    "paused": false,
+    "t": 15.843416
+   },
+   "afterReturn": {
+    "paused": false,
+    "readyState": 4,
+    "t": 17.89
+   },
+   "afterReturn2s": {
+    "paused": false,
+    "t": 19.89
+   },
+   "mediaEvents": [],
+   "mediaRequestsInScenario": 0,
+   "audio": {
+    "seconds": 26.0,
+    "audibleSeconds": 19.3,
+    "silenceGapsMsWhilePlaying": [
+     20,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10
+    ],
+    "blips": 26,
+    "blipIntervalsMin": 0.15,
+    "blipIntervalsMax": 0.58,
+    "blipIntervalsUnder0_5s": 24
+   },
+   "compositor": [
+    {
+     "id": 41,
+     "app_id": "firefox",
+     "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube \u2014 Mozilla Firefox",
+     "floating": false,
+     "sticky": false,
+     "size": [
+      1920,
+      1054
+     ],
+     "shell": "xdg_shell"
+    }
+   ]
+  }
+ },
+ "perf": [
+  {
+   "label": "page loaded, paused",
+   "seconds": 8.05,
+   "cpu_pct_one_core": 0.6,
+   "pss_mb": 241.0,
+   "processes": 10
+  },
+  {
+   "label": "playing in page",
+   "seconds": 8.04,
+   "cpu_pct_one_core": 7.3,
+   "pss_mb": 251.3,
+   "processes": 10
+  },
+  {
+   "label": "playing in PiP: minimal",
+   "seconds": 8.04,
+   "cpu_pct_one_core": 6.7,
+   "pss_mb": 252.7,
+   "processes": 10
+  },
+  {
+   "label": "playing in PiP: overlay",
+   "seconds": 8.04,
+   "cpu_pct_one_core": 8.7,
+   "pss_mb": 253.6,
+   "processes": 10
+  },
+  {
+   "label": "playing in PiP: overlay + blur(8px)",
+   "seconds": 8.03,
+   "cpu_pct_one_core": 7.5,
+   "pss_mb": 251.8,
+   "processes": 10
+  },
+  {
+   "label": "playing in PiP: docked",
+   "seconds": 8.04,
+   "cpu_pct_one_core": 6.5,
+   "pss_mb": 251.9,
+   "processes": 10
+  },
+  {
+   "label": "16 programmatic resizes",
+   "seconds": 8.08,
+   "cpu_pct_one_core": 6.4
+  },
+  {
+   "label": "listeners",
+   "videoListenersAddedByLab": "15 media + 6 status",
+   "observers": 1
+  }
+ ]
+}

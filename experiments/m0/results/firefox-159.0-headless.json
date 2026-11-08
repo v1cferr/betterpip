@@ -1,0 +1,1148 @@
+{
+ "meta": {
+  "label": "firefox-159.0",
+  "browser": "/nix/store/vk5drhp6vl299ivwrwh2xzj6243g17zz-firefox-159.0/bin/firefox",
+  "headless": true,
+  "date": "2026-11-08T12:04:48-0300",
+  "kernel": "7.3.1",
+  "session": "wayland",
+  "desktop": "Hyprland",
+  "wayland_display": true,
+  "display": ":0",
+  "browserName": "firefox",
+  "browserVersion": "159.0",
+  "platformName": "linux"
+ },
+ "scenarios": {
+  "E1-detect": {
+   "detect": {
+    "backdropFilter": true,
+    "captureStream": "function",
+    "containerQueries": true,
+    "hasDocumentPictureInPicture": true,
+    "hasOnEnter": true,
+    "initialWindow": null,
+    "isSecureContext": true,
+    "isTopLevel": true,
+    "mediaSession": true,
+    "mozCaptureStream": "function",
+    "pictureInPictureElement": true,
+    "pictureInPictureEnabled": true,
+    "requestVideoFrameCallback": "function",
+    "requestWindowType": "function",
+    "userActivationApi": true,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0",
+    "videoRequestPictureInPicture": "function"
+   },
+   "noActivation": {
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+    "name": "NotAllowedError",
+    "opened": false
+   },
+   "extension": {
+    "bg-background-direct": {
+     "at": 1794150290201,
+     "has": true,
+     "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+     "name": "NotAllowedError",
+     "ok": false
+    },
+    "cs-isolated-detect": {
+     "extensionPageUrl": "moz-extension://47566745-10b7-41dd-8bb5-aed7ebafdd35/ext-page.html",
+     "has": true,
+     "requestWindowType": "function"
+    },
+    "cs-main-detect": {
+     "has": true,
+     "hasBrowserApi": "undefined"
+    }
+   }
+  },
+  "E1-ctx-isolated": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "label": "cs-isolated",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1,
+   "innerClick": {
+    "clicks": 1,
+    "isTrusted": true
+   }
+  },
+  "E1-ctx-wrapped": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "label": "cs-wrapped",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1,
+   "innerClick": {
+    "clicks": 1,
+    "isTrusted": true
+   }
+  },
+  "E1-ctx-main": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "ok": true
+   },
+   "pipHandles": 1,
+   "innerClick": {
+    "clicks": 1,
+    "isTrusted": true
+   }
+  },
+  "E1-ctx-isolated-move-video": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     480,
+     300
+    ],
+    "label": "cs-move-video",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1,
+   "innerClick": null
+  },
+  "E1-ctx-keydown": {
+   "result": {
+    "domWrite": true,
+    "inner": [
+     360,
+     240
+    ],
+    "label": "cs-keydown",
+    "ok": true,
+    "sameAsPageWindow": true
+   },
+   "pipHandles": 1
+  },
+  "E1-ctx-background": {
+   "result": {
+    "at": 1794150323767,
+    "has": true,
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture requires user activation",
+    "name": "NotAllowedError",
+    "ok": false
+   }
+  },
+  "E1-ctx-toolbar-command": {
+   "chromeError": "Message: System access is required. Start Firefox with the \"MOZ_REMOTE_ALLOW_SYSTEM_ACCESS=1\" environment variable set to enable it.",
+   "pipHandles": 0
+  },
+  "E1-ctx-extension-page": {
+   "status": "ERROR",
+   "error": "WebDriverException: Message: Navigation to \"moz-extension://f6b6ffb6-bde4-45f8-8010-563cda157686/ext-page.html\" is not allowed in this context\nStacktrace:\nRemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:14:8\nWebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:169:5\nUnsupportedOperationError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:977:5\nnavigateTo@chrome://remote/content/marionette/driver.sys.mjs:2576:13\n"
+  },
+  "E1-iframe-cross-origin": {
+   "frameResult": {
+    "exposed": true,
+    "message": "DocumentPictureInPicture.requestWindow: Document Picture-in-Picture is only available in top-level contexts",
+    "name": "NotAllowedError",
+    "ok": false
+   },
+   "topReadsFrameVideo": {
+    "message": "Permission denied to access property \"document\" on cross-origin object",
+    "name": "SecurityError",
+    "ok": false
+   },
+   "pipHandles": 0
+  },
+  "E2-html-window": {
+   "e2": {
+    "clicks": [
+     {
+      "active": true,
+      "isTrusted": true,
+      "n": 1
+     },
+     {
+      "active": true,
+      "isTrusted": true,
+      "n": 2
+     }
+    ],
+    "open": {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      480,
+      320
+     ],
+     "locationHref": "about:blank",
+     "ms": 92,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      480,
+      361
+     ],
+     "requested": {
+      "height": 320,
+      "width": 480
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      786,
+      268
+     ],
+     "title": ""
+    }
+   },
+   "statusText": "clicked 2",
+   "webdriverRect": {
+    "x": 786,
+    "y": 268,
+    "width": 480,
+    "height": 361
+   },
+   "events": [
+    {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      480,
+      320
+     ],
+     "locationHref": "about:blank",
+     "ms": 92,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      480,
+      361
+     ],
+     "requested": {
+      "height": 320,
+      "width": 480
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      786,
+      268
+     ],
+     "t": 1675,
+     "title": "",
+     "type": "pip:open"
+    },
+    {
+     "inner": [
+      480,
+      320
+     ],
+     "outer": [
+      480,
+      361
+     ],
+     "t": 1682,
+     "type": "pip:resize"
+    },
+    {
+     "isTrusted": true,
+     "n": 1,
+     "t": 1959,
+     "type": "e2:click"
+    },
+    {
+     "isTrusted": true,
+     "n": 2,
+     "t": 2226,
+     "type": "e2:click"
+    },
+    {
+     "col": true,
+     "outer": [
+      480,
+      361
+     ],
+     "t": 2498,
+     "type": "e2:toggle"
+    }
+   ]
+  },
+  "E3-video-move": {
+   "beforeClick": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 2.911,
+    "droppedFrames": 0,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": false,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 88,
+    "volume": 1,
+    "wall": 4589
+   },
+   "e3": {
+    "after": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 3.273,
+     "droppedFrames": 0,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 99,
+     "volume": 1,
+     "wall": 4962
+    },
+    "before": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 3.192,
+     "droppedFrames": 0,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": false,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 96,
+     "volume": 1,
+     "wall": 4859
+    },
+    "css": "load",
+    "moveMs": 0,
+    "open": {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      640,
+      400
+     ],
+     "locationHref": "about:blank",
+     "ms": 97,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      640,
+      441
+     ],
+     "requested": {
+      "height": 400,
+      "width": 640
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      626,
+      188
+     ],
+     "title": ""
+    },
+    "pageVideoCount": 0,
+    "pipVideoCount": 1
+   },
+   "during": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 6.838,
+    "droppedFrames": 0,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 205,
+    "volume": 1,
+    "wall": 8488
+   },
+   "afterControls": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 20.43,
+    "droppedFrames": 1,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1.5,
+    "readyState": 4,
+    "totalFrames": 313,
+    "volume": 0.5,
+    "wall": 12830
+   },
+   "still": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 23.427,
+    "droppedFrames": 1,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1.5,
+    "readyState": 4,
+    "totalFrames": 403,
+    "volume": 0.5,
+    "wall": 14834
+   },
+   "restore": {
+    "afterReturn": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 23.467,
+     "droppedFrames": 1,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": false,
+     "paused": false,
+     "playbackRate": 1.5,
+     "readyState": 4,
+     "totalFrames": 404,
+     "volume": 0.5,
+     "wall": 14855
+    },
+    "atClose": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 23.467,
+     "droppedFrames": 1,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1.5,
+     "readyState": 4,
+     "totalFrames": 404,
+     "volume": 0.5,
+     "wall": 14848
+    }
+   },
+   "afterReturn": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 28.748,
+    "droppedFrames": 1,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": false,
+    "paused": false,
+    "playbackRate": 1.5,
+    "readyState": 4,
+    "totalFrames": 562,
+    "volume": 0.5,
+    "wall": 18361
+   },
+   "mediaRequestsBeforeMove": 12,
+   "mediaRequestsAfterAll": 12,
+   "mediaRequests": [
+    {
+     "t": 1794150291.2598143,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150296.6192694,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150302.4483802,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150308.0908873,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150313.6281164,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150319.534696,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150324.9468682,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150330.1333778,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150337.6000457,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150342.9895706,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150349.1235454,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    },
+    {
+     "t": 1794150354.676127,
+     "method": "GET",
+     "path": "/fixtures/clock.webm",
+     "range": "bytes=0-",
+     "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+    }
+   ],
+   "events": [
+    {
+     "currentTime": 0,
+     "ownerIsPip": false,
+     "t": 69,
+     "type": "media:loadedmetadata"
+    },
+    {
+     "currentTime": 0,
+     "ownerIsPip": false,
+     "t": 1582,
+     "type": "media:play"
+    },
+    {
+     "currentTime": 0,
+     "ownerIsPip": false,
+     "t": 1583,
+     "type": "media:playing"
+    },
+    {
+     "activeBefore": true,
+     "baseURI": "http://127.0.0.1:47120/site/index.html",
+     "dpipWindowMatches": true,
+     "inner": [
+      640,
+      400
+     ],
+     "locationHref": "about:blank",
+     "ms": 97,
+     "origin": "http://127.0.0.1:47120",
+     "outer": [
+      640,
+      441
+     ],
+     "requested": {
+      "height": 400,
+      "width": 640
+     },
+     "sameOrigin": true,
+     "screenXY": [
+      626,
+      188
+     ],
+     "t": 4956,
+     "title": "",
+     "type": "pip:open"
+    },
+    {
+     "inner": [
+      640,
+      400
+     ],
+     "outer": [
+      640,
+      441
+     ],
+     "t": 4964,
+     "type": "pip:resize"
+    },
+    {
+     "after": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 3.273,
+      "droppedFrames": 0,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": true,
+      "paused": false,
+      "playbackRate": 1,
+      "readyState": 4,
+      "totalFrames": 99,
+      "volume": 1,
+      "wall": 4962
+     },
+     "before": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 3.192,
+      "droppedFrames": 0,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": false,
+      "paused": false,
+      "playbackRate": 1,
+      "readyState": 4,
+      "totalFrames": 96,
+      "volume": 1,
+      "wall": 4859
+     },
+     "css": "load",
+     "moveMs": 0,
+     "open": {
+      "activeBefore": true,
+      "baseURI": "http://127.0.0.1:47120/site/index.html",
+      "dpipWindowMatches": true,
+      "inner": [
+       640,
+       400
+      ],
+      "locationHref": "about:blank",
+      "ms": 97,
+      "origin": "http://127.0.0.1:47120",
+      "outer": [
+       640,
+       441
+      ],
+      "requested": {
+       "height": 400,
+       "width": 640
+      },
+      "sameOrigin": true,
+      "screenXY": [
+       626,
+       188
+      ],
+      "title": ""
+     },
+     "pageVideoCount": 0,
+     "pipVideoCount": 1,
+     "t": 4981,
+     "type": "e3:moved"
+    },
+    {
+     "isTrusted": true,
+     "t": 8759,
+     "type": "e3:toggle"
+    },
+    {
+     "currentTime": 7.116,
+     "ownerIsPip": true,
+     "t": 8761,
+     "type": "media:pause"
+    },
+    {
+     "isTrusted": true,
+     "t": 9620,
+     "type": "e3:toggle"
+    },
+    {
+     "currentTime": 7.116,
+     "ownerIsPip": true,
+     "t": 9622,
+     "type": "media:play"
+    },
+    {
+     "currentTime": 7.116,
+     "ownerIsPip": true,
+     "t": 9622,
+     "type": "media:playing"
+    },
+    {
+     "currentTime": 17.969,
+     "ownerIsPip": true,
+     "t": 10487,
+     "type": "media:seeking"
+    },
+    {
+     "currentTime": 17.969,
+     "ownerIsPip": true,
+     "t": 10489,
+     "type": "media:waiting"
+    },
+    {
+     "currentTime": 17.969,
+     "ownerIsPip": true,
+     "t": 10514,
+     "type": "media:seeked"
+    },
+    {
+     "currentTime": 17.969,
+     "ownerIsPip": true,
+     "t": 10516,
+     "type": "media:playing"
+    },
+    {
+     "currentTime": 18.728,
+     "ownerIsPip": true,
+     "t": 11352,
+     "type": "media:volumechange"
+    },
+    {
+     "currentTime": 19.614,
+     "ownerIsPip": true,
+     "t": 12221,
+     "type": "media:ratechange"
+    },
+    {
+     "t": 14846,
+     "type": "pip:pagehide"
+    },
+    {
+     "afterReturn": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 23.467,
+      "droppedFrames": 1,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": false,
+      "paused": false,
+      "playbackRate": 1.5,
+      "readyState": 4,
+      "totalFrames": 404,
+      "volume": 0.5,
+      "wall": 14855
+     },
+     "atClose": {
+      "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+      "currentTime": 23.467,
+      "droppedFrames": 1,
+      "muted": false,
+      "networkState": 1,
+      "ownerIsPip": true,
+      "paused": false,
+      "playbackRate": 1.5,
+      "readyState": 4,
+      "totalFrames": 404,
+      "volume": 0.5,
+      "wall": 14848
+     },
+     "t": 14855,
+     "type": "e3:restored"
+    }
+   ]
+  },
+  "E4-layout": {
+   "modes": [
+    {
+     "effective": "overlay",
+     "inner": [
+      640,
+      400
+     ],
+     "outerAfter": [
+      640,
+      441
+     ],
+     "outerBefore": [
+      640,
+      441
+     ],
+     "requested": "overlay",
+     "t": 5739,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       640,
+       400
+      ],
+      "objectFit": "contain",
+      "picture": [
+       640,
+       360
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "effective": "docked",
+     "inner": [
+      640,
+      400
+     ],
+     "outerAfter": [
+      640,
+      441
+     ],
+     "outerBefore": [
+      640,
+      441
+     ],
+     "requested": "docked",
+     "t": 6434,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       422,
+       400
+      ],
+      "objectFit": "contain",
+      "picture": [
+       422,
+       238
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "effective": "minimal",
+     "inner": [
+      640,
+      400
+     ],
+     "outerAfter": [
+      640,
+      441
+     ],
+     "outerBefore": [
+      640,
+      441
+     ],
+     "requested": "minimal",
+     "t": 7104,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       640,
+       400
+      ],
+      "objectFit": "contain",
+      "picture": [
+       640,
+       360
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "effective": "docked",
+     "inner": [
+      640,
+      400
+     ],
+     "outerAfter": [
+      640,
+      441
+     ],
+     "outerBefore": [
+      640,
+      441
+     ],
+     "requested": "docked",
+     "t": 7784,
+     "type": "e4:mode",
+     "video": {
+      "element": [
+       422,
+       400
+      ],
+      "objectFit": "contain",
+      "picture": [
+       422,
+       238
+      ],
+      "sourceRatio": 1.7778
+     }
+    }
+   ],
+   "resizes": [
+    {
+     "requested": [
+      900,
+      420
+     ],
+     "webdriverRect": {
+      "x": 626,
+      "y": 188,
+      "width": 900,
+      "height": 420
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      900,
+      379
+     ],
+     "outer": [
+      900,
+      420
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": true,
+     "video": {
+      "element": [
+       594,
+       379
+      ],
+      "objectFit": "contain",
+      "picture": [
+       594,
+       334
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      520,
+      360
+     ],
+     "webdriverRect": {
+      "x": 626,
+      "y": 188,
+      "width": 520,
+      "height": 360
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "overlay",
+     "inner": [
+      520,
+      319
+     ],
+     "outer": [
+      520,
+      360
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": true,
+     "video": {
+      "element": [
+       520,
+       319
+      ],
+      "objectFit": "contain",
+      "picture": [
+       520,
+       293
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      320,
+      240
+     ],
+     "webdriverRect": {
+      "x": 626,
+      "y": 188,
+      "width": 320,
+      "height": 240
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "overlay",
+     "inner": [
+      320,
+      199
+     ],
+     "outer": [
+      320,
+      240
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": true,
+     "video": {
+      "element": [
+       320,
+       199
+      ],
+      "objectFit": "contain",
+      "picture": [
+       320,
+       180
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      260,
+      170
+     ],
+     "webdriverRect": {
+      "x": 626,
+      "y": 188,
+      "width": 260,
+      "height": 170
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "minimal",
+     "inner": [
+      260,
+      129
+     ],
+     "outer": [
+      260,
+      170
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": false,
+     "video": {
+      "element": [
+       260,
+       129
+      ],
+      "objectFit": "contain",
+      "picture": [
+       229,
+       129
+      ],
+      "sourceRatio": 1.7778
+     }
+    },
+    {
+     "requested": [
+      800,
+      450
+     ],
+     "webdriverRect": {
+      "x": 626,
+      "y": 188,
+      "width": 800,
+      "height": 450
+     },
+     "docOverflowX": false,
+     "docOverflowY": false,
+     "effective": "docked",
+     "inner": [
+      800,
+      409
+     ],
+     "outer": [
+      800,
+      450
+     ],
+     "panelOverflowY": "auto",
+     "panelScrollable": true,
+     "video": {
+      "element": [
+       528,
+       409
+      ],
+      "objectFit": "contain",
+      "picture": [
+       528,
+       297
+      ],
+      "sourceRatio": 1.7778
+     }
+    }
+   ],
+   "playback": {
+    "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+    "currentTime": 9.704,
+    "droppedFrames": 0,
+    "muted": false,
+    "networkState": 1,
+    "ownerIsPip": true,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "totalFrames": 291,
+    "volume": 1,
+    "wall": 11352
+   },
+   "pipHandles": 1
+  },
+  "E5-lifecycle-automated": {
+   "afterTabSwitch": {
+    "pipOpen": true,
+    "media": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 5.964,
+     "droppedFrames": 0,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 179,
+     "volume": 1,
+     "wall": 7615
+    },
+    "visibility": "visible"
+   },
+   "afterMinimize": {
+    "pipOpen": true,
+    "media": {
+     "currentSrc": "http://127.0.0.1:47120/fixtures/clock.webm",
+     "currentTime": 8.257,
+     "droppedFrames": 0,
+     "muted": false,
+     "networkState": 1,
+     "ownerIsPip": true,
+     "paused": false,
+     "playbackRate": 1,
+     "readyState": 4,
+     "totalFrames": 247,
+     "volume": 1,
+     "wall": 9891
+    },
+    "handles": 2
+   },
+   "afterOpenerNavigation": {
+    "pipHandles": 0,
+    "playingBefore": true
+   },
+   "afterOpenerClosed": {
+    "remainingHandles": 1,
+    "pipStillListed": false
+   }
+  },
+  "B-native-pip": {
+   "result": {
+    "element": true,
+    "height": 256,
+    "ok": true,
+    "width": 455
+   },
+   "handles": 1,
+   "note": "Native PiP is a browser-owned player window; no page HTML can be placed in it."
+  },
+  "C-popup-window": {
+   "result": {
+    "alwaysOnTop": false,
+    "height": 300,
+    "id": 27,
+    "ok": true,
+    "state": "normal",
+    "type": "popup",
+    "width": 420
+   },
+   "handles": 2
+  }
+ },
+ "perf": []
+}
