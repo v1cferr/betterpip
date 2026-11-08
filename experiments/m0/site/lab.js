@@ -78,6 +78,9 @@ log("detect", M0.results.detect);
   log("noActivation", M0.results.noActivation);
 })();
 
+// E8: opener focus changes, to see whether focus returns when the PiP window closes.
+for (const ev of ["focus", "blur"]) window.addEventListener(ev, () => log("opener:" + ev));
+
 window.documentPictureInPicture?.addEventListener("enter", (e) => log("dpip:enter", { hasWindow: !!e.window }));
 
 // ---------------------------------------------------------------- helpers for the PiP doc
@@ -104,6 +107,9 @@ async function requestPip(opts) {
     log("pip:open", info);
     pip.addEventListener("pagehide", () => log("pip:pagehide"));
     pip.addEventListener("resize", () => log("pip:resize", { inner: [pip.innerWidth, pip.innerHeight], outer: [pip.outerWidth, pip.outerHeight] }));
+    // E8: where keyboard focus goes when the window opens, and back when it closes.
+    info.focusAtOpen = { pipHasFocus: pip.document.hasFocus(), openerHasFocus: document.hasFocus() };
+    for (const ev of ["focus", "blur"]) pip.addEventListener(ev, () => log("pip:" + ev, { openerHasFocus: document.hasFocus() }));
     return { pip, info };
   } catch (e) {
     const info = { ...errInfo(e), activeBefore, ms: Math.round(performance.now() - t0) };
@@ -233,6 +239,16 @@ async function openVideoPip({ width = 640, height = 400, mode = "minimal" } = {}
   root.append(shell);
   d.body.append(root);
   paint();
+
+  // E8: shortcuts handled inside the PiP document (k = play/pause, ArrowRight = +5 s).
+  d.addEventListener("keydown", (e) => {
+    const entry = { key: e.key, isTrusted: e.isTrusted, target: e.target.id || e.target.tagName };
+    if (e.key === "k") { video.paused ? video.play() : video.pause(); entry.action = "toggle"; }
+    if (e.key === "ArrowRight" && e.target === d.body) { video.currentTime += 5; entry.action = "+5s"; }
+    log("e8:key", entry);
+  });
+  const focusLog = () => log("e8:focus", { active: d.activeElement?.id || d.activeElement?.tagName, pipHasFocus: d.hasFocus() });
+  d.addEventListener("focusin", focusLog);
 
   const ro = new pip.ResizeObserver((entries) => {
     const r = entries[0].contentRect;

@@ -525,6 +525,56 @@ class Lab:
             self.record(f"E7-csp-{policy}", **out)
         self.run(f"E7-csp-{policy}", fn)
 
+    def e8_focus(self):
+        """E8: keyboard focus and keyboard input inside the PiP window. Key actions are
+        trusted WebDriver input sent to the window WebDriver has selected."""
+        pip, _, _ = self.open_video()
+        out = {"atOpen": self.m0("results.e3.open.focusAtOpen")}
+        time.sleep(0.5)
+        # Read from the opener context first: switching windows in WebDriver moves focus.
+        out["afterOpen"] = self.js("""const d = __m0.pip.document;
+            return {pipHasFocus: d.hasFocus(), openerHasFocus: document.hasFocus(), active: d.activeElement && (d.activeElement.id || d.activeElement.tagName)}""")
+        self.d.switch_to.window(pip)
+        state = lambda: self.js("""const v = document.querySelector('video'); const a = document.activeElement;
+            return {active: a.id || a.tagName, paused: v.paused, t: +v.currentTime.toFixed(2), hasFocus: document.hasFocus()}""")
+        key = lambda *k: (ActionChains(self.d).send_keys(*k).perform(), time.sleep(0.3))
+        out["afterSwitch"] = state()
+        seq = []
+        # The moved <video> keeps its native controls; enough presses to pass through them.
+        for _ in range(14):
+            key(Keys.TAB)
+            seq.append(state()["active"])
+        out["tabSequence"] = seq
+        key(Keys.SHIFT, Keys.TAB)
+        out["shiftTabTo"] = state()["active"]
+        self.js("document.getElementById('bp-play').focus()")
+        s0 = state(); key(Keys.SPACE); s1 = state()
+        out["spaceOnPlay"] = {"before": s0, "after": s1, "toggled": s0["paused"] != s1["paused"]}
+        self.js("document.getElementById('bp-fwd').focus()")
+        s0 = state(); key(Keys.ENTER); s1 = state()
+        out["enterOnFwd"] = {"before": s0, "after": s1, "jumped": s1["t"] - s0["t"] >= 9}
+        self.js("document.activeElement.blur()")
+        s0 = state(); key("k"); s1 = state()
+        out["shortcutK"] = {"toggled": s0["paused"] != s1["paused"], "after": s1}
+        s0 = state(); key(Keys.ARROW_RIGHT); s1 = state()
+        out["shortcutArrowRight"] = {"jumped": s1["t"] - s0["t"] >= 4, "before": s0["t"], "after": s1["t"]}
+        key(Keys.ESCAPE)
+        out["pipOpenAfterEscape"] = pip in self.d.window_handles
+        # Close from inside the PiP and wait before touching the opener, so any focus change
+        # in that second comes from the browser/compositor, not from WebDriver.
+        try:
+            self.js("setTimeout(() => window.close(), 0)")
+        except WebDriverException:
+            pass
+        time.sleep(1.0)
+        self.d.switch_to.window(self.main)
+        ev = self.m0("events")
+        closed_at = next((e["t"] for e in ev if e["type"] == "pip:pagehide"), None)
+        out["closedAt"] = closed_at
+        out["openerFocusAfterClose"] = [e for e in ev if closed_at is not None and e["t"] >= closed_at and e["type"].startswith("opener:")]
+        out["events"] = [e for e in ev if e["type"].startswith(("e8:", "pip:focus", "pip:blur", "opener:"))]
+        self.record("E8-keyboard-focus", **out)
+
     def e4_layout(self):
         pip, _, _ = self.open_video()
         out = {"modes": [], "resizes": []}
@@ -747,6 +797,7 @@ class Lab:
         self.run("E4-layout", self.e4_layout)
         for policy in ("none", "strict", "tt"):
             self.e7_csp(policy)
+        self.run("E8-keyboard-focus", self.e8_focus)
         self.run("E5-lifecycle-automated", self.e5_lifecycle)
         if self.compositor_enabled():
             self.run("E5-compositor", self.e5_compositor)
